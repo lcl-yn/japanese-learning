@@ -1,44 +1,47 @@
 <script setup lang="ts">
-import { Check, Close } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
+import { emptyAnswer, emptyResult, type PracticeAnswer } from '@/utils/answerCheck'
 import { visibleDescribe } from '@/utils/wordDisplay'
 import { wordKey } from '@/utils/weightedRandom'
+import AnswerField from './AnswerField.vue'
 
 const wordsStore = useWordsStore()
 
-const promptLabel = computed(() => (wordsStore.mode === 'cn2jp' ? '中文' : '日语'))
-const answerLabel = computed(() => (wordsStore.mode === 'cn2jp' ? '日语' : '中文'))
-const answerPlaceholder = computed(() => (wordsStore.mode === 'cn2jp' ? '请输入日语' : '请输入中文'))
+const isCn2Jp = computed(() => wordsStore.mode === 'cn2jp')
+const promptLabel = computed(() => (isCn2Jp.value ? '中文' : '日语'))
 
-/** Element Plus 动态列 v-if 切换时会残留旧单元格 DOM，用 key 强制重建表格 */
+/** 切换模式或换一批词时重建表格，避免动态列残留旧单元格 */
 const tableKey = computed(
-  () =>
-    `${wordsStore.mode}-${wordsStore.answersChecked}-${wordsStore.currentWords.map((word) => wordKey(word)).join(',')}`,
+  () => `${wordsStore.mode}-${wordsStore.currentWords.map((word) => wordKey(word)).join(',')}`,
 )
 
 function promptOf(word: Word) {
-  return wordsStore.mode === 'cn2jp' ? word.cn : word.jp
+  return isCn2Jp.value ? word.cn : word.jp
 }
 
 function describeOf(word: Word) {
-  if (wordsStore.mode !== 'cn2jp') return ''
+  if (!isCn2Jp.value) return ''
   return visibleDescribe(word.describe)
 }
 
-function expectedOf(word: Word) {
-  return wordsStore.mode === 'cn2jp' ? word.jp : word.cn
+function answerAt(index: number): PracticeAnswer {
+  return wordsStore.userAnswers[index] ?? emptyAnswer()
 }
 
-function setAnswer(index: number, value: string) {
-  wordsStore.userAnswers[index] = value
+function resultAt(index: number) {
+  return wordsStore.answerResults[index] ?? emptyResult()
+}
+
+function setField(index: number, field: keyof PracticeAnswer, value: string) {
+  wordsStore.userAnswers[index] = { ...answerAt(index), [field]: value }
 }
 </script>
 
 <template>
   <el-table :key="tableKey" :data="wordsStore.wordPairs" style="width: 100%">
-    <el-table-column :label="promptLabel">
+    <el-table-column :label="promptLabel" min-width="120">
       <template #default="{ row }">
         <div v-if="row.word1" class="prompt-cell">
           <div>{{ promptOf(row.word1) }}</div>
@@ -47,32 +50,49 @@ function setAnswer(index: number, value: string) {
       </template>
     </el-table-column>
 
-    <el-table-column :label="answerLabel">
+    <el-table-column v-if="isCn2Jp" label="日语假名" min-width="150">
       <template #default="{ row }">
-        <el-input
+        <AnswerField
           v-if="row.word1 && row.index1 != null"
-          :model-value="wordsStore.userAnswers[row.index1] ?? ''"
-          :placeholder="answerPlaceholder"
-          @update:model-value="setAnswer(row.index1, $event)"
+          :model-value="answerAt(row.index1).kana"
+          placeholder="请输入假名"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index1).kana"
+          :expected="row.word1.jp"
+          @update:model-value="setField(row.index1, 'kana', $event)"
         />
       </template>
     </el-table-column>
 
-    <el-table-column v-if="wordsStore.answersChecked" label="结果">
+    <el-table-column v-if="isCn2Jp" label="日语手写" min-width="150">
       <template #default="{ row }">
-        <span v-if="row.word1 && row.index1 != null && wordsStore.answerResults[row.index1]" class="correct">
-          <el-icon><Check /></el-icon>
-          正确
-        </span>
-        <span v-else-if="row.word1" class="incorrect">
-          <el-icon><Close /></el-icon>
-          错误
-          <div>正确答案: {{ expectedOf(row.word1) }}</div>
-        </span>
+        <AnswerField
+          v-if="row.word1 && row.index1 != null"
+          :model-value="answerAt(row.index1).write"
+          placeholder="请输入日语手写"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index1).write"
+          :expected="row.word1.jp_write"
+          @update:model-value="setField(row.index1, 'write', $event)"
+        />
       </template>
     </el-table-column>
 
-    <el-table-column :label="promptLabel">
+    <el-table-column v-if="!isCn2Jp" label="中文" min-width="150">
+      <template #default="{ row }">
+        <AnswerField
+          v-if="row.word1 && row.index1 != null"
+          :model-value="answerAt(row.index1).cn"
+          placeholder="请输入中文"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index1).cn"
+          :expected="row.word1.cn"
+          @update:model-value="setField(row.index1, 'cn', $event)"
+        />
+      </template>
+    </el-table-column>
+
+    <el-table-column :label="promptLabel" min-width="120">
       <template #default="{ row }">
         <div v-if="row.word2" class="prompt-cell">
           <div>{{ promptOf(row.word2) }}</div>
@@ -81,49 +101,51 @@ function setAnswer(index: number, value: string) {
       </template>
     </el-table-column>
 
-    <el-table-column :label="answerLabel">
+    <el-table-column v-if="isCn2Jp" label="日语假名" min-width="150">
       <template #default="{ row }">
-        <el-input
+        <AnswerField
           v-if="row.word2 && row.index2 != null"
-          :model-value="wordsStore.userAnswers[row.index2] ?? ''"
-          :placeholder="answerPlaceholder"
-          @update:model-value="setAnswer(row.index2, $event)"
+          :model-value="answerAt(row.index2).kana"
+          placeholder="请输入假名"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index2).kana"
+          :expected="row.word2.jp"
+          @update:model-value="setField(row.index2, 'kana', $event)"
         />
       </template>
     </el-table-column>
 
-    <el-table-column v-if="wordsStore.answersChecked" label="结果">
+    <el-table-column v-if="isCn2Jp" label="日语手写" min-width="150">
       <template #default="{ row }">
-        <span v-if="row.word2 && row.index2 != null && wordsStore.answerResults[row.index2]" class="correct">
-          <el-icon><Check /></el-icon>
-          正确
-        </span>
-        <span v-else-if="row.word2" class="incorrect">
-          <el-icon><Close /></el-icon>
-          错误
-          <div>正确答案: {{ expectedOf(row.word2) }}</div>
-        </span>
+        <AnswerField
+          v-if="row.word2 && row.index2 != null"
+          :model-value="answerAt(row.index2).write"
+          placeholder="请输入日语手写"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index2).write"
+          :expected="row.word2.jp_write"
+          @update:model-value="setField(row.index2, 'write', $event)"
+        />
+      </template>
+    </el-table-column>
+
+    <el-table-column v-if="!isCn2Jp" label="中文" min-width="150">
+      <template #default="{ row }">
+        <AnswerField
+          v-if="row.word2 && row.index2 != null"
+          :model-value="answerAt(row.index2).cn"
+          placeholder="请输入中文"
+          :checked="wordsStore.answersChecked"
+          :correct="resultAt(row.index2).cn"
+          :expected="row.word2.cn"
+          @update:model-value="setField(row.index2, 'cn', $event)"
+        />
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <style scoped>
-.correct {
-  color: #67c23a;
-  font-weight: bold;
-}
-
-.incorrect {
-  color: #f56c6c;
-}
-
-.correct :deep(.el-icon),
-.incorrect :deep(.el-icon) {
-  vertical-align: middle;
-  margin-right: 2px;
-}
-
 .prompt-describe {
   margin-top: 4px;
   color: #909399;

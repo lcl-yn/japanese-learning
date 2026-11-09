@@ -14,7 +14,7 @@ const modeModel = computed({
 })
 
 const accuracy = computed(() => {
-  const total = wordsStore.currentWords.length
+  const total = wordsStore.answerTotal
   if (total === 0) return 0
   return Math.round((wordsStore.correctCount / total) * 100)
 })
@@ -50,7 +50,7 @@ const accuracy = computed(() => {
         <div class="result-header">
           <span>测试结果统计</span>
           <span>正确率: {{ accuracy }}%</span>
-          <span>正确: {{ wordsStore.correctCount }} / 总数: {{ wordsStore.currentWords.length }}</span>
+          <span>正确: {{ wordsStore.correctCount }} / 总数: {{ wordsStore.answerTotal }}</span>
         </div>
       </template>
     </el-card>

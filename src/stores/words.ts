@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia'
 import { loadAllWords } from '@/services/wordsLoader'
+import {
+  emptyAnswer,
+  emptyResult,
+  judgeCn2Jp,
+  judgeJp2Cn,
+  type PracticeAnswer,
+  type PracticeResult,
+} from '@/utils/answerCheck'
 import { selectRandomWordsWithWeights, wordKey } from '@/utils/weightedRandom'
 import type { Word, WordsManifest } from '@/types/word'
 
@@ -17,8 +25,8 @@ export const useWordsStore = defineStore('words', {
     errorCounts: {} as Record<string, number>,
     mode: 'cn2jp' as 'cn2jp' | 'jp2cn',
     currentWords: [] as Word[],
-    userAnswers: [] as string[],
-    answerResults: [] as boolean[],
+    userAnswers: [] as PracticeAnswer[],
+    answerResults: [] as PracticeResult[],
     answersChecked: false,
     correctCount: 0,
   }),
@@ -44,6 +52,10 @@ export const useWordsStore = defineStore('words', {
         const lessonOk = state.currentLessonId === 0 || w.lesson === state.currentLessonId
         return courseOk && lessonOk
       })
+    },
+    answerTotal(state): number {
+      const count = state.currentWords.length
+      return state.mode === 'cn2jp' ? count * 2 : count
     },
     wordPairs(state) {
       const pairs: Array<{
@@ -113,8 +125,8 @@ export const useWordsStore = defineStore('words', {
       this.currentWords = selectRandomWordsWithWeights(count, this.filteredWords, (w) =>
         this.getWeight(w),
       )
-      this.userAnswers = new Array(this.currentWords.length).fill('')
-      this.answerResults = new Array(this.currentWords.length).fill(false)
+      this.userAnswers = this.currentWords.map(() => emptyAnswer())
+      this.answerResults = this.currentWords.map(() => emptyResult())
       this.answersChecked = false
       this.correctCount = 0
     },
@@ -123,11 +135,18 @@ export const useWordsStore = defineStore('words', {
       this.correctCount = 0
       for (let i = 0; i < this.currentWords.length; i++) {
         const word = this.currentWords[i]
-        const userAnswer = (this.userAnswers[i] || '').trim()
-        const expected = this.mode === 'cn2jp' ? word.jp : word.cn
-        const ok = userAnswer === expected
-        this.answerResults[i] = ok
-        if (ok) this.correctCount++
+        const answer = this.userAnswers[i] ?? emptyAnswer()
+        if (this.mode === 'cn2jp') {
+          const verdict = judgeCn2Jp(word, answer.kana, answer.write)
+          this.answerResults[i] = { ...verdict, cn: false }
+          if (verdict.kana) this.correctCount++
+          if (verdict.write) this.correctCount++
+          if (!verdict.kana || !verdict.write) this.incrementError(word)
+          continue
+        }
+        const cnOk = judgeJp2Cn(word, answer.cn)
+        this.answerResults[i] = { kana: false, write: false, cn: cnOk }
+        if (cnOk) this.correctCount++
         else this.incrementError(word)
       }
       this.answersChecked = true
