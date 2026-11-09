@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>中日语言学习</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 移除表格高度限制，避免垂直滚动条 */
+        .el-table {
+            overflow: visible;
+        }
+
+        .el-table__body-wrapper {
+            overflow: visible;
+        }
+
+        .el-table .cell {
+            word-break: normal;
+            line-height: 30px;
+        }
+
+        .correct {
+            color: #67C23A;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #F56C6C;
+        }
+
+        .mode-switch {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .el-input {
+            width: 100%;
+        }
+
+        .el-table__row {
+            height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <h1 style="text-align: center;">中日语言学习</h1>
+
+            <div class="mode-switch">
+                <el-radio-group v-model="mode" @change="resetTest">
+                    <el-radio-button label="cn2jp">看中文写日语</el-radio-button>
+                    <el-radio-button label="jp2cn">看日语写中文</el-radio-button>
+                </el-radio-group>
+                <el-select v-model="currentLesson" placeholder="选择课时" style="width: 120px; margin-left: 20px;">
+                    <el-option label="全部" :value="0"></el-option>
+                    <el-option label="第一课" :value="1"></el-option>
+                    <el-option label="第二课" :value="2"></el-option>
+                </el-select>
+                <el-button type="info" @click="showAllWords" style="margin-left: 20px;">显示所有单词</el-button>
+                <el-button type="primary" @click="showKanaChart"
+                    style="margin-left: 20px; background-color: #ff6b6b; border-color: #ff6b6b;"
+                    icon="el-icon-notebook-2">50音图</el-button>
+            </div>
+
+            <!-- 显示所有单词的对话框 -->
+            <el-dialog title="所有需要背诵的单词" :visible.sync="dialogVisible" width="70%" center>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <el-switch v-model="showChinese" active-text="显示中文" inactive-text="隐藏中文"
+                            style="margin-right: 20px;">
+                        </el-switch>
+                        <el-switch v-model="showJapanese" active-text="显示日文" inactive-text="隐藏日文">
+                        </el-switch>
+                    </div>
+                    <div>
+                        <span style="margin-right: 10px;">语音选择:</span>
+                        <el-select v-model="selectedVoice" placeholder="选择语音" style="width: 200px;">
+                            <el-option v-for="voice in availableVoices" :key="voice.voiceURI" :label="voice.name"
+                                :value="voice">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <el-table :data="paginatedWords" style="width: 100%" border>
+                    <el-table-column label="中文" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="showChinese">{{ scope.row.cn
+                                +'------'+scope.row.part_of_speech+'------'+scope.row.jp_kanji}}</span>
+                            <span v-else style="color: #ccc;">***隐藏***</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="日语" align="center">
+                        <template slot-scope="scope">
+                            <div v-if="showJapanese"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="flex: 1; padding-right: 10px; text-align: left;">{{ scope.row.jp}}</span>
+                                <div style="display: flex; gap: 10px;">
+                                    <el-button size="small" @click="speakJapanese(scope.row)">
+                                        朗读
+                                    </el-button>
+                                    <el-button size="small" @click="singleJapanese(scope.row)">
+                                        {{scope.row.jp === hiddenWords ? '显示' : '隐藏'}}
+                                    </el-button>
+                                </div>
+                            </div>
+                            <span v-else style="color: #ccc;">***隐藏***</span>
+                        </template>
+                    </el-table-column>
+                    <!-- <el-table-column label="操作" align="center">
+                        <template slot-scope="scope">
+                            <el-button size="mini" type="primary"
+                                @click="startPracticeWithWord(scope.row)">练习</el-button>
+                        </template>
+                    </el-table-column> -->
+                </el-table>
+
+                <!-- 分页组件 -->
+                <div style="margin-top: 20px; text-align: center;">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                        :current-page="wordCurrentPage" :page-sizes="pageSizeOptions" :page-size="wordPageSize"
+                        layout="total, sizes, prev, pager, next, jumper" :total="allWords.length">
+                    </el-pagination>
+                </div>
+
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">关闭</el-button>
+                </span>
+            </el-dialog>
+
+            <!-- 50音图对话框 -->
+            <el-dialog title="日语50音图" :visible.sync="kanaDialogVisible" width="80%" center>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="margin-right: 10px;">语音选择:</span>
+                        <el-select v-model="selectedVoice" placeholder="选择语音" style="width: 200px;">
+                            <el-option v-for="voice in availableVoices" :key="voice.voiceURI" :label="voice.name"
+                                :value="voice">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin-bottom: 15px;">基本50音</h3>
+                <el-table :data="hiraganaChart" style="width: 100%; margin-bottom: 30px;" border>
+                    <el-table-column v-for="col in kanaColumns" :key="col" :label="col" align="center">
+                        <template slot-scope="scope">
+                            <div v-if="scope.row[col]"
+                                style="display: flex; justify-content: space-around; align-items: center;">
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].hiragana)">
+                                    {{ scope.row[col].hiragana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].katakana)">
+                                    {{ scope.row[col].katakana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <h3 style="text-align: center; margin-bottom: 15px;">拗音</h3>
+                <el-table :data="youonChart" style="width: 100%; margin-bottom: 30px;" border>
+                    <el-table-column v-for="col in kanaColumns" :key="col" :label="col" align="center">
+                        <template slot-scope="scope">
+                            <div v-if="scope.row[col]"
+                                style="display: flex; justify-content: space-around; align-items: center;">
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].hiragana)">
+                                    {{ scope.row[col].hiragana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].katakana)">
+                                    {{ scope.row[col].katakana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <h3 style="text-align: center; margin-bottom: 15px;">浊音/半浊音</h3>
+                <el-table :data="dakuonChart" style="width: 100%;" border>
+                    <el-table-column v-for="col in kanaColumns" :key="col" :label="col" align="center">
+                        <template slot-scope="scope">
+                            <div v-if="scope.row[col]"
+                                style="display: flex; justify-content: space-around; align-items: center;">
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].hiragana)">
+                                    {{ scope.row[col].hiragana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                                <span style="cursor: pointer;" @click="speakKana(scope.row[col].katakana)">
+                                    {{ scope.row[col].katakana }}<span
+                                        v-if="scope.row[col].romaji">({{scope.row[col].romaji}})</span>
+                                </span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="kanaDialogVisible = false">关闭</el-button>
+                </span>
+            </el-dialog>
+
+            <el-card v-if="!showResults">
+                <div slot="header" class="clearfix">
+                    <span>{{ mode === 'cn2jp' ? '看中文写日语' : '看日语写中文' }}</span>
+                    <el-button style="float: right" type="primary" @click="checkAllAnswers">提交所有答案</el-button>
+                </div>
+
+                <el-table :data="wordPairs" style="width: 100%">
+                    <!-- 第一个问题 -->
+                    <el-table-column :label="mode === 'cn2jp' ? '中文' : '日语'">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.word1">{{ mode === 'cn2jp' ? scope.row.word1.cn : scope.row.word1.jp
+                                }}</span>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column :label="mode === 'cn2jp' ? '日语' : '中文'">
+                        <template slot-scope="scope">
+                            <el-input v-if="scope.row.word1" v-model="userAnswers[scope.row.index1]"
+                                :placeholder="mode === 'cn2jp' ? '请输入日语' : '请输入中文'">
+                            </el-input>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column label="结果" v-if="answersChecked">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.word1 && answerResults[scope.row.index1]" class="correct">
+                                <i class="el-icon-check"></i> 正确
+                            </span>
+                            <span v-else-if="scope.row.word1" class="incorrect">
+                                <i class="el-icon-close"></i> 错误
+                                <div>正确答案: {{ mode === 'cn2jp' ? scope.row.word1.jp : scope.row.word1.cn }}</div>
+                            </span>
+                        </template>
+                    </el-table-column>
+
+                    <!-- 第二个问题 -->
+                    <el-table-column :label="mode === 'cn2jp' ? '中文' : '日语'">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.word2">{{ mode === 'cn2jp' ? scope.row.word2.cn : scope.row.word2.jp
+                                }}</span>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column :label="mode === 'cn2jp' ? '日语' : '中文'">
+                        <template slot-scope="scope">
+                            <el-input v-if="scope.row.word2" v-model="userAnswers[scope.row.index2]"
+                                :placeholder="mode === 'cn2jp' ? '请输入日语' : '请输入中文'">
+                            </el-input>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column label="结果" v-if="answersChecked">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.word2 && answerResults[scope.row.index2]" class="correct">
+                                <i class="el-icon-check"></i> 正确
+                            </span>
+                            <span v-else-if="scope.row.word2" class="incorrect">
+                                <i class="el-icon-close"></i> 错误
+                                <div>正确答案: {{ mode === 'cn2jp' ? scope.row.word2.jp : scope.row.word2.cn }}</div>
+                            </span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <div style="margin-top: 20px; text-align: center" v-if="answersChecked">
+                    <el-button type="primary" @click="startNewTest">开始新测试</el-button>
+                </div>
+            </el-card>
+
+            <el-card v-if="answersChecked" style="margin-top: 20px;">
+                <div slot="header">
+                    <span>测试结果统计</span>
+                    <span style="margin-left: 20px;">正确率: {{ Math.round((correctCount / currentWords.length) * 100)
+                        }}%</span>
+                    <span style="margin-left: 20px;">
+                        正确: {{ correctCount }} / 总数: {{ currentWords.length }}
+                    </span>
+                </div>
+            </el-card>
+        </div>
+    </div>
+
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <!-- import Element UI -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <!-- 添加Vue混入(mixin)来扩展功能 -->
+    <script>
+        // 定义一个全局混入，添加新的属性和方法
+        Vue.mixin({
+            data: function () {
+                return {
+                    dialogVisible: false,
+                    allWords: [],
+                    currentLesson: 0, // 0表示全部，1表示第一课，2表示第二课
+                    showChinese: true,  // 默认显示中文
+                    showJapanese: true,  // 默认显示日文
+                    showSingleJapanese: true,
+                    userMap: new Map(),
+                    hiddenWords: '***隐藏***',
+                    wordCurrentPage: 1,     // 当前页码
+                    wordPageSize: 10,       // 每页显示的单词数量
+                    pageSizeOptions: [10, 20, 30, 40, 50], // 可选的每页显示数量
+                    availableVoices: [],    // 可用的语音列表
+                    selectedVoice: null     // 当前选中的语音
+                };
+            },
+            computed: {
+                // 计算当前页应显示的单词
+                paginatedWords: function () {
+                    const start = (this.wordCurrentPage - 1) * this.wordPageSize;
+                    const end = start + this.wordPageSize;
+                    return this.allWords.slice(start, end);
+                }
+            },
+            methods: {
+                // 处理每页显示数量变化
+                handleSizeChange: function (size) {
+                    this.wordPageSize = size;
+                    // 如果当前页码超出了新的总页数，则重置为第一页
+                    const totalPages = Math.ceil(this.allWords.length / this.wordPageSize);
+                    if (this.wordCurrentPage > totalPages) {
+                        this.wordCurrentPage = 1;
+                    }
+                },
+
+                // 处理页码变化
+                handleCurrentChange: function (page) {
+                    this.wordCurrentPage = page;
+                },
+
+                showAllWords: async function () {
+                    // 加载语音列表
+                    await this.loadVoices();
+
+                    // 直接尝试访问allWords变量
+                    try {
+                        // 过滤掉空单词并根据课时筛选
+                        this.allWords = allWords.filter(word =>
+                            word && word.cn && word.jp &&
+                            (this.currentLesson === 0 || word.lesson === this.currentLesson)
+                        );
+                    } catch (e) {
+                        console.error("无法访问allWords变量:", e);
+
+                        // 如果无法访问allWords，则回退到从currentWords中提取
+                        const words = [];
+
+                        // 如果有wordPairs，从中提取单词
+                        if (this.wordPairs && Array.isArray(this.wordPairs)) {
+                            this.wordPairs.forEach(pair => {
+                                if (pair.word1 && !words.some(w => w.cn === pair.word1.cn && w.jp === pair.word1.jp)) {
+                                    words.push(pair.word1);
+                                }
+                                if (pair.word2 && !words.some(w => w.cn === pair.word2.cn && w.jp === pair.word2.jp)) {
+                                    words.push(pair.word2);
+                                }
+                            });
+                        }
+                        // 如果有currentWords，从中提取
+                        else if (this.currentWords && Array.isArray(this.currentWords)) {
+                            this.currentWords.forEach(word => {
+                                if (!words.some(w => w.cn === word.cn && w.jp === word.jp)) {
+                                    words.push(word);
+                                }
+                            });
+                        }
+
+                        this.allWords = words;
+                    }
+
+                    // 重置分页到第一页
+                    this.wordCurrentPage = 1;
+
+                    // 显示对话框
+                    this.dialogVisible = true;
+                },
+
+                startPracticeWithWord: function (word) {
+                    // 关闭对话框
+                    this.dialogVisible = false;
+
+                    // 重置测试
+                    if (this.resetTest) {
+                        this.resetTest();
+                    }
+
+                    // 创建一个只包含选定单词的测试
+                    const singleWordPair = {
+                        word1: word,
+                        index1: 0,
+                        word2: null,
+                        index2: null
+                    };
+
+                    // 设置wordPairs只包含这一个单词对
+                    this.wordPairs = [singleWordPair];
+                    this.currentWords = [word];
+
+                    // 重置用户答案和结果
+                    this.userAnswers = new Array(1).fill('');
+                    this.answerResults = [];
+                    this.answersChecked = false;
+
+                    // 显示通知
+                    this.$message({
+                        message: `正在练习单词: ${word.cn} - ${word.jp}`,
+                        type: 'info',
+                        duration: 2000
+                    });
+                },
+                singleJapanese: function (word) {
+                    // 确保word有index属性
+                    if (!word.hasOwnProperty('index')) {
+                        word.index = word.cn + '-' + word.jp; // 使用唯一标识
+                    }
+
+                    // 如果当前显示的是隐藏状态
+                    if (word.jp === this.hiddenWords) {
+                        // 恢复原始值
+                        word.jp = this.userMap.get(word.index) || word.jp;
+                    } else {
+                        // 存储原始值并设置为隐藏
+                        this.userMap.set(word.index, word.jp);
+                        word.jp = this.hiddenWords;
+                    }
+                },
+                // 加载可用语音列表
+                loadVoices: function () {
+                    return new Promise((resolve) => {
+                        const voices = window.speechSynthesis.getVoices();
+                        if (voices.length > 0) {
+                            this.availableVoices = voices.filter(v => v.lang === "ja-JP");
+                            // 尝试设置默认语音为Microsoft Ichiro
+                            const defaultVoice = this.availableVoices.find(v => v.name.includes('Microsoft Ichiro'));
+                            if (defaultVoice) {
+                                this.selectedVoice = defaultVoice;
+                            }
+                            resolve();
+                        } else {
+                            window.speechSynthesis.onvoiceschanged = () => {
+                                this.availableVoices = window.speechSynthesis.getVoices().filter(v => v.lang === "ja-JP");
+                                // 尝试设置默认语音为Microsoft Ichiro
+                                const defaultVoice = this.availableVoices.find(v => v.name.includes('Microsoft Ichiro'));
+                                if (defaultVoice) {
+                                    this.selectedVoice = defaultVoice;
+                                }
+                                resolve();
+                            };
+                        }
+                    });
+                },
+
+                speakJapanese: function (word) {
+                    const text = word.jp;
+                    const utter = new SpeechSynthesisUtterance(text);
+                    utter.lang = "ja-JP";
+
+                    // 使用选定的语音或默认日语语音
+                    if (this.selectedVoice) {
+                        utter.voice = this.selectedVoice;
+                    } else {
+                        const japaneseVoices = this.availableVoices.filter(v => v.lang === "ja-JP");
+                        if (japaneseVoices.length > 0) {
+                            utter.voice = japaneseVoices[0];
+                        }
+                    }
+
+                    window.speechSynthesis.speak(utter);
+                }
+            }
+        });
+    </script>
+
+    <!-- import custom JS -->
+    <script src="../js/japanese-chinese-learning.js"></script>
+</body>
+
+</html>
