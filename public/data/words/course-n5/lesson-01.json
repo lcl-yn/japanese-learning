@@ -1,0 +1,658 @@
+[
+  {
+    "index": 1,
+    "cn": "大学生",
+    "jp": "だいがくせい",
+    "jp_kanji": "大学生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 2,
+    "cn": "学生",
+    "jp": "がくせい",
+    "jp_kanji": "学生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 3,
+    "cn": "先生",
+    "jp": "せんせい",
+    "jp_kanji": "先生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 4,
+    "cn": "老师",
+    "jp": "きょうし",
+    "jp_kanji": "教師",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 5,
+    "cn": "大学",
+    "jp": "だいがく",
+    "jp_kanji": "大学",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 6,
+    "cn": "是,好,知道了,对的,引起对方注意的喊声~",
+    "jp": "はい",
+    "jp_kanji": "はい",
+    "part_of_speech": "感叹词",
+    "lesson": 1
+  },
+  {
+    "index": 7,
+    "cn": "不,不是",
+    "jp": "いいえ",
+    "jp_kanji": "いいえ",
+    "part_of_speech": "感叹词",
+    "lesson": 1
+  },
+  {
+    "index": 8,
+    "cn": "不,不是（口语方式，随便说说可以不允许写入作文中）",
+    "jp": "いや",
+    "jp_kanji": "嫌",
+    "part_of_speech": "感叹词",
+    "lesson": 1
+  },
+  {
+    "index": 9,
+    "cn": "不知道，不明白",
+    "jp": "わかりません",
+    "jp_kanji": "分かりません",
+    "part_of_speech": "动词",
+    "lesson": 1
+  },
+  {
+    "index": 10,
+    "cn": "中国人",
+    "jp": "ちゆうごくじん",
+    "jp_kanji": "中国人",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 11,
+    "cn": "日本人",
+    "jp": "にほんじん",
+    "jp_kanji": "日本人",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 12,
+    "cn": "韩国人",
+    "jp": "かんこくじん",
+    "jp_kanji": "韓国人",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 13,
+    "cn": "美国人(アメリカ人)",
+    "jp": "アメリカじん",
+    "jp_kanji": "アメリカ人",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 14,
+    "cn": "法国人(フランス人)",
+    "jp": "フランスじん",
+    "jp_kanji": "フランス人",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 15,
+    "cn": "先生,老师（广泛的尊称）",
+    "jp": "せんせい",
+    "jp_kanji": "先生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 16,
+    "cn": "老师(强调从事老师的职业身份)",
+    "jp": "きょうし",
+    "jp_kanji": "教師",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 17,
+    "cn": "茶",
+    "jp": "おちや",
+    "jp_kanji": "お茶",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 18,
+    "cn": "留学生",
+    "jp": "りゆうがくせい",
+    "jp_kanji": "留学生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 19,
+    "cn": "教授",
+    "jp": "きょうじゅ",
+    "jp_kanji": "教授",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 20,
+    "cn": "职员(社員)",
+    "jp": "しゃいん",
+    "jp_kanji": "社員",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 21,
+    "cn": "公司职员(会社員)",
+    "jp": "かいしゃいん",
+    "jp_kanji": "会社員",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 22,
+    "cn": "店员(店員)",
+    "jp": "てんいん",
+    "jp_kanji": "店員",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 23,
+    "cn": "进修生(研修生)",
+    "jp": "けんしゆうせい",
+    "jp_kanji": "研修生",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 24,
+    "cn": "企业(企業)",
+    "jp": "きぎょう",
+    "jp_kanji": "企業",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 25,
+    "cn": "(我)父亲",
+    "jp": "ちち",
+    "jp_kanji": "父",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 26,
+    "cn": "科长(課長)",
+    "jp": "かちょう",
+    "jp_kanji": "課長",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 27,
+    "cn": "总经理,社长(设镸)",
+    "jp": "しゃちょう",
+    "jp_kanji": "社長",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 28,
+    "cn": "迎接(出迎え)",
+    "jp": "でむかえ",
+    "jp_kanji": "出迎え",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 29,
+    "cn": "那个（あの人）",
+    "jp": "あのひと",
+    "jp_kanji": "あの人",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 30,
+    "cn": "我(私)",
+    "jp": "わたし",
+    "jp_kanji": "私",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 31,
+    "cn": "你",
+    "jp": "あなた",
+    "jp_kanji": "貴方",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 32,
+    "cn": "表示轻微感谢,再见,友好招呼",
+    "jp": "とうモ",
+    "jp_kanji": "どうも",
+    "part_of_speech": "感叹词",
+    "lesson": 1
+  },
+  {
+    "index": 33,
+    "cn": "哎,哎呀表示感叹词",
+    "jp": "あっ",
+    "jp_kanji": "あっ",
+    "part_of_speech": "感叹词",
+    "lesson": 1
+  },
+  {
+    "index": 34,
+    "cn": "李-专有名词姓氏",
+    "jp": "り",
+    "jp_kanji": "李",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 35,
+    "cn": "王-专有名词姓氏",
+    "jp": "おう",
+    "jp_kanji": "王",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 36,
+    "cn": "张(張)-专有名词姓氏",
+    "jp": "ちよお",
+    "jp_kanji": "張",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 37,
+    "cn": "森-专有名词姓氏",
+    "jp": "もり",
+    "jp_kanji": "森",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 38,
+    "cn": "林-专有名词姓氏",
+    "jp": "はやし",
+    "jp_kanji": "林",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 39,
+    "cn": "小野-专有名词姓氏",
+    "jp": "おの",
+    "jp_kanji": "小野",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 40,
+    "cn": "吉田-专有名词姓氏",
+    "jp": "よしだ",
+    "jp_kanji": "吉田",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 41,
+    "cn": "田中-专有名词姓氏",
+    "jp": "たなか",
+    "jp_kanji": "田中",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 42,
+    "cn": "中村-专有名词姓氏",
+    "jp": "なかむら",
+    "jp_kanji": "中村",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 43,
+    "cn": "太郎-专有名词姓氏",
+    "jp": "たるう",
+    "jp_kanji": "太郎",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 44,
+    "cn": "金-专有名词姓氏",
+    "jp": "キム",
+    "jp_kanji": "金",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 45,
+    "cn": "迪蓬-专有名词姓氏",
+    "jp": "デュボン",
+    "jp_kanji": "デュボン",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 46,
+    "cn": "Smith史密斯-专有名词姓氏",
+    "jp": "スミス",
+    "jp_kanji": "スミス",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 47,
+    "cn": "Jsonhnson约翰逊-专有名词姓氏",
+    "jp": "ジョンソン",
+    "jp_kanji": "ジョンソン",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 48,
+    "cn": "中国-专有名词",
+    "jp": "ちゆうごく",
+    "jp_kanji": "中国",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 49,
+    "cn": "东京大学(東京大学)-专有名词",
+    "jp": "とうきょうだいがく",
+    "jp_kanji": "東京大学",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 50,
+    "cn": "北京大学-专有名词",
+    "jp": "ペキンだいがく",
+    "jp_kanji": "北京大学",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 51,
+    "cn": "JC策划公司(JC企画)-专有名词",
+    "jp": "ジインーシーきかく",
+    "jp_kanji": "JC企画",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 52,
+    "cn": "北京旅行社-专有名词",
+    "jp": "ペキンりょこうしや",
+    "jp_kanji": "北京旅行社",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 53,
+    "cn": "日中商事-专有名词",
+    "jp": "にっちゆうしょうじ",
+    "jp_kanji": "日中商事",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 54,
+    "cn": "你好",
+    "jp": "こんにちは",
+    "jp_kanji": "今日は",
+    "part_of_speech": "问候语",
+    "lesson": 1
+  },
+  {
+    "index": 55,
+    "cn": "对不起,请问",
+    "jp": "すみません",
+    "jp_kanji": "済みません",
+    "part_of_speech": "寒暄语",
+    "lesson": 1
+  },
+  {
+    "index": 56,
+    "cn": "请",
+    "jp": "どうぞ",
+    "jp_kanji": "どうぞ",
+    "part_of_speech": "副词",
+    "lesson": 1
+  },
+  {
+    "index": 57,
+    "cn": "请多关照",
+    "jp": "よろしくあねがいします",
+    "jp_kanji": "宜しくお願いします",
+    "part_of_speech": "寒暄语",
+    "lesson": 1
+  },
+  {
+    "index": 58,
+    "cn": "初期见面",
+    "jp": "はじぬまして",
+    "jp_kanji": "初めまして",
+    "part_of_speech": "寒暄语",
+    "lesson": 1
+  },
+  {
+    "index": 59,
+    "cn": "我才要(请您),我这边也是,",
+    "jp": "こちらこそ",
+    "jp_kanji": "こちらこそ",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 60,
+    "cn": "是,是这样",
+    "jp": "そうてす",
+    "jp_kanji": "そうです",
+    "part_of_speech": "副词",
+    "lesson": 1
+  },
+  {
+    "index": 61,
+    "cn": "不是",
+    "jp": "ちがいます",
+    "jp_kanji": "違います",
+    "part_of_speech": "动词",
+    "lesson": 1
+  },
+  {
+    "index": 62,
+    "cn": "不知道",
+    "jp": "わかりませい",
+    "jp_kanji": "分かりません",
+    "part_of_speech": "动词",
+    "lesson": 1
+  },
+  {
+    "index": 63,
+    "cn": "非常,很",
+    "jp": "どうも",
+    "jp_kanji": "どうも",
+    "part_of_speech": "副词",
+    "lesson": 1
+  },
+  {
+    "index": 64,
+    "cn": "实在对不起",
+    "jp": "どうもすみませい",
+    "jp_kanji": "どうも済みません",
+    "part_of_speech": "寒暄语",
+    "lesson": 1
+  },
+  {
+    "index": 65,
+    "cn": "酱,君",
+    "jp": "～ちん／～ちやん／～くん（君）",
+    "jp_kanji": "～ちゃん／～くん",
+    "part_of_speech": "后缀",
+    "lesson": 1
+  },
+  {
+    "index": 66,
+    "cn": "八百屋,蔬菜水果店",
+    "jp": "やおや",
+    "jp_kanji": "八百屋",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 67,
+    "cn": "米粥",
+    "jp": "おかゆ",
+    "jp_kanji": "お粥",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 68,
+    "cn": "半夜",
+    "jp": "よなか",
+    "jp_kanji": "夜中",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 69,
+    "cn": "休息",
+    "jp": "やすみ",
+    "jp_kanji": "休み",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 70,
+    "cn": "请给我",
+    "jp": "ください",
+    "jp_kanji": "下さい",
+    "part_of_speech": "动词",
+    "lesson": 1
+  },
+  {
+    "index": 71,
+    "cn": "茶",
+    "jp": "おちゃ",
+    "jp_kanji": "お茶",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 72,
+    "cn": "水",
+    "jp": "みず",
+    "jp_kanji": "水",
+    "part_of_speech": "名词",
+    "lesson": 1
+  },
+  {
+    "index": 73,
+    "cn": "我(私)-多数情况下用这个",
+    "jp": "わたし",
+    "jp_kanji": "私",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 74,
+    "cn": "我-可爱女性一般用这个",
+    "jp": "ぁたし",
+    "jp_kanji": "あたし",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 75,
+    "cn": "我-彪悍男性用这个",
+    "jp": "おれ",
+    "jp_kanji": "俺",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 76,
+    "cn": "我-可爱男性用这个",
+    "jp": "ぼく",
+    "jp_kanji": "僕",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 77,
+    "cn": "你-恋人或夫妻称呼",
+    "jp": "あなた",
+    "jp_kanji": "貴方",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 78,
+    "cn": "你(君)-友好关系称呼你",
+    "jp": "きみ",
+    "jp_kanji": "君",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 79,
+    "cn": "你-上下级雇佣关系",
+    "jp": "まえ",
+    "jp_kanji": "前",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 80,
+    "cn": "他,那个人(あの人)",
+    "jp": "あのひと",
+    "jp_kanji": "あの人",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 81,
+    "cn": "他(彼)",
+    "jp": "かね",
+    "jp_kanji": "彼",
+    "part_of_speech": "代词",
+    "lesson": 1
+  },
+  {
+    "index": 82,
+    "cn": "她(彼女)",
+    "jp": "かのじょ",
+    "jp_kanji": "彼女",
+    "part_of_speech": "代词",
+    "lesson": 1
+  }
+]

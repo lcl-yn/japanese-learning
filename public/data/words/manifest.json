@@ -1,0 +1,20 @@
+{
+  "courses": [
+    {
+      "id": "n5",
+      "name": "N5 基础",
+      "lessons": [
+        {
+          "id": 1,
+          "name": "第1课",
+          "file": "course-n5/lesson-01.json"
+        },
+        {
+          "id": 2,
+          "name": "第2课",
+          "file": "course-n5/lesson-02.json"
+        }
+      ]
+    }
+  ]
+}

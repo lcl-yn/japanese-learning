@@ -1,0 +1,34 @@
+[
+  {
+    "index": 83,
+    "cn": "那位",
+    "jp": "どなた",
+    "jp_kanji": "誰",
+    "part_of_speech": "代词",
+    "lesson": 2
+  },
+  {
+    "index": 84,
+    "cn": "钥匙,锁",
+    "jp": "かぎ",
+    "jp_kanji": "鍵",
+    "part_of_speech": "名词",
+    "lesson": 2
+  },
+  {
+    "index": 85,
+    "cn": "车",
+    "jp": "くるま",
+    "jp_kanji": "車",
+    "part_of_speech": "名词",
+    "lesson": 2
+  },
+  {
+    "index": 86,
+    "cn": "谢谢",
+    "jp": "ありがとうございます",
+    "jp_kanji": "谢谢",
+    "part_of_speech": "名词",
+    "lesson": 2
+  }
+]
