@@ -1,6 +1,96 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import LessonFilter from '@/components/LessonFilter.vue'
+import PracticeTable from '@/components/PracticeTable.vue'
+import { useWordsStore } from '@/stores/words'
+
+const wordsStore = useWordsStore()
+
+const cardTitle = computed(() => (wordsStore.mode === 'cn2jp' ? '看中文写日语' : '看日语写中文'))
+
+const accuracy = computed(() => {
+  const total = wordsStore.currentWords.length
+  if (total === 0) return 0
+  return Math.round((wordsStore.correctCount / total) * 100)
+})
+
+function onModeChange(value: string | number | boolean | undefined) {
+  if (value === 'cn2jp' || value === 'jp2cn') {
+    wordsStore.setMode(value)
+  }
+}
 </script>
 
 <template>
-  <h2>练习</h2>
+  <div class="practice-view">
+    <div class="mode-switch">
+      <el-radio-group :model-value="wordsStore.mode" @change="onModeChange">
+        <el-radio-button value="cn2jp">看中文写日语</el-radio-button>
+        <el-radio-button value="jp2cn">看日语写中文</el-radio-button>
+      </el-radio-group>
+      <LessonFilter />
+    </div>
+
+    <el-card>
+      <template #header>
+        <div class="card-header">
+          <span>{{ cardTitle }}</span>
+          <el-button type="primary" @click="wordsStore.checkAnswers()">提交所有答案</el-button>
+        </div>
+      </template>
+
+      <PracticeTable />
+
+      <div v-if="wordsStore.answersChecked" class="new-test">
+        <el-button type="primary" @click="wordsStore.startTest(16)">开始新测试</el-button>
+      </div>
+    </el-card>
+
+    <el-card v-if="wordsStore.answersChecked" class="result-card">
+      <template #header>
+        <div class="result-header">
+          <span>测试结果统计</span>
+          <span>正确率: {{ accuracy }}%</span>
+          <span>正确: {{ wordsStore.correctCount }} / 总数: {{ wordsStore.currentWords.length }}</span>
+        </div>
+      </template>
+    </el-card>
+  </div>
 </template>
+
+<style scoped>
+.mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header,
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.result-header {
+  justify-content: flex-start;
+}
+
+.new-test {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.result-card {
+  margin-top: 20px;
+}
+
+.result-card :deep(.el-card__body) {
+  display: none;
+  padding: 0;
+}
+</style>
