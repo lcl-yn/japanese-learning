@@ -1,3 +1,5 @@
+# https://japanese-learning.1141193930.workers.dev/practice
+
 # 中日语言学习
 
 Vite + Vue 3 + TypeScript 日语练习应用。词库按课程分片放在 `public/data/words/`，启动时读取 `manifest.json`，并行加载各课 JSON，并由 `wordsLoader` 注入 `courseId`。练习、单词本、50音图共用同一份 Pinia 词库。
