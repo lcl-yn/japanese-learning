@@ -10,7 +10,7 @@ export type KanaRow = Partial<Record<KanaColumn, KanaCell | null>>
 
 export const kanaColumns: KanaColumn[] = ['a', 'i', 'u', 'e', 'o']
 
-/** 平假名 50 音图，与 legacy kana 数据一致 */
+/** 平假名 50 音图 */
 export const hiraganaChart: KanaRow[] = [
   { a: { hiragana: 'あ', katakana: 'ア', romaji: 'a' }, i: { hiragana: 'い', katakana: 'イ', romaji: 'i' }, u: { hiragana: 'う', katakana: 'ウ', romaji: 'u' }, e: { hiragana: 'え', katakana: 'エ', romaji: 'e' }, o: { hiragana: 'お', katakana: 'オ', romaji: 'o' } },
   { a: { hiragana: 'か', katakana: 'カ', romaji: 'ka' }, i: { hiragana: 'き', katakana: 'キ', romaji: 'ki' }, u: { hiragana: 'く', katakana: 'ク', romaji: 'ku' }, e: { hiragana: 'け', katakana: 'ケ', romaji: 'ke' }, o: { hiragana: 'こ', katakana: 'コ', romaji: 'ko' } },
@@ -25,7 +25,7 @@ export const hiraganaChart: KanaRow[] = [
   { a: { hiragana: 'ん', katakana: 'ン', romaji: 'n' }, i: null, u: null, e: null, o: null },
 ]
 
-/** 拗音，列位与 legacy youonChart 一致（きゅ 等落在 i 列） */
+/** 拗音，きゅ 等落在 i 列 */
 export const youonChart: KanaRow[] = [
   { a: { hiragana: 'きゃ', katakana: 'キャ', romaji: 'kya' }, i: { hiragana: 'きゅ', katakana: 'キュ', romaji: 'kyu' }, u: null, e: null, o: { hiragana: 'きょ', katakana: 'キョ', romaji: 'kyo' } },
   { a: { hiragana: 'しゃ', katakana: 'シャ', romaji: 'sha' }, i: { hiragana: 'しゅ', katakana: 'シュ', romaji: 'shu' }, u: null, e: null, o: { hiragana: 'しょ', katakana: 'ショ', romaji: 'sho' } },

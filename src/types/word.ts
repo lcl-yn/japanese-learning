@@ -1,8 +1,8 @@
 export interface Word {
-  index: number
   cn: string
   jp: string
-  jp_kanji: string
+  jp_write: string
+  describe: string
   part_of_speech: string
   lesson: number
   courseId: string

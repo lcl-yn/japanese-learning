@@ -31,15 +31,17 @@ npm run build
 ```json
 [
   {
-    "index": 1,
     "cn": "明天",
     "jp": "あした",
-    "jp_kanji": "明日",
+    "jp_write": "明日",
+    "describe": "",
     "part_of_speech": "名词",
     "lesson": 3
   }
 ]
 ```
+
+`describe` 默认是空字符串。看中文写日语时，这条说明去掉首尾空白后还有内容，就在中文下一行显示「单词说明：」加这段说明；空字符串或 null 时只显示中文。
 
 3. 在 `public/data/words/manifest.json` 的对应课程下登记该课。`file` 相对 `public/data/words/`。
 
@@ -62,7 +64,3 @@ npm run build
 ## 语音
 
 单词本和 50音图使用浏览器 `speechSynthesis`，下拉只列出 `lang` 为 `ja-JP` 的语音。系统没有日语语音时下拉为空，朗读仍以 `ja-JP` 发出，实际发音取决于本机语音引擎。
-
-## 旧版代码
-
-Vue 2 单页备份在 `legacy/`（`legacy/element-ui/` 与 `legacy/js/`），只作对照，不参与当前构建。

@@ -22,7 +22,9 @@ const hiddenKey = ref<string[]>([])
 
 const paginatedWords = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value
-  return wordsStore.filteredWords.slice(start, start + pageSize.value)
+  return wordsStore.filteredWords
+    .map((word, order) => ({ word, order }))
+    .slice(start, start + pageSize.value)
 })
 
 watch(
@@ -37,21 +39,21 @@ watch(pageSize, () => {
   if (currentPage.value > totalPages) currentPage.value = 1
 })
 
-function rowKey(word: Word) {
-  return `${word.courseId}:${word.lesson}:${word.index}`
+function rowKey(order: number) {
+  return `${wordsStore.currentCourseId}:${wordsStore.currentLessonId}:${order}`
 }
 
 function formatChinese(word: Word) {
-  return `${word.cn}------${word.part_of_speech}------${word.jp_kanji}`
+  return `${word.cn}------${word.part_of_speech}------${word.jp_write}`
 }
 
-function isRowHidden(word: Word) {
-  return hiddenKey.value.includes(rowKey(word))
+function isRowHidden(order: number) {
+  return hiddenKey.value.includes(rowKey(order))
 }
 
-function toggleHide(word: Word) {
-  const key = rowKey(word)
-  if (isRowHidden(word)) {
+function toggleHide(order: number) {
+  const key = rowKey(order)
+  if (isRowHidden(order)) {
     hiddenKey.value = hiddenKey.value.filter((item) => item !== key)
     return
   }
@@ -68,7 +70,7 @@ function onSpeak(word: Word) {
     <el-table :data="paginatedWords" border style="width: 100%">
       <el-table-column label="中文" align="center">
         <template #default="{ row }">
-          <span v-if="showChinese">{{ formatChinese(row) }}</span>
+          <span v-if="showChinese">{{ formatChinese(row.word) }}</span>
           <span v-else class="hidden-text">***隐藏***</span>
         </template>
       </el-table-column>
@@ -76,13 +78,13 @@ function onSpeak(word: Word) {
       <el-table-column label="日语" align="center">
         <template #default="{ row }">
           <div v-if="showJapanese" class="jp-cell">
-            <span class="jp-text" :class="{ 'hidden-text': isRowHidden(row) }">
-              {{ isRowHidden(row) ? '***隐藏***' : row.jp }}
+            <span class="jp-text" :class="{ 'hidden-text': isRowHidden(row.order) }">
+              {{ isRowHidden(row.order) ? '***隐藏***' : row.word.jp }}
             </span>
             <div class="jp-actions">
-              <el-button size="small" @click="onSpeak(row)">朗读</el-button>
-              <el-button size="small" @click="toggleHide(row)">
-                {{ isRowHidden(row) ? '显示' : '隐藏' }}
+              <el-button size="small" @click="onSpeak(row.word)">朗读</el-button>
+              <el-button size="small" @click="toggleHide(row.order)">
+                {{ isRowHidden(row.order) ? '显示' : '隐藏' }}
               </el-button>
             </div>
           </div>

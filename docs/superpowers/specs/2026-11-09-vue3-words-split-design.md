@@ -105,10 +105,10 @@ japanese-learning/
 ```json
 [
   {
-    "index": 1,
     "cn": "大学生",
     "jp": "だいがくせい",
-    "jp_kanji": "大学生",
+    "jp_write": "大学生",
+    "describe": "",
     "part_of_speech": "名词",
     "lesson": 1
   }
@@ -127,10 +127,10 @@ japanese-learning/
 
 ```ts
 export interface Word {
-  index: number
   cn: string
   jp: string
-  jp_kanji: string
+  jp_write: string
+  describe: string
   part_of_speech: string
   lesson: number
   courseId: string // 加载时由 loader 注入，JSON 文件内可不写

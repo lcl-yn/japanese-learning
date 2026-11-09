@@ -3,7 +3,13 @@ import { selectRandomWordsWithWeights, wordKey } from './weightedRandom'
 import type { Word } from '@/types/word'
 
 const w = (cn: string, jp: string, lesson = 1): Word => ({
-  index: 1, cn, jp, jp_kanji: cn, part_of_speech: '名词', lesson, courseId: 'n5',
+  cn,
+  jp,
+  jp_write: cn,
+  describe: '',
+  part_of_speech: '名词',
+  lesson,
+  courseId: 'n5',
 })
 
 describe('wordKey', () => {

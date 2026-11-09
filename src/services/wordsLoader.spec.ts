@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { loadAllWords } from './wordsLoader'
-import type { WordsManifest, Word } from '@/types/word'
+import type { WordsManifest } from '@/types/word'
 
 describe('loadAllWords', () => {
   beforeEach(() => {
@@ -23,11 +23,26 @@ describe('loadAllWords', () => {
         },
       ],
     }
-    const lesson1: Omit<Word, 'courseId'>[] = [
-      { index: 1, cn: '学生', jp: 'がくせい', jp_kanji: '学生', part_of_speech: '名词', lesson: 1 },
+    const lesson1 = [
+      {
+        index: 9,
+        cn: '学生',
+        jp: 'がくせい',
+        jp_write: '学生',
+        describe: null,
+        part_of_speech: '名词',
+        lesson: 1,
+      },
     ]
-    const lesson2: Omit<Word, 'courseId'>[] = [
-      { index: 2, cn: '车', jp: 'くるま', jp_kanji: '車', part_of_speech: '名词', lesson: 2 },
+    const lesson2 = [
+      {
+        cn: '车',
+        jp: 'くるま',
+        jp_write: '車',
+        describe: '交通工具',
+        part_of_speech: '名词',
+        lesson: 2,
+      },
     ]
 
     const fetchMock = fetch as unknown as ReturnType<typeof vi.fn>
@@ -45,9 +60,26 @@ describe('loadAllWords', () => {
     })
 
     const result = await loadAllWords('/data/words')
-    expect(result.words).toHaveLength(2)
-    expect(result.words[0].courseId).toBe('n5')
-    expect(result.words[1].cn).toBe('车')
+    expect(result.words).toEqual([
+      {
+        cn: '学生',
+        jp: 'がくせい',
+        jp_write: '学生',
+        describe: '',
+        part_of_speech: '名词',
+        lesson: 1,
+        courseId: 'n5',
+      },
+      {
+        cn: '车',
+        jp: 'くるま',
+        jp_write: '車',
+        describe: '交通工具',
+        part_of_speech: '名词',
+        lesson: 2,
+        courseId: 'n5',
+      },
+    ])
     expect(result.manifest.courses[0].id).toBe('n5')
   })
 })

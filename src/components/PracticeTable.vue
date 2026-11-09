@@ -3,6 +3,8 @@ import { Check, Close } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
+import { visibleDescribe } from '@/utils/wordDisplay'
+import { wordKey } from '@/utils/weightedRandom'
 
 const wordsStore = useWordsStore()
 
@@ -13,11 +15,16 @@ const answerPlaceholder = computed(() => (wordsStore.mode === 'cn2jp' ? '请输�
 /** Element Plus 动态列 v-if 切换时会残留旧单元格 DOM，用 key 强制重建表格 */
 const tableKey = computed(
   () =>
-    `${wordsStore.mode}-${wordsStore.answersChecked}-${wordsStore.currentWords.map((w) => w.index).join(',')}`,
+    `${wordsStore.mode}-${wordsStore.answersChecked}-${wordsStore.currentWords.map((word) => wordKey(word)).join(',')}`,
 )
 
 function promptOf(word: Word) {
   return wordsStore.mode === 'cn2jp' ? word.cn : word.jp
+}
+
+function describeOf(word: Word) {
+  if (wordsStore.mode !== 'cn2jp') return ''
+  return visibleDescribe(word.describe)
 }
 
 function expectedOf(word: Word) {
@@ -33,7 +40,10 @@ function setAnswer(index: number, value: string) {
   <el-table :key="tableKey" :data="wordsStore.wordPairs" style="width: 100%">
     <el-table-column :label="promptLabel">
       <template #default="{ row }">
-        <span v-if="row.word1">{{ promptOf(row.word1) }}</span>
+        <div v-if="row.word1" class="prompt-cell">
+          <div>{{ promptOf(row.word1) }}</div>
+          <div v-if="describeOf(row.word1)" class="prompt-describe">单词说明：{{ describeOf(row.word1) }}</div>
+        </div>
       </template>
     </el-table-column>
 
@@ -64,7 +74,10 @@ function setAnswer(index: number, value: string) {
 
     <el-table-column :label="promptLabel">
       <template #default="{ row }">
-        <span v-if="row.word2">{{ promptOf(row.word2) }}</span>
+        <div v-if="row.word2" class="prompt-cell">
+          <div>{{ promptOf(row.word2) }}</div>
+          <div v-if="describeOf(row.word2)" class="prompt-describe">单词说明：{{ describeOf(row.word2) }}</div>
+        </div>
       </template>
     </el-table-column>
 
@@ -109,5 +122,13 @@ function setAnswer(index: number, value: string) {
 .incorrect :deep(.el-icon) {
   vertical-align: middle;
   margin-right: 2px;
+}
+
+.prompt-describe {
+  margin-top: 4px;
+  color: #909399;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre-line;
 }
 </style>

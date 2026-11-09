@@ -64,7 +64,7 @@ export function findVoiceByUri(voiceURI?: string | null): SpeechSynthesisVoice |
 }
 
 /**
- * 朗读日语。行为对齐 legacy：
+ * 朗读日语。
  * - 有明确选中的 voiceURI 时才绑定 voice
  * - 否则只设 lang=ja-JP，让浏览器自行选引擎（可走在线日语 TTS）
  * - 绝不把中文 voice 强加给日语文本
@@ -92,6 +92,6 @@ export function speakJapanese(text: string, voiceURI?: string | null) {
     if (currentUtterance === utter) currentUtterance = null
   }
 
-  // 与 legacy 一致：不先 cancel，避免部分 Chromium 把紧随其后的 speak 吞掉
+  // 不先 cancel，避免部分 Chromium 把紧随其后的 speak 吞掉
   window.speechSynthesis.speak(utter)
 }

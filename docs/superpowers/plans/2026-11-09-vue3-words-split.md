@@ -172,10 +172,10 @@ git commit -m "chore: scaffold Vue3 Vite TS and move legacy code"
 
 ```ts
 export interface Word {
-  index: number
   cn: string
   jp: string
-  jp_kanji: string
+  jp_write: string
+  describe: string
   part_of_speech: string
   lesson: number
   courseId: string
@@ -229,10 +229,10 @@ describe('loadAllWords', () => {
       ],
     }
     const lesson1: Omit<Word, 'courseId'>[] = [
-      { index: 1, cn: '学生', jp: 'がくせい', jp_kanji: '学生', part_of_speech: '名词', lesson: 1 },
+      { cn: '学生', jp: 'がくせい', jp_write: '学生', describe: '', part_of_speech: '名词', lesson: 1 },
     ]
     const lesson2: Omit<Word, 'courseId'>[] = [
-      { index: 2, cn: '车', jp: 'くるま', jp_kanji: '車', part_of_speech: '名词', lesson: 2 },
+      { cn: '车', jp: 'くるま', jp_write: '車', describe: '', part_of_speech: '名词', lesson: 2 },
     ]
 
     const fetchMock = fetch as unknown as ReturnType<typeof vi.fn>
@@ -312,7 +312,7 @@ import { selectRandomWordsWithWeights, wordKey } from './weightedRandom'
 import type { Word } from '@/types/word'
 
 const w = (cn: string, jp: string, lesson = 1): Word => ({
-  index: 1, cn, jp, jp_kanji: cn, part_of_speech: '名词', lesson, courseId: 'n5',
+  cn, jp, jp_write: cn, describe: '', part_of_speech: '名词', lesson, courseId: 'n5',
 })
 
 describe('wordKey', () => {
@@ -446,10 +446,10 @@ const byLesson = new Map()
 for (const w of valid) {
   const list = byLesson.get(w.lesson) || []
   list.push({
-    index: w.index,
     cn: w.cn,
     jp: w.jp,
-    jp_kanji: w.jp_kanji ?? '',
+    jp_write: w.jp_write ?? '',
+    describe: typeof w.describe === 'string' ? w.describe : '',
     part_of_speech: w.part_of_speech ?? '',
     lesson: w.lesson,
   })

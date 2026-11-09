@@ -15,7 +15,7 @@ onMounted(async () => {
     voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
     voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
   hasJapaneseVoice.value = Boolean(japanese)
-  // 没有日语引擎时保持空选，朗读走 lang=ja-JP（与 legacy 一致）
+  // 没有日语引擎时保持空选，朗读走 lang=ja-JP
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
 })
 </script>
