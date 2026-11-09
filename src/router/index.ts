@@ -1,14 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Placeholder from '@/views/Placeholder.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Placeholder,
-    },
+    { path: '/', redirect: '/practice' },
+    { path: '/practice', name: 'practice', component: () => import('@/views/PracticeView.vue') },
+    { path: '/words', name: 'words', component: () => import('@/views/WordsView.vue') },
+    { path: '/kana', name: 'kana', component: () => import('@/views/KanaView.vue') },
   ],
 })
 
