@@ -10,6 +10,12 @@ const promptLabel = computed(() => (wordsStore.mode === 'cn2jp' ? '中文' : '�
 const answerLabel = computed(() => (wordsStore.mode === 'cn2jp' ? '日语' : '中文'))
 const answerPlaceholder = computed(() => (wordsStore.mode === 'cn2jp' ? '请输入日语' : '请输入中文'))
 
+/** Element Plus 动态列 v-if 切换时会残留旧单元格 DOM，用 key 强制重建表格 */
+const tableKey = computed(
+  () =>
+    `${wordsStore.mode}-${wordsStore.answersChecked}-${wordsStore.currentWords.map((w) => w.index).join(',')}`,
+)
+
 function promptOf(word: Word) {
   return wordsStore.mode === 'cn2jp' ? word.cn : word.jp
 }
@@ -24,7 +30,7 @@ function setAnswer(index: number, value: string) {
 </script>
 
 <template>
-  <el-table :data="wordsStore.wordPairs" style="width: 100%">
+  <el-table :key="tableKey" :data="wordsStore.wordPairs" style="width: 100%">
     <el-table-column :label="promptLabel">
       <template #default="{ row }">
         <span v-if="row.word1">{{ promptOf(row.word1) }}</span>

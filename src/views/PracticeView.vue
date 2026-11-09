@@ -8,23 +8,22 @@ const wordsStore = useWordsStore()
 
 const cardTitle = computed(() => (wordsStore.mode === 'cn2jp' ? '看中文写日语' : '看日语写中文'))
 
+const modeModel = computed({
+  get: () => wordsStore.mode,
+  set: (value: 'cn2jp' | 'jp2cn') => wordsStore.setMode(value),
+})
+
 const accuracy = computed(() => {
   const total = wordsStore.currentWords.length
   if (total === 0) return 0
   return Math.round((wordsStore.correctCount / total) * 100)
 })
-
-function onModeChange(value: string | number | boolean | undefined) {
-  if (value === 'cn2jp' || value === 'jp2cn') {
-    wordsStore.setMode(value)
-  }
-}
 </script>
 
 <template>
   <div class="practice-view">
     <div class="mode-switch">
-      <el-radio-group :model-value="wordsStore.mode" @change="onModeChange">
+      <el-radio-group v-model="modeModel">
         <el-radio-button value="cn2jp">看中文写日语</el-radio-button>
         <el-radio-button value="jp2cn">看日语写中文</el-radio-button>
       </el-radio-group>

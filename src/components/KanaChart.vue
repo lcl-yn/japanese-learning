@@ -6,9 +6,9 @@ const props = withDefaults(
   defineProps<{
     title: string
     rows: KanaRow[]
-    voice?: SpeechSynthesisVoice | null
+    voiceUri?: string
   }>(),
-  { voice: null },
+  { voiceUri: '' },
 )
 
 function cellAt(row: KanaRow, column: KanaColumn): KanaCell | null {
@@ -18,7 +18,7 @@ function cellAt(row: KanaRow, column: KanaColumn): KanaCell | null {
 function onSpeakCell(row: KanaRow, column: KanaColumn, script: 'hiragana' | 'katakana') {
   const cell = cellAt(row, column)
   if (!cell) return
-  speakJapanese(cell[script], props.voice)
+  speakJapanese(cell[script], props.voiceUri)
 }
 </script>
 

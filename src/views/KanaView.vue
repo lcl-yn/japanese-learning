@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import KanaChart from '@/components/KanaChart.vue'
 import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
-import { loadVoices } from '@/utils/speech'
+import { loadVoices, type VoiceOption } from '@/utils/speech'
 
-const japaneseVoices = ref<SpeechSynthesisVoice[]>([])
+const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
-
-const selectedVoice = computed(
-  () => japaneseVoices.value.find((voice) => voice.voiceURI === selectedVoiceUri.value) ?? null,
-)
+const hasJapaneseVoice = ref(false)
 
 onMounted(async () => {
   const voices = await loadVoices()
-  japaneseVoices.value = voices.filter((voice) => voice.lang === 'ja-JP')
-  const preferred =
-    japaneseVoices.value.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
-    japaneseVoices.value[0]
-  if (preferred) selectedVoiceUri.value = preferred.voiceURI
+  voiceOptions.value = voices
+  const japanese =
+    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
+    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
+  hasJapaneseVoice.value = Boolean(japanese)
+  // 没有日语引擎时保持空选，朗读走 lang=ja-JP（与 legacy 一致）
+  selectedVoiceUri.value = japanese?.voiceURI ?? ''
 })
 </script>
 
@@ -27,20 +26,28 @@ onMounted(async () => {
     <div class="toolbar">
       <div class="voice">
         <span>语音选择:</span>
-        <el-select v-model="selectedVoiceUri" class="voice-select" placeholder="选择语音" clearable>
+        <el-select
+          v-model="selectedVoiceUri"
+          class="voice-select"
+          :placeholder="hasJapaneseVoice ? '选择语音' : '自动（日语）'"
+          clearable
+        >
           <el-option
-            v-for="voice in japaneseVoices"
+            v-for="voice in voiceOptions"
             :key="voice.voiceURI"
-            :label="voice.name"
+            :label="`${voice.name} (${voice.lang})`"
             :value="voice.voiceURI"
           />
         </el-select>
       </div>
     </div>
+    <p v-if="!hasJapaneseVoice" class="voice-hint">
+      未检测到本机日语语音包，将使用浏览器日语朗读；也可手动选中文语音（发音可能不准确）。
+    </p>
 
-    <KanaChart title="基本50音" :rows="hiraganaChart" :voice="selectedVoice" />
-    <KanaChart title="拗音" :rows="youonChart" :voice="selectedVoice" />
-    <KanaChart title="浊音半浊音" :rows="dakuonChart" :voice="selectedVoice" />
+    <KanaChart title="基本50音" :rows="hiraganaChart" :voice-uri="selectedVoiceUri" />
+    <KanaChart title="拗音" :rows="youonChart" :voice-uri="selectedVoiceUri" />
+    <KanaChart title="浊音半浊音" :rows="dakuonChart" :voice-uri="selectedVoiceUri" />
   </div>
 </template>
 
@@ -59,6 +66,13 @@ onMounted(async () => {
 }
 
 .voice-select {
-  width: 200px;
+  width: 280px;
+}
+
+.voice-hint {
+  margin: 0 0 16px;
+  color: #909399;
+  font-size: 13px;
+  text-align: right;
 }
 </style>

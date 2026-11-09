@@ -8,9 +8,9 @@ const props = withDefaults(
   defineProps<{
     showChinese: boolean
     showJapanese: boolean
-    voice?: SpeechSynthesisVoice | null
+    voiceUri?: string
   }>(),
-  { voice: null },
+  { voiceUri: '' },
 )
 
 const pageSizeOptions = [10, 20, 30, 40, 50]
@@ -59,7 +59,7 @@ function toggleHide(word: Word) {
 }
 
 function onSpeak(word: Word) {
-  speakJapanese(word.jp, props.voice)
+  speakJapanese(word.jp, props.voiceUri)
 }
 </script>
 
