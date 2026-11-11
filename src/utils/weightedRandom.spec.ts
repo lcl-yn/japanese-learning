@@ -9,7 +9,8 @@ const w = (cn: string, jp: string, lesson = 1): Word => ({
   describe: '',
   part_of_speech: '名词',
   lesson,
-  courseId: 'n5',
+  unit: 1,
+  bookId: 'beginner-upper',
 })
 
 describe('wordKey', () => {

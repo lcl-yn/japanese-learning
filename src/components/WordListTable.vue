@@ -10,8 +10,11 @@ const props = withDefaults(
     showChinese: boolean
     showJapanese: boolean
     voiceUri?: string
+    /** 传入时用这批词，不再跟练习当前课走。 */
+    words?: Word[]
+    scopeKey?: string
   }>(),
-  { voiceUri: '' },
+  { voiceUri: '', scopeKey: '' },
 )
 
 const pageSizeOptions = [10, 20, 30, 40, 50]
@@ -21,27 +24,32 @@ const currentPage = ref(1)
 const pageSize = ref(10)
 const hiddenKey = ref<string[]>([])
 
+const sourceWords = computed(() => props.words ?? wordsStore.filteredWords)
+
+const listScope = computed(() =>
+  props.words
+    ? props.scopeKey
+    : `${wordsStore.currentBookId}:${wordsStore.currentUnitId}:${wordsStore.currentLessonId}`,
+)
+
 const paginatedWords = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value
-  return wordsStore.filteredWords
+  return sourceWords.value
     .map((word, order) => ({ word, order }))
     .slice(start, start + pageSize.value)
 })
 
-watch(
-  () => [wordsStore.currentCourseId, wordsStore.currentLessonId],
-  () => {
-    currentPage.value = 1
-  },
-)
+watch(listScope, () => {
+  currentPage.value = 1
+})
 
 watch(pageSize, () => {
-  const totalPages = Math.max(1, Math.ceil(wordsStore.filteredWords.length / pageSize.value))
+  const totalPages = Math.max(1, Math.ceil(sourceWords.value.length / pageSize.value))
   if (currentPage.value > totalPages) currentPage.value = 1
 })
 
 function rowKey(order: number) {
-  return `${wordsStore.currentCourseId}:${wordsStore.currentLessonId}:${order}`
+  return `${listScope.value}:${order}`
 }
 
 function isRowHidden(order: number) {
@@ -115,7 +123,7 @@ function speechOf(word: Word) {
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"
         :page-sizes="pageSizeOptions"
-        :total="wordsStore.filteredWords.length"
+        :total="sourceWords.length"
         layout="total, sizes, prev, pager, next, jumper"
         prev-text="上一页"
         next-text="下一页"

@@ -9,18 +9,19 @@ import {
   type PracticeResult,
 } from '@/utils/answerCheck'
 import { selectRandomWordsWithWeights, wordKey } from '@/utils/weightedRandom'
-import type { Word, WordsManifest } from '@/types/word'
+import type { ScopeOption, Word, WordsManifest } from '@/types/word'
 
 const ERROR_STORAGE_KEY = 'wordErrorCounts'
 
 export const useWordsStore = defineStore('words', {
   state: () => ({
-    manifest: { courses: [] } as WordsManifest,
+    manifest: { books: [] } as WordsManifest,
     allWords: [] as Word[],
     loading: false,
     error: '' as string,
     loaded: false,
-    currentCourseId: 'all' as string,
+    currentBookId: 'all' as string,
+    currentUnitId: 0,
     currentLessonId: 0,
     errorCounts: {} as Record<string, number>,
     mode: 'cn2jp' as 'cn2jp' | 'jp2cn',
@@ -31,26 +32,31 @@ export const useWordsStore = defineStore('words', {
     correctCount: 0,
   }),
   getters: {
-    lessonOptions(state) {
-      const options: { courseId: string; lessonId: number; label: string }[] = [
-        { courseId: 'all', lessonId: 0, label: '全部' },
+    lessonOptions(state): ScopeOption[] {
+      const book = state.manifest.books.find((item) => item.id === state.currentBookId)
+      const unit = book?.units.find((item) => item.unit === state.currentUnitId)
+      if (!book || !unit) {
+        return [{ bookId: 'all', unitId: 0, lessonId: 0, label: '全部' }]
+      }
+      const options: ScopeOption[] = [
+        { bookId: book.id, unitId: unit.unit, lessonId: 0, label: '本单元全部' },
       ]
-      for (const course of state.manifest.courses) {
-        for (const lesson of course.lessons) {
-          options.push({
-            courseId: course.id,
-            lessonId: lesson.id,
-            label: `${course.name} · ${lesson.name}`,
-          })
-        }
+      for (const lesson of unit.lessons) {
+        options.push({
+          bookId: book.id,
+          unitId: unit.unit,
+          lessonId: lesson.lesson,
+          label: lesson.name,
+        })
       }
       return options
     },
     filteredWords(state): Word[] {
       return state.allWords.filter((w) => {
-        const courseOk = state.currentCourseId === 'all' || w.courseId === state.currentCourseId
+        const bookOk = state.currentBookId === 'all' || w.bookId === state.currentBookId
+        const unitOk = state.currentUnitId === 0 || w.unit === state.currentUnitId
         const lessonOk = state.currentLessonId === 0 || w.lesson === state.currentLessonId
-        return courseOk && lessonOk
+        return bookOk && unitOk && lessonOk
       })
     },
     answerTotal(state): number {
@@ -112,10 +118,19 @@ export const useWordsStore = defineStore('words', {
       this.errorCounts[key] = (this.errorCounts[key] || 0) + 1
       localStorage.setItem(ERROR_STORAGE_KEY, JSON.stringify(this.errorCounts))
     },
-    setLesson(courseId: string, lessonId: number) {
-      this.currentCourseId = courseId
+    /**
+     * 记下当前册、单元和课。
+     *
+     * @param bookId 书籍编号，全部时为 all
+     * @param unitId 单元号，0 表示不缩到某一单元
+     * @param lessonId 课号，0 表示这一单元的全部课
+     * @param restart 为真时按这个范围重新抽题
+     */
+    setScope(bookId: string, unitId: number, lessonId: number, restart = true) {
+      this.currentBookId = bookId
+      this.currentUnitId = unitId
       this.currentLessonId = lessonId
-      this.startTest(16)
+      if (restart) this.startTest(16)
     },
     setMode(mode: 'cn2jp' | 'jp2cn') {
       this.mode = mode

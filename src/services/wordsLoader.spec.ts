@@ -10,16 +10,32 @@ describe('loadAllWords', () => {
     vi.unstubAllGlobals()
   })
 
-  it('reads manifest, fetches lessons in parallel, injects courseId', async () => {
+  it('reads manifest, fetches lessons in parallel, injects book, unit and lesson', async () => {
     const manifest: WordsManifest = {
-      courses: [
+      books: [
         {
-          id: 'n5',
-          name: 'N5 基础',
-          lessons: [
-            { id: 1, name: '第一课', file: 'course-n5/lesson-01.json' },
-            { id: 2, name: '第二课', file: 'course-n5/lesson-02.json' },
+          id: 'beginner-upper',
+          name: '初级上册',
+          level: 'beginner',
+          volume: 'upper',
+          units: [
+            {
+              id: 201,
+              unit: 1,
+              name: '第1单元',
+              lessons: [
+                { id: 101, lesson: 1, name: '第1课', file: 'beginner-upper/lesson-01.json' },
+                { id: 102, lesson: 2, name: '第2课', file: 'beginner-upper/lesson-02.json' },
+              ],
+            },
           ],
+        },
+        {
+          id: 'beginner-lower',
+          name: '初级下册',
+          level: 'beginner',
+          volume: 'lower',
+          units: [],
         },
       ],
     }
@@ -31,7 +47,7 @@ describe('loadAllWords', () => {
         jp_write: '学生',
         describe: null,
         part_of_speech: '名词',
-        lesson: 1,
+        lesson: 99,
       },
     ]
     const lesson2 = [
@@ -68,7 +84,8 @@ describe('loadAllWords', () => {
         describe: '',
         part_of_speech: '名词',
         lesson: 1,
-        courseId: 'n5',
+        unit: 1,
+        bookId: 'beginner-upper',
       },
       {
         cn: '车',
@@ -77,9 +94,11 @@ describe('loadAllWords', () => {
         describe: '交通工具',
         part_of_speech: '名词',
         lesson: 2,
-        courseId: 'n5',
+        unit: 1,
+        bookId: 'beginner-upper',
       },
     ])
-    expect(result.manifest.courses[0].id).toBe('n5')
+    expect(result.manifest.books[0].id).toBe('beginner-upper')
+    expect(fetchMock).toHaveBeenCalledTimes(3)
   })
 })

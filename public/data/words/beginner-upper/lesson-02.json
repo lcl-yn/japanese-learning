@@ -4,15 +4,13 @@
         "jp": "だれ",
         "jp_write": "誰",
         "describe": "",
-        "part_of_speech": "疑问词",
-        "lesson": 2
+        "part_of_speech": "疑问词"
     },
     {
         "cn": "谁",
         "jp": "どなた",
         "jp_write": "何方",
         "describe": "だれ 的礼貌用法",
-        "part_of_speech": "疑问词",
-        "lesson": 2
+        "part_of_speech": "疑问词"
     }
 ]

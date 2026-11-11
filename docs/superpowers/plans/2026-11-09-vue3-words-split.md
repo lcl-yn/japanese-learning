@@ -132,7 +132,7 @@ app.use(ElementPlus)
 app.mount('#app')
 ```
 
-先建最小 `src/router/index.ts`（仅 `/` → 占位页），`App.vue` 显示 `中日语言学习` + `<RouterView />`。
+先建最小 `src/router/index.ts`（仅 `/` → 占位页），`App.vue` 显示 `日语学习` + `<RouterView />`。
 
 - [ ] **Step 6: 验证脚手架**
 
@@ -728,7 +728,7 @@ onMounted(() => {
 <template>
   <div class="app-shell">
     <header class="app-header">
-      <h1>中日语言学习</h1>
+      <h1>日语学习</h1>
       <nav>
         <RouterLink to="/practice">练习</RouterLink>
         <RouterLink to="/words">单词本</RouterLink>

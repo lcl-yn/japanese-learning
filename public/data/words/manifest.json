@@ -1,20 +1,85 @@
 {
-  "courses": [
-    {
-      "id": "n5",
-      "name": "N5 基础",
-      "lessons": [
+    "books": [
         {
-          "id": 1,
-          "name": "第1课",
-          "file": "course-n5/lesson-01.json"
+            "id": "beginner-upper",
+            "name": "初级上册",
+            "level": "beginner",
+            "volume": "upper",
+            "units": [
+                {
+                    "id": 1,
+                    "unit": 1,
+                    "name": "第1单元",
+                    "lessons": [
+                        {
+                            "id": 1,
+                            "lesson": 1,
+                            "name": "第1课",
+                            "file": "beginner-upper/lesson-01.json"
+                        },
+                        {
+                            "id": 2,
+                            "lesson": 2,
+                            "name": "第2课",
+                            "file": "beginner-upper/lesson-02.json"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "unit": 2,
+                    "name": "第2单元",
+                    "lessons": []
+                }
+            ]
         },
         {
-          "id": 2,
-          "name": "第2课",
-          "file": "course-n5/lesson-02.json"
+            "id": "beginner-lower",
+            "name": "初级下册",
+            "level": "beginner",
+            "volume": "lower",
+            "units": [
+                {
+                    "id": 1,
+                    "unit": 1,
+                    "name": "第1单元",
+                    "lessons": []
+                },
+                {
+                    "id": 2,
+                    "unit": 2,
+                    "name": "第2单元",
+                    "lessons": []
+                }
+            ]
+        },
+        {
+            "id": "intermediate-upper",
+            "name": "中级上册",
+            "level": "intermediate",
+            "volume": "upper",
+            "units": []
+        },
+        {
+            "id": "intermediate-lower",
+            "name": "中级下册",
+            "level": "intermediate",
+            "volume": "lower",
+            "units": []
+        },
+        {
+            "id": "advanced-upper",
+            "name": "高级上册",
+            "level": "advanced",
+            "volume": "upper",
+            "units": []
+        },
+        {
+            "id": "advanced-lower",
+            "name": "高级下册",
+            "level": "advanced",
+            "volume": "lower",
+            "units": []
         }
-      ]
-    }
-  ]
+    ]
 }

@@ -62,7 +62,7 @@ const accuracy = computed(() => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 20px;
   margin-bottom: 20px;
 }
