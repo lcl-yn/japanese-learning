@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 项目地图
 
-Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进入第一课的练习。练习、单词本、五十音图共用 `src/stores/words.ts`。
+Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进入五十音图。练习、单词本、五十音图共用 `src/stores/words.ts`。
 
 ## 不要重读全文
 
@@ -25,7 +25,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 | 路由 | 入口 | 相关文件 |
 | --- | --- | --- |
-| `/` | `src/views/HomeRedirect.vue` | 进入第一本有课的书，打开第一课的练习 |
+| `/` | 重定向到 `/kana` | 打开五十音图 |
 | `/study/:bookId/:unitId/:lessonId/practice` | `src/views/PracticeView.vue` | `PracticeTable.vue`、`AnswerField.vue`、`LessonFilter.vue` |
 | `/words` | `src/views/WordsView.vue` | 单词本。册、单元、课只筛列表，不带动左侧目录 |
 | `/study/:bookId/:unitId/:lessonId/reading` | `src/views/SectionPlaceholder.vue` | 课文，暂无内容 |

@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'home', component: () => import('@/views/HomeRedirect.vue'), props: { target: 'practice' } },
-    { path: '/practice', redirect: '/' },
+    { path: '/', redirect: '/kana' },
+    { path: '/practice', redirect: '/kana' },
     {
       path: '/words',
       name: 'words',
