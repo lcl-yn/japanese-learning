@@ -96,7 +96,7 @@
         "lesson": 1
     },
     {
-        "cn": "美国人(アメリカ人)",
+        "cn": "美国人",
         "jp": "アメリカじん",
         "jp_write": "アメリカ人",
         "describe": "",
@@ -104,7 +104,7 @@
         "lesson": 1
     },
     {
-        "cn": "法国人(フランス人)",
+        "cn": "法国人",
         "jp": "フランスじん",
         "jp_write": "フランス人",
         "describe": "",
@@ -112,18 +112,18 @@
         "lesson": 1
     },
     {
-        "cn": "先生,老师（广泛的尊称）",
+        "cn": "先生",
         "jp": "せんせい",
         "jp_write": "先生",
-        "describe": "",
+        "describe": "广泛的尊称",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "老师(强调从事老师的职业身份)",
+        "cn": "老师",
         "jp": "きょうし",
         "jp_write": "教師",
-        "describe": "",
+        "describe": "强调从事老师的职业身份",
         "part_of_speech": "名词",
         "lesson": 1
     },
@@ -192,15 +192,15 @@
         "lesson": 1
     },
     {
-        "cn": "(我)父亲",
+        "cn": "父亲",
         "jp": "ちち",
         "jp_write": "父",
-        "describe": "",
+        "describe": "我的父亲，用于自己口述时使用，不能用于称呼对方的父亲",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "科长(課長)",
+        "cn": "科长",
         "jp": "かちょう",
         "jp_write": "課長",
         "describe": "",
@@ -208,15 +208,15 @@
         "lesson": 1
     },
     {
-        "cn": "总经理,社长(设镸)",
+        "cn": "社长",
         "jp": "しゃちょう",
         "jp_write": "社長",
-        "describe": "",
+        "describe": "总经理",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "迎接(出迎え)",
+        "cn": "迎接",
         "jp": "でむかえ",
         "jp_write": "出迎え",
         "describe": "",
@@ -224,7 +224,7 @@
         "lesson": 1
     },
     {
-        "cn": "那个（あの人）",
+        "cn": "那个人",
         "jp": "あのひと",
         "jp_write": "あの人",
         "describe": "",
@@ -232,7 +232,7 @@
         "lesson": 1
     },
     {
-        "cn": "我(私)",
+        "cn": "我",
         "jp": "わたし",
         "jp_write": "私",
         "describe": "",
@@ -248,179 +248,179 @@
         "lesson": 1
     },
     {
-        "cn": "表示轻微感谢,再见,友好招呼",
+        "cn": "非常",
         "jp": "とうモ",
         "jp_write": "どうも",
-        "describe": "",
-        "part_of_speech": "感叹词",
+        "describe": "也可以翻译为：非常感谢、再见、你好，如：とうもすみません 非常抱歉/真是对不起",
+        "part_of_speech": "感叹词,副词",
         "lesson": 1
     },
     {
-        "cn": "哎,哎呀表示感叹词",
+        "cn": "哎呀",
         "jp": "あっ",
         "jp_write": "あっ",
-        "describe": "",
+        "describe": "哎呀表示感叹词",
         "part_of_speech": "感叹词",
         "lesson": 1
     },
     {
-        "cn": "李-专有名词姓氏",
+        "cn": "李",
         "jp": "り",
         "jp_write": "李",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "专有名词姓氏",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "王-专有名词姓氏",
+        "cn": "王",
         "jp": "おう",
         "jp_write": "王",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "专有名词姓氏",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "张(張)-专有名词姓氏",
+        "cn": "张",
         "jp": "ちよお",
         "jp_write": "張",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "专有名词姓氏",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "森-专有名词姓氏",
+        "cn": "森",
         "jp": "もり",
         "jp_write": "森",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "林-专有名词姓氏",
+        "cn": "林",
         "jp": "はやし",
         "jp_write": "林",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "专有名词姓氏",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "小野-专有名词姓氏",
+        "cn": "小野",
         "jp": "おの",
         "jp_write": "小野",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "吉田-专有名词姓氏",
+        "cn": "吉田",
         "jp": "よしだ",
         "jp_write": "吉田",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "田中-专有名词姓氏",
+        "cn": "田中",
         "jp": "たなか",
         "jp_write": "田中",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "中村-专有名词姓氏",
+        "cn": "中村",
         "jp": "なかむら",
         "jp_write": "中村",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "太郎-专有名词姓氏",
+        "cn": "太郎",
         "jp": "たるう",
         "jp_write": "太郎",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "金-专有名词姓氏",
+        "cn": "金",
         "jp": "キム",
         "jp_write": "金",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "迪蓬-专有名词姓氏",
+        "cn": "迪蓬",
         "jp": "デュボン",
         "jp_write": "デュボン",
-        "describe": "",
+        "describe": "专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "Smith史密斯-专有名词姓氏",
+        "cn": "史密斯",
         "jp": "スミス",
         "jp_write": "スミス",
-        "describe": "",
+        "describe": "Smith-专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "Jsonhnson约翰逊-专有名词姓氏",
+        "cn": "约翰逊",
         "jp": "ジョンソン",
         "jp_write": "ジョンソン",
-        "describe": "",
+        "describe": "Jsonhnson-专有名词姓氏",
         "part_of_speech": "名词",
         "lesson": 1
     },
     {
-        "cn": "中国-专有名词",
+        "cn": "中国",
         "jp": "ちゆうごく",
         "jp_write": "中国",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "国家-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "东京大学(東京大学)-专有名词",
+        "cn": "东京大学",
         "jp": "とうきょうだいがく",
         "jp_write": "東京大学",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "地点/机构-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "北京大学-专有名词",
+        "cn": "北京大学",
         "jp": "ペキンだいがく",
         "jp_write": "北京大学",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "地点/机构-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "JC策划公司(JC企画)-专有名词",
+        "cn": "JC策划公司",
         "jp": "ジインーシーきかく",
         "jp_write": "JC企画",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "机构-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "北京旅行社-专有名词",
+        "cn": "北京旅行社",
         "jp": "ペキンりょこうしや",
         "jp_write": "北京旅行社",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "机构-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
-        "cn": "日中商事-专有名词",
+        "cn": "日中商事",
         "jp": "にっちゆうしょうじ",
         "jp_write": "日中商事",
-        "describe": "",
-        "part_of_speech": "名词",
+        "describe": "机构-专有名词",
+        "part_of_speech": "专有名词",
         "lesson": 1
     },
     {
@@ -432,10 +432,10 @@
         "lesson": 1
     },
     {
-        "cn": "对不起,请问",
+        "cn": "对不起",
         "jp": "すみません",
         "jp_write": "済みません",
-        "describe": "",
+        "describe": "也可以翻译为：请问、打扰一下，相当于英语里的 “Excuse me”",
         "part_of_speech": "寒暄语",
         "lesson": 1
     },
@@ -472,10 +472,10 @@
         "lesson": 1
     },
     {
-        "cn": "是,是这样",
+        "cn": "是的",
         "jp": "そうてす",
         "jp_write": "そうです",
-        "describe": "",
+        "describe": "是,是的,是这样",
         "part_of_speech": "副词",
         "lesson": 1
     },
@@ -520,10 +520,10 @@
         "lesson": 1
     },
     {
-        "cn": "八百屋,蔬菜水果店",
+        "cn": "蔬菜水果店",
         "jp": "やおや",
         "jp_write": "八百屋",
-        "describe": "",
+        "describe": "八百屋,蔬菜水果店",
         "part_of_speech": "名词",
         "lesson": 1
     },
@@ -576,7 +576,7 @@
         "lesson": 1
     },
     {
-        "cn": "我(私)-多数情况下用这个",
+        "cn": "我",
         "jp": "わたし",
         "jp_write": "私",
         "describe": "",
@@ -584,63 +584,63 @@
         "lesson": 1
     },
     {
-        "cn": "我-可爱女性一般用这个",
+        "cn": "我",
         "jp": "ぁたし",
         "jp_write": "あたし",
-        "describe": "",
+        "describe": "可爱女性一般用这个读法",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "我-彪悍男性用这个",
+        "cn": "我",
         "jp": "おれ",
         "jp_write": "俺",
-        "describe": "",
+        "describe": "彪悍男性用这个",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "我-可爱男性用这个",
+        "cn": "我",
         "jp": "ぼく",
         "jp_write": "僕",
-        "describe": "",
+        "describe": "可爱男性用这个",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "你-恋人或夫妻称呼",
+        "cn": "你",
         "jp": "あなた",
         "jp_write": "貴方",
-        "describe": "",
+        "describe": "恋人或夫妻称呼，非这两种关系的人能不直呼“你”就不直呼，用称谓、省略、或指向对方的东西来代替。",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "你(君)-友好关系称呼你",
+        "cn": "你",
         "jp": "きみ",
         "jp_write": "君",
-        "describe": "",
+        "describe": "友好关系称呼你",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "你-上下级雇佣关系",
+        "cn": "你",
         "jp": "まえ",
         "jp_write": "前",
-        "describe": "",
+        "describe": "上下级雇佣关系",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "他,那个人(あの人)",
+        "cn": "那个人",
         "jp": "あのひと",
         "jp_write": "あの人",
-        "describe": "",
+        "describe": "他,那个人",
         "part_of_speech": "代词",
         "lesson": 1
     },
     {
-        "cn": "他(彼)",
+        "cn": "他",
         "jp": "かね",
         "jp_write": "彼",
         "describe": "",
@@ -648,7 +648,7 @@
         "lesson": 1
     },
     {
-        "cn": "她(彼女)",
+        "cn": "她",
         "jp": "かのじょ",
         "jp_write": "彼女",
         "describe": "",

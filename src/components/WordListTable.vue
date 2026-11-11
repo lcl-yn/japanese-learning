@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
 import { speakJapanese } from '@/utils/speech'
+import { visibleDescribe } from '@/utils/wordDisplay'
 
 const props = withDefaults(
   defineProps<{
@@ -43,10 +44,6 @@ function rowKey(order: number) {
   return `${wordsStore.currentCourseId}:${wordsStore.currentLessonId}:${order}`
 }
 
-function formatChinese(word: Word) {
-  return `${word.cn}------${word.part_of_speech}------${word.jp_write}`
-}
-
 function isRowHidden(order: number) {
   return hiddenKey.value.includes(rowKey(order))
 }
@@ -63,19 +60,38 @@ function toggleHide(order: number) {
 function onSpeak(word: Word) {
   speakJapanese(word.jp, props.voiceUri)
 }
+
+function describeOf(word: Word) {
+  return visibleDescribe(word.describe)
+}
 </script>
 
 <template>
   <div class="word-list">
     <el-table :data="paginatedWords" border style="width: 100%">
-      <el-table-column label="中文" align="center">
+      <el-table-column label="中文释义" min-width="180" align="center">
         <template #default="{ row }">
-          <span v-if="showChinese">{{ formatChinese(row.word) }}</span>
+          <div v-if="showChinese" class="cn-cell">
+            <div>{{ row.word.cn }}</div>
+            <div v-if="describeOf(row.word)" class="cn-describe">单词说明：{{ describeOf(row.word) }}</div>
+          </div>
           <span v-else class="hidden-text">***隐藏***</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="日语" align="center">
+      <el-table-column label="日文书写" min-width="140" align="center">
+        <template #default="{ row }">
+          {{ row.word.jp_write }}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="词性" width="100" align="center">
+        <template #default="{ row }">
+          {{ row.word.part_of_speech }}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="读音（假名）" min-width="240" align="center">
         <template #default="{ row }">
           <div v-if="showJapanese" class="jp-cell">
             <span class="jp-text" :class="{ 'hidden-text': isRowHidden(row.order) }">
@@ -108,6 +124,18 @@ function onSpeak(word: Word) {
 <style scoped>
 .hidden-text {
   color: #ccc;
+}
+
+.cn-cell {
+  line-height: 1.4;
+}
+
+.cn-describe {
+  margin-top: 4px;
+  color: #909399;
+  font-size: 13px;
+  text-align: left;
+  white-space: pre-line;
 }
 
 .jp-cell {
