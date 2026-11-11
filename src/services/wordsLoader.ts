@@ -1,6 +1,6 @@
 import type { Word, WordsManifest } from '@/types/word'
 
-const DEFAULT_BASE = '/data/words'
+const DEFAULT_BASE = `${import.meta.env.BASE_URL}data/words`
 
 interface LessonWord {
   cn: string

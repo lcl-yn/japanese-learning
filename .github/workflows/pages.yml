@@ -1,0 +1,74 @@
+# 工作流在 GitHub 网页上显示的名字
+name: Deploy GitHub Pages
+
+# 什么时候触发这次发布
+on:
+  # 有人把代码推送到下面这些分支时自动跑
+  push:
+    branches: [master]
+  # 也可以在 GitHub 的 Actions 页面手动点 “Run workflow” 再跑一次
+  workflow_dispatch:
+
+# 这个工作流里的 GITHUB_TOKEN 被允许做哪些事。写得越窄越安全
+permissions:
+  contents: read # 只读仓库代码，用来检出源码
+  pages: write # 允许把构建结果发布到 GitHub Pages
+  id-token: write # 允许申请一个身份令牌，部署时用来向 GitHub 证明“我是这个仓库的 Actions”
+
+# 同一时间只保留一次发布，避免两次 push 抢着部署
+concurrency:
+  group: pages # 用这个名字把相关运行归成一组
+  cancel-in-progress: false # 已经在发布的那次不取消，新的排队等它结束。取消到一半的部署可能留下不完整的网站
+
+# 具体要执行的任务。一个工作流可以有多个 job，这里只有发布这一个
+jobs:
+  deploy:
+    # 发布必须挂在名为 github-pages 的环境上，这是 GitHub Pages 官方动作的要求
+    environment:
+      name: github-pages
+      # 部署成功后，把最终网址写回这个环境，Actions 页面上可以直接点开
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest # 在 GitHub 提供的一台最新 Ubuntu 虚拟机上执行
+    steps:
+      # 把仓库代码下载到这台虚拟机
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 安装 Node.js。版本和本地开发接近，并用 package-lock.json 缓存 npm 依赖
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # 按锁文件安装依赖。ci 比 install 更严格，锁文件和 package.json 不一致时会直接失败
+      - name: Install dependencies
+        run: npm ci
+
+      # 执行 package.json 里的 build：先做类型检查，再打包到 dist
+      # GITHUB_PAGES=true 只在这一步生效，vite.config.ts 看到它才会把资源前缀改成 /仓库名/
+      # Cloudflare 的构建不会设置这个变量，所以那边仍然从网站根路径发布
+      - name: Build
+        run: npm run build
+        env:
+          GITHUB_PAGES: true
+
+      # GitHub Pages 只托管静态文件，没有服务器做前端路由回退
+      # 把首页复制成 404.html 后，刷新 /practice 这类地址时会重新加载应用，而不是看到 GitHub 的 404 页
+      - name: Add SPA fallback
+        run: cp dist/index.html dist/404.html
+
+      # 读取仓库的 Pages 设置，为后面的上传和部署做准备
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 把 dist 目录打包成 Pages 专用的制品。path 是要上传的构建目录
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      # 把上一步的制品发布出去。id 让后面的 steps.deployment.outputs.page_url 能取到网址
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
