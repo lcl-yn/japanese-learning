@@ -34,6 +34,8 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。没有课的单元只显示「暂无课」。单词本里的册、单元、课只筛词表，打开单词本时左侧课单保持收起。单元号用清单单元对象上的 `unit`，课号用课对象上的 `lesson`，都不用 `id`。词条 JSON 不写这两个字段。
 
+文档标题和简介由 `src/utils/seo.ts` 写入。五十音图、单词本用固定简介；练习、课文、语法会带上当前册、单元和课。课文和语法页标记为 noindex。
+
 词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json` 的 `books`（初级 / 中级 / 高级，各分上册、下册）→ `units` → `lessons`，再并行加载各课 JSON。书籍、单元、课号由清单写入，词条 JSON 不写这些位置。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`；内存里另有 `bookId`、`unit`、`lesson`。
 
 练习页的课次下拉只列当前单元的课，含「本单元全部」。单词本的册、单元、课互不影响正在做的练习。

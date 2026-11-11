@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import LessonFilter from '@/components/LessonFilter.vue'
 import PracticeTable from '@/components/PracticeTable.vue'
 import { useWordsStore } from '@/stores/words'
+import { PRACTICE_DESCRIPTION } from '@/utils/seo'
 
 const wordsStore = useWordsStore()
 
@@ -22,6 +23,7 @@ const accuracy = computed(() => {
 
 <template>
   <div class="practice-view">
+    <p class="page-lead">{{ PRACTICE_DESCRIPTION }}</p>
     <div class="mode-switch">
       <el-radio-group v-model="modeModel">
         <el-radio-button value="cn2jp">看中文写日语</el-radio-button>
@@ -58,6 +60,13 @@ const accuracy = computed(() => {
 </template>
 
 <style scoped>
+.page-lead {
+  margin: 0 0 16px;
+  color: #57534e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .mode-switch {
   display: flex;
   flex-wrap: wrap;

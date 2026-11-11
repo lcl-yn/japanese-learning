@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import KanaChart from '@/components/KanaChart.vue'
 import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { KANA_DESCRIPTION } from '@/utils/seo'
 
 const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
@@ -44,6 +45,7 @@ onMounted(async () => {
 <template>
   <div class="kana-view">
     <h2>50音图</h2>
+    <p class="page-lead">{{ KANA_DESCRIPTION }}</p>
     <div class="toolbar">
       <div class="voice">
         <span>语音选择:</span>
@@ -91,6 +93,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.page-lead {
+  margin: 0 0 16px;
+  color: #57534e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .toolbar {
   display: flex;
   align-items: center;

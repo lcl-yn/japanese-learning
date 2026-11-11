@@ -5,12 +5,15 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const title = computed(() => (typeof route.meta.title === 'string' ? route.meta.title : ''))
+const description = computed(() =>
+  typeof route.meta.description === 'string' ? route.meta.description : '这一部分还没有内容，先留在这里。',
+)
 </script>
 
 <template>
   <section class="placeholder">
     <h2>{{ title }}</h2>
-    <p>这一部分还没有内容，先留在这里。</p>
+    <p>{{ description }}</p>
   </section>
 </template>
 

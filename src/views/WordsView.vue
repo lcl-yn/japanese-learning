@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import WordListTable from '@/components/WordListTable.vue'
 import { useWordsStore } from '@/stores/words'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { WORDS_DESCRIPTION } from '@/utils/seo'
 
 const wordsStore = useWordsStore()
 
@@ -78,6 +79,7 @@ onMounted(async () => {
 <template>
   <div class="words-view">
     <h2>单词本</h2>
+    <p class="page-lead">{{ WORDS_DESCRIPTION }}</p>
     <div class="toolbar">
       <div class="switches">
         <el-select
@@ -145,6 +147,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.page-lead {
+  margin: 0 0 16px;
+  color: #57534e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;

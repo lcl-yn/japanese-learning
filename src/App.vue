@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import AppSidebar from '@/components/AppSidebar.vue'
 import { useWordsStore } from '@/stores/words'
+import { applyDocumentSeo, resolveDescription, resolvePageTitle, resolveRobots, SITE_NAME, SITE_TAGLINE } from '@/utils/seo'
 
 const wordsStore = useWordsStore()
 const route = useRoute()
@@ -60,6 +61,18 @@ const crumbs = computed(() => {
   names.push(section)
   return names
 })
+
+watch(
+  () => [route.fullPath, crumbs.value.join('\0')] as const,
+  () => {
+    applyDocumentSeo({
+      title: resolvePageTitle(crumbs.value, route.meta),
+      description: resolveDescription(crumbs.value, route.meta),
+      robots: resolveRobots(route.meta),
+    })
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -100,7 +113,7 @@ const crumbs = computed(() => {
       </main>
     </div>
 
-    <footer class="app-footer">日语学习</footer>
+    <footer class="app-footer">{{ SITE_NAME }} · {{ SITE_TAGLINE }}</footer>
 
     <el-drawer v-model="menuOpen" direction="ltr" size="280px" title="目录" class="nav-drawer">
       <AppSidebar v-if="wordsStore.loaded" @select="menuOpen = false" />
@@ -153,11 +166,13 @@ const crumbs = computed(() => {
 }
 
 .app-footer {
-  height: 44px;
+  height: auto;
+  min-height: 44px;
   border-bottom: none;
   border-top: 1px solid #e4ddd2;
   color: #57534e;
   font-size: 13px;
+  line-height: 1.5;
 }
 
 .app-header h1 {
