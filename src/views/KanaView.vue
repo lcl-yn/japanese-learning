@@ -8,6 +8,27 @@ const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
 const hasJapaneseVoice = ref(false)
 
+const kanaMarks = [
+  {
+    symbol: '゛',
+    name: '浊音符号',
+    effect: '加在清音右上角，变成浊音',
+    example: 'か→が、た→だ、は→ば',
+  },
+  {
+    symbol: '゜',
+    name: '半浊音符号',
+    effect: '加在は行右上角，变成半浊音',
+    example: 'は→ぱ、ひ→ぴ、ふ→ぷ',
+  },
+  {
+    symbol: 'ー',
+    name: '长音符号',
+    effect: '表示元音拉长<br>あ → 长音<br>い → 长音<br>う → 长音<br>い/え → 长音<br>う/お → 长音',
+    example: 'ノート',
+  },
+]
+
 onMounted(async () => {
   const voices = await loadVoices()
   voiceOptions.value = voices
@@ -48,6 +69,24 @@ onMounted(async () => {
     <KanaChart title="基本50音" :rows="hiraganaChart" :voice-uri="selectedVoiceUri" />
     <KanaChart title="拗音" :rows="youonChart" :voice-uri="selectedVoiceUri" />
     <KanaChart title="浊音半浊音" :rows="dakuonChart" :voice-uri="selectedVoiceUri" />
+
+    <section class="kana-marks">
+      <h3>符号</h3>
+      <el-table :data="kanaMarks" border style="width: 100%">
+        <el-table-column label="符号" width="100" align="center">
+          <template #default="{ row }">
+            <span class="mark-symbol">{{ row.symbol }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="name" label="名称" width="140" align="center" />
+        <el-table-column label="作用" min-width="240">
+          <template #default="{ row }">
+            <span class="mark-effect" v-html="row.effect"></span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="example" label="例子" min-width="240" />
+      </el-table>
+    </section>
   </div>
 </template>
 
@@ -74,5 +113,25 @@ onMounted(async () => {
   color: #909399;
   font-size: 13px;
   text-align: right;
+}
+
+.kana-marks {
+  margin-bottom: 30px;
+}
+
+.kana-marks h3 {
+  margin: 0 0 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.mark-symbol {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.mark-effect {
+  line-height: 1.7;
 }
 </style>

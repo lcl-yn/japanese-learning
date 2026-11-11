@@ -64,6 +64,10 @@ function onSpeak(word: Word) {
 function describeOf(word: Word) {
   return visibleDescribe(word.describe)
 }
+
+function speechOf(word: Word) {
+  return word.part_of_speech.trim()
+}
 </script>
 
 <template>
@@ -72,7 +76,10 @@ function describeOf(word: Word) {
       <el-table-column label="中文释义" min-width="180" align="center">
         <template #default="{ row }">
           <div v-if="showChinese" class="cn-cell">
-            <div>{{ row.word.cn }}</div>
+            <div>
+              <span>{{ row.word.cn }}</span>
+              <span v-if="speechOf(row.word)" class="cn-speech"> [{{ speechOf(row.word) }}]</span>
+            </div>
             <div v-if="describeOf(row.word)" class="cn-describe">单词说明：{{ describeOf(row.word) }}</div>
           </div>
           <span v-else class="hidden-text">***隐藏***</span>
@@ -82,12 +89,6 @@ function describeOf(word: Word) {
       <el-table-column label="日文书写" min-width="140" align="center">
         <template #default="{ row }">
           {{ row.word.jp_write }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="词性" width="100" align="center">
-        <template #default="{ row }">
-          {{ row.word.part_of_speech }}
         </template>
       </el-table-column>
 
@@ -116,6 +117,8 @@ function describeOf(word: Word) {
         :page-sizes="pageSizeOptions"
         :total="wordsStore.filteredWords.length"
         layout="total, sizes, prev, pager, next, jumper"
+        prev-text="上一页"
+        next-text="下一页"
       />
     </div>
   </div>
@@ -128,6 +131,12 @@ function describeOf(word: Word) {
 
 .cn-cell {
   line-height: 1.4;
+/* text-align: left; */
+}
+
+.cn-speech {
+  color: #909399;
+  font-size: 12px;
 }
 
 .cn-describe {
@@ -160,5 +169,11 @@ function describeOf(word: Word) {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+}
+
+.pager :deep(.btn-prev),
+.pager :deep(.btn-next) {
+  width: auto;
+  padding: 0 12px;
 }
 </style>

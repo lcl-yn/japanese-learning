@@ -1,0 +1,17 @@
+---
+description: 本仓库的 Vue 3 与 TypeScript 写法。新代码沿用现有文件，不另起一套风格。
+alwaysApply: true
+globs: src/**/*.{vue,ts}
+---
+
+# Vue 3 / TypeScript
+
+沿用现有文件。组件继续用 `<script setup lang="ts">`，状态继续用 Pinia。不引入 Options API、class 组件或第二套状态库。
+
+- 组件用类型化的 `defineProps` / `defineEmits`，样式用 `<style scoped>`。
+- 共享的纯函数放 `src/utils`，共享类型放 `src/types`。能单测的逻辑配同目录 `*.spec.ts`。
+- 存储键、模式标识、多处使用的数字写成具名常量，放在使用处旁边；跨文件使用再导出。只出现一次的界面文案留在原处。
+- 只有一个调用点、也不值得单测的逻辑留在原文件。第二个调用点出现，或逻辑需要单测时，再抽成模块。
+- 不用 `any`。词条用 `src/types/word.ts` 里的类型。
+- 有业务含义的函数写简短中文注释，格式对齐 `src/utils/wordDisplay.ts` 与 `src/utils/answerCheck.ts`。不写复述代码的注释。
+- 命名和目录与周围文件一致。`vue-tsc` 保持能通过。

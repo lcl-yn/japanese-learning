@@ -1,0 +1,42 @@
+---
+description: 本项目已学过的结构与行为。新会话以此为准，不要重读全文。
+alwaysApply: true
+---
+
+# 项目地图
+
+Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进入 `/practice`。练习、单词本、五十音图共用 `src/stores/words.ts`。
+
+## 不要重读全文
+
+- 新会话先用本规则，只打开当前任务碰到的文件。
+- 词库 JSON、`README.md`、整份 store 和全部视图，没有被本次任务碰到就不要读。
+- 发现本规则与代码不符时，只读那几个文件，并立刻改掉过时的句子。
+
+## 自己更新这份地图
+
+做完会让本规则过时的改动后，在同一次任务里更新本文件。不要等用户提醒。
+
+要更新：路由、页面职责、词条字段、加载方式、练习出题或判分、错题权重、命令，以及上面表格里的文件路径。
+
+不必更新：单条词的内容、文案措辞、样式微调、测试断言细节。地图保持短，只记仍成立的行为。
+
+## 路由与文件
+
+| 路由 | 入口 | 相关文件 |
+| --- | --- | --- |
+| `/practice` | `src/views/PracticeView.vue` | `PracticeTable.vue`、`AnswerField.vue`、`LessonFilter.vue` |
+| `/words` | `src/views/WordsView.vue` | `WordListTable.vue` |
+| `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts` |
+
+词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json`，再并行加载各课 JSON，并写入 `courseId`。词条 JSON 不写 `courseId`。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`、`lesson`。
+
+## 练习
+
+- `cn2jp` 看中文写日语：题干是中文。`describe` 去空白后有内容时，下一行显示「单词说明：」。作答格是假名和手写，分别对 `jp`、`jp_write`。两者相同且假名答对、手写留空时，手写也算对。
+- `jp2cn` 看日语写中文：题干用 `japanesePrompt`（`src/utils/wordDisplay.ts`）。手写与假名不同时显示 `手写(假名)`；手写为空或与假名相同则只显示假名。作答格只有中文，对 `cn`。
+- 判分在 `src/utils/answerCheck.ts`。错题计数在 `localStorage` 的 `wordErrorCounts`，抽词用 `src/utils/weightedRandom.ts`，错得越多越容易被抽到。
+
+## 命令
+
+`npm run dev`（5173，占用则顺延）、`npm run test:unit`、`npm run build`（先 `vue-tsc -b`）。改界面后在浏览器里走一遍受影响的操作。

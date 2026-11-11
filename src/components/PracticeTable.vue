@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
 import { emptyAnswer, emptyResult, type PracticeAnswer } from '@/utils/answerCheck'
-import { visibleDescribe } from '@/utils/wordDisplay'
+import { japanesePrompt, visibleDescribe } from '@/utils/wordDisplay'
 import { wordKey } from '@/utils/weightedRandom'
 import AnswerField from './AnswerField.vue'
 
@@ -11,6 +11,7 @@ const wordsStore = useWordsStore()
 
 const isCn2Jp = computed(() => wordsStore.mode === 'cn2jp')
 const promptLabel = computed(() => (isCn2Jp.value ? '中文' : '日语'))
+const promptMinWidth = computed(() => (isCn2Jp.value ? 120 : 200))
 
 /** 切换模式或换一批词时重建表格，避免动态列残留旧单元格 */
 const tableKey = computed(
@@ -18,7 +19,8 @@ const tableKey = computed(
 )
 
 function promptOf(word: Word) {
-  return isCn2Jp.value ? word.cn : word.jp
+  if (isCn2Jp.value) return word.cn
+  return japanesePrompt(word.jp, word.jp_write)
 }
 
 function describeOf(word: Word) {
@@ -41,10 +43,10 @@ function setField(index: number, field: keyof PracticeAnswer, value: string) {
 
 <template>
   <el-table :key="tableKey" :data="wordsStore.wordPairs" style="width: 100%">
-    <el-table-column :label="promptLabel" min-width="120">
+    <el-table-column :label="promptLabel" :min-width="promptMinWidth">
       <template #default="{ row }">
         <div v-if="row.word1" class="prompt-cell">
-          <div>{{ promptOf(row.word1) }}</div>
+          <div :class="{ 'prompt-nowrap': !isCn2Jp }">{{ promptOf(row.word1) }}</div>
           <div v-if="describeOf(row.word1)" class="prompt-describe">单词说明：{{ describeOf(row.word1) }}</div>
         </div>
       </template>
@@ -92,10 +94,10 @@ function setField(index: number, field: keyof PracticeAnswer, value: string) {
       </template>
     </el-table-column>
 
-    <el-table-column :label="promptLabel" min-width="120">
+    <el-table-column :label="promptLabel" :min-width="promptMinWidth">
       <template #default="{ row }">
         <div v-if="row.word2" class="prompt-cell">
-          <div>{{ promptOf(row.word2) }}</div>
+          <div :class="{ 'prompt-nowrap': !isCn2Jp }">{{ promptOf(row.word2) }}</div>
           <div v-if="describeOf(row.word2)" class="prompt-describe">单词说明：{{ describeOf(row.word2) }}</div>
         </div>
       </template>
@@ -146,6 +148,10 @@ function setField(index: number, field: keyof PracticeAnswer, value: string) {
 </template>
 
 <style scoped>
+.prompt-nowrap {
+  white-space: nowrap;
+}
+
 .prompt-describe {
   margin-top: 4px;
   color: #909399;

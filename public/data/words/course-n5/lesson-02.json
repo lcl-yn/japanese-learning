@@ -1,10 +1,18 @@
 [
     {
-        "cn": "那位",
-        "jp": "どなた",
+        "cn": "谁",
+        "jp": "だれ",
         "jp_write": "誰",
         "describe": "",
-        "part_of_speech": "代词",
+        "part_of_speech": "疑问词",
+        "lesson": 2
+    },
+    {
+        "cn": "谁",
+        "jp": "どなた",
+        "jp_write": "何方",
+        "describe": "だれ 的礼貌用法",
+        "part_of_speech": "疑问词",
         "lesson": 2
     }
 ]
