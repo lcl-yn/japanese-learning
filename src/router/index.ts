@@ -35,7 +35,7 @@ const router = createRouter({
     {
       path: '/study/:bookId/:unitId/:lessonId/grammar',
       name: 'grammar',
-      component: () => import('@/views/SectionPlaceholder.vue'),
+      component: () => import('@/views/GrammarView.vue'),
       meta: { title: '语法', description: GRAMMAR_DESCRIPTION, robots: 'noindex,follow', section: 'grammar' },
     },
     { path: '/study/:bookId/:unitId/:lessonId/words', redirect: '/words' },

@@ -21,7 +21,7 @@ export const PRACTICE_DESCRIPTION = '看中文写假名和手写，或看日语�
 
 export const READING_DESCRIPTION = '日语课文还在整理，暂时没有可阅读的内容。'
 
-export const GRAMMAR_DESCRIPTION = '日语语法还在整理，暂时没有可学习的内容。'
+export const GRAMMAR_DESCRIPTION = '按课阅读语法笔记，包含标题、例句和批注。'
 
 const SECTION_LABEL: Record<string, string> = {
   practice: '单词练习',
