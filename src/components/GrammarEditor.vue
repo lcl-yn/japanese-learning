@@ -105,6 +105,19 @@ const alignOptions = [
 
 type TextAlignValue = (typeof alignOptions)[number]['value']
 
+type EditorActive = {
+  bold: boolean
+  italic: boolean
+  underline: boolean
+  strike: boolean
+  quote: boolean
+  block: string
+  font: string
+  size: string
+  color: string
+  align: TextAlignValue
+}
+
 const alignIconWidths: Record<TextAlignValue, number[]> = {
   left: [14, 8, 14, 10],
   center: [14, 8, 14, 10],
@@ -249,7 +262,7 @@ watch(
   },
 )
 
-const active = computed(() => {
+const active = computed((): EditorActive => {
   const current = editor.value
   if (!current) {
     return {
