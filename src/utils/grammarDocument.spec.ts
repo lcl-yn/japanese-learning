@@ -66,6 +66,15 @@ describe('grammarHasText', () => {
       }),
     ).toBe(true)
   })
+
+  it('treats a lesson audio block as content', () => {
+    expect(
+      grammarHasText({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: '/data/audio/beginner-upper/第4课基本课文.m4a' } }],
+      }),
+    ).toBe(true)
+  })
 })
 
 describe('parseGrammarSaveBody', () => {
@@ -127,6 +136,42 @@ describe('parseGrammarSaveBody', () => {
       isGrammarDocument({
         type: 'doc',
         content: [{ type: 'paragraph', attrs: { style: { color: 'red' } } }],
+      }),
+    ).toBe(false)
+  })
+
+  it('keeps a local lesson audio node', () => {
+    expect(
+      isGrammarDocument({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: '/data/audio/beginner-upper/第4课基本课文.m4a' } }],
+      }),
+    ).toBe(true)
+  })
+
+  it('rejects audio paths that leave the audio folder', () => {
+    expect(
+      isGrammarDocument({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: '/data/audio/../secret.m4a' } }],
+      }),
+    ).toBe(false)
+    expect(
+      isGrammarDocument({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: 'https://example.com/a.m4a' } }],
+      }),
+    ).toBe(false)
+    expect(
+      isGrammarDocument({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: '/data/audio/第4课基本课文.m4a' } }],
+      }),
+    ).toBe(false)
+    expect(
+      isGrammarDocument({
+        type: 'doc',
+        content: [{ type: 'lessonAudio', attrs: { src: '/data/audio/beginner-upper/extra/第1课.m4a' } }],
       }),
     ).toBe(false)
   })

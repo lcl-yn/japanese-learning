@@ -42,13 +42,13 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 ## 课文与语法
 
-课文和语法共用 `LessonDocumentView.vue` 与 `GrammarEditor.vue`。当前课按需读取 `public/data/reading/{bookId}/unit-XX-lesson-XX.json` 或 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可在当前单元格上下插入行、左右插入列，也可删除所在行、列或整张表。框选多格后右键只留删行、删列，并删掉选区盖住的全部行或列。没有文件时分别显示「这一课还没有课文」「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__reading` 或 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读。引用里连续回车仍留在同一段引用中。
+课文和语法共用 `LessonDocumentView.vue` 与 `GrammarEditor.vue`。当前课按需读取 `public/data/reading/{bookId}/unit-XX-lesson-XX.json` 或 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可在当前单元格上下插入行、左右插入列，也可删除所在行、列或整张表。框选多格后右键只留删行、删列，并删掉选区盖住的全部行或列。课文编辑时可以从 `public/data/audio/{bookId}` 插入当前册的播放条，初级上册在 `beginner-upper`。播放条带进度、播放和暂停，并写入课文 JSON。没有文件时分别显示「这一课还没有课文」「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__reading` 或 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读，播放条仍可播放。引用里连续回车仍留在同一段引用中。
 
 ## 练习
 
 - `cn2jp` 看中文写日语：题干是中文。`describe` 去空白后有内容时，下一行显示「单词说明：」。作答格是假名和手写，分别对 `jp`、`jp_write`。两者相同且假名答对、手写留空时，手写也算对。
 - `jp2cn` 看日语写中文：题干用 `japanesePrompt`（`src/utils/wordDisplay.ts`）。手写与假名不同时显示 `手写(假名)`；手写为空或与假名相同则只显示假名。作答格只有中文，对 `cn`。
-- 判分在 `src/utils/answerCheck.ts`。错题计数在 `localStorage` 的 `wordErrorCounts`，抽词用 `src/utils/weightedRandom.ts`，错得越多越容易被抽到。
+- 判分在 `src/utils/answerCheck.ts`。错题计数在 `localStorage` 的 `wordErrorCounts`，抽词用 `src/utils/weightedRandom.ts`，错得越多越容易被抽到。课文和语法只记下当前课，不重新抽题。再打开单词时，抽出的题若不是这一课，按这一课重新抽；同一课来回切换则保留作答。
 
 ## 命令
 

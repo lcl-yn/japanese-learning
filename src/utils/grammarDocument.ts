@@ -1,3 +1,5 @@
+import { isLessonAudioSrc, LESSON_AUDIO_TYPE } from './lessonAudio.ts'
+
 export type GrammarAttr = string | number | boolean | null | number[]
 
 export interface GrammarMark {
@@ -106,11 +108,11 @@ export function emptyGrammarDocument(): GrammarDocument {
 }
 
 /**
- * 文档里是否已经有可见文字。
- * 只有空段落或空白时，页面显示「这一课还没有语法」。
+ * 文档里是否已经有可见文字或课文音频。
+ * 只有空段落或空白时，页面显示「这一课还没有课文」或「这一课还没有语法」。
  *
- * @param document 语法文档
- * @return 有非空白文字时为 true
+ * @param document 课文或语法文档
+ * @return 有非空白文字或音频时为 true
  */
 export function grammarHasText(document: GrammarDocument): boolean {
   return nodeHasText(document)
@@ -195,12 +197,21 @@ function isNode(value: unknown, budget: { count: number }, depth: number): value
   }
   if (value.content !== undefined) {
     if (!Array.isArray(value.content)) return false
-    return value.content.every((child) => isNode(child, budget, depth + 1))
+    if (!value.content.every((child) => isNode(child, budget, depth + 1))) return false
   }
+  if (value.type === LESSON_AUDIO_TYPE) return isLessonAudioNode(value)
   return true
 }
 
-function nodeHasText(node: { text?: string; content?: GrammarDocumentNode[] }): boolean {
+/** 课文音频是叶子节点，地址必须落在本地音频目录。 */
+function isLessonAudioNode(value: Record<string, unknown>): boolean {
+  if (value.text !== undefined || value.content !== undefined || value.marks !== undefined) return false
+  if (!isRecord(value.attrs)) return false
+  return isLessonAudioSrc(value.attrs.src)
+}
+
+function nodeHasText(node: { type?: string; text?: string; content?: GrammarDocumentNode[] }): boolean {
+  if (node.type === LESSON_AUDIO_TYPE) return true
   if (typeof node.text === 'string' && node.text.trim()) return true
   return node.content?.some(nodeHasText) ?? false
 }

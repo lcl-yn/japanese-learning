@@ -2,7 +2,7 @@
 import { Extension } from '@tiptap/core'
 import { TableKit } from '@tiptap/extension-table'
 import { liftListItem, sinkListItem } from '@tiptap/pm/schema-list'
-import { TextSelection } from '@tiptap/pm/state'
+import { TextSelection, NodeSelection } from '@tiptap/pm/state'
 import { CellSelection, columnResizing } from '@tiptap/pm/tables'
 import type { EditorView } from '@tiptap/pm/view'
 import { EditorContent, useEditor } from '@tiptap/vue-3'
@@ -11,8 +11,11 @@ import TextAlign from '@tiptap/extension-text-align'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import { computed, ref, watch } from 'vue'
+import { lessonAudioFiles } from 'virtual:lesson-audio'
+import { lessonAudioExtension } from '@/components/lessonAudioExtension'
 import type { GrammarDocument } from '@/types/grammar'
 import { isGrammarDocument } from '@/utils/grammarDocument'
+import { isLessonAudioSrc, lessonAudioLabel, lessonAudioNamesForBook, lessonAudioSrc, orderLessonAudioForLesson } from '@/utils/lessonAudio'
 import { quoteEnter } from '@/utils/quoteEnter'
 
 const props = withDefaults(
@@ -22,11 +25,17 @@ const props = withDefaults(
     placeholder?: string
     label?: string
     toolbarLabel?: string
+    allowAudio?: boolean
+    audioLesson?: number | null
+    audioBookId?: string | null
   }>(),
   {
     placeholder: '写下这一课的语法…',
     label: '语法笔记',
     toolbarLabel: '语法格式',
+    allowAudio: false,
+    audioLesson: null,
+    audioBookId: null,
   },
 )
 
@@ -198,6 +207,22 @@ const tableHoverLabel = computed(() => {
   return `${cols}×${rows} 表格`
 })
 
+const audioOpen = ref(false)
+const audioQuery = ref('')
+
+const audioBookFiles = computed(() => lessonAudioNamesForBook(lessonAudioFiles, props.audioBookId))
+
+const audioChoices = computed(() => {
+  const query = audioQuery.value.trim()
+  const ordered = orderLessonAudioForLesson(audioBookFiles.value, props.audioLesson)
+  if (!query) return ordered
+  return ordered.filter((name) => lessonAudioLabel(audioChoiceSrc(name)).includes(query) || name.includes(query))
+})
+
+watch(audioOpen, (open) => {
+  if (!open) audioQuery.value = ''
+})
+
 const editor = useEditor({
   content: props.document,
   editable: props.editable,
@@ -224,6 +249,7 @@ const editor = useEditor({
       table: { resizable: false, cellMinWidth: tableCellMinWidth },
     }),
     tableColumnResize,
+    lessonAudioExtension,
   ],
   editorProps: {
     attributes: {
@@ -542,6 +568,51 @@ function insertRule() {
   editor.value?.chain().focus().setHorizontalRule().run()
 }
 
+/**
+ * 在光标处插入一条课文音频。
+ *
+ * @param fileName 当前册音频目录里的文件名
+ */
+function insertAudio(fileName: string) {
+  const src = audioChoiceSrc(fileName)
+  if (!isLessonAudioSrc(src)) return
+  audioOpen.value = false
+  const current = editor.value
+  if (!current) return
+  let chain = current.chain().focus()
+  const { selection } = current.state
+  if (selection instanceof NodeSelection && selection.node.type.name === lessonAudioExtension.name) {
+    chain = chain.setTextSelection(selection.to)
+  }
+  chain
+    .insertContent({ type: lessonAudioExtension.name, attrs: { src } })
+    .command(({ tr, dispatch }) => {
+      if (dispatch) tr.setSelection(TextSelection.near(tr.doc.resolve(tr.selection.to)))
+      return true
+    })
+    .run()
+}
+
+/** 当前册下某个音频文件的文档地址。 */
+function audioChoiceSrc(fileName: string): string {
+  const bookId = props.audioBookId
+  if (!bookId) return ''
+  return lessonAudioSrc(bookId, fileName)
+}
+
+/** 当前课的音频和后面的其他课之间画一条分隔。 */
+function audioDividerBefore(index: number): boolean {
+  const lesson = props.audioLesson
+  if (audioQuery.value.trim() || lesson === null || !Number.isInteger(lesson) || lesson < 1) return false
+  const names = audioChoices.value
+  if (index <= 0 || index >= names.length) return false
+  const prefix = `第${lesson}课`
+  const previous = names[index - 1]
+  const current = names[index]
+  if (!previous || !current) return false
+  return previous.startsWith(prefix) && !current.startsWith(prefix)
+}
+
 function resetTableHover() {
   tableHover.value = { rows: 0, cols: 0 }
 }
@@ -822,6 +893,46 @@ defineExpose({ scrollToHeading })
         </div>
       </el-popover>
       <button type="button" class="tool" aria-label="分割线" @mousedown.prevent @click="insertRule">分割线</button>
+      <el-popover
+        v-if="allowAudio"
+        v-model:visible="audioOpen"
+        trigger="click"
+        placement="bottom-start"
+        :width="280"
+        popper-class="grammar-audio-popper"
+      >
+        <template #reference>
+          <button
+            type="button"
+            class="tool"
+            aria-label="音频"
+            :aria-expanded="audioOpen"
+            :disabled="audioBookFiles.length === 0"
+            @mousedown.prevent
+          >
+            音频
+          </button>
+        </template>
+        <div class="audio-picker" @mousedown.prevent>
+          <input
+            v-model="audioQuery"
+            class="audio-query"
+            type="search"
+            aria-label="筛选音频"
+            placeholder="筛选文件名"
+            @mousedown.stop
+          />
+          <p v-if="audioChoices.length === 0" class="audio-empty">没有这个音频</p>
+          <div v-else class="audio-list" role="listbox" aria-label="音频文件">
+            <template v-for="(name, index) in audioChoices" :key="name">
+              <div v-if="audioDividerBefore(index)" class="audio-line" role="separator" />
+              <button type="button" class="audio-option" role="option" @click="insertAudio(name)">
+                {{ lessonAudioLabel(audioChoiceSrc(name)) }}
+              </button>
+            </template>
+          </div>
+        </div>
+      </el-popover>
     </div>
     <EditorContent :editor="editor" />
     <Teleport to="body">
@@ -1208,6 +1319,74 @@ defineExpose({ scrollToHeading })
 
 .table-custom:hover {
   background: #f3f4f6;
+}
+
+.audio-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.audio-query {
+  width: 100%;
+  box-sizing: border-box;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #e4ddd2;
+  border-radius: 6px;
+  background: #fff;
+  color: #1c1917;
+  font: inherit;
+  font-size: 14px;
+}
+
+.audio-query:focus-visible {
+  outline: 2px solid #9f3d2f;
+  outline-offset: 1px;
+}
+
+.audio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 240px;
+  overflow: auto;
+}
+
+.audio-option {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #1c1917;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.audio-option:hover {
+  border-color: #9f3d2f;
+  background: #f7eeeb;
+}
+
+.audio-line {
+  height: 1px;
+  margin: 4px 0;
+  background: #e4ddd2;
+}
+
+.audio-empty {
+  margin: 0;
+  color: #a8a29e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+:global(.grammar-audio-popper.el-popover.el-popper) {
+  padding: 8px;
 }
 
 .table-size-title {

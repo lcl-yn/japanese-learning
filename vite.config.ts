@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 import { grammarSavePlugin } from './vite/grammarSavePlugin.ts'
+import { lessonAudioPlugin } from './vite/lessonAudioPlugin.ts'
 
 /**
  * 决定打包后静态资源的公共前缀。
@@ -22,7 +23,7 @@ export default defineConfig({
   // 资源公共路径。页面、JS、CSS 的引用都会加上它，并写入 import.meta.env.BASE_URL
   base: resolveBase(),
   // Vite 插件。vue() 负责把 .vue 单文件组件编译成浏览器能运行的代码
-  plugins: [vue(), grammarSavePlugin()],
+  plugins: [vue(), grammarSavePlugin(), lessonAudioPlugin()],
   resolve: {
     alias: {
       // 让 import '@/...' 指向 src 目录，避免写很长的相对路径

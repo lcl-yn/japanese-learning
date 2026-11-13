@@ -208,6 +208,9 @@ async function confirmLeave(): Promise<boolean> {
             :placeholder="page.placeholder"
             :label="page.editorLabel"
             :toolbar-label="page.toolbarLabel"
+            :allow-audio="section === 'reading'"
+            :audio-lesson="section === 'reading' ? lesson : null"
+            :audio-book-id="section === 'reading' ? bookId : null"
             @update="onDraft"
           />
         </template>
