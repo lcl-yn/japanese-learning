@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import AppSidebar from '@/components/AppSidebar.vue'
+import JapaneseSpeaker from '@/components/JapaneseSpeaker.vue'
 import { useWordsStore } from '@/stores/words'
 import { applyDocumentSeo, resolveDescription, resolvePageTitle, resolveRobots, SITE_NAME, SITE_TAGLINE } from '@/utils/seo'
 
@@ -118,6 +119,8 @@ watch(
     <el-drawer v-model="menuOpen" direction="ltr" size="280px" title="目录" class="nav-drawer">
       <AppSidebar v-if="wordsStore.loaded" @select="menuOpen = false" />
     </el-drawer>
+
+    <JapaneseSpeaker />
   </div>
 </template>
 
@@ -229,7 +232,7 @@ watch(
 main {
   flex: 1;
   overflow: auto;
-  padding: 20px 28px 32px;
+  padding: 20px 28px 120px;
   outline: none;
 }
 
@@ -270,7 +273,7 @@ main {
   }
 
   main {
-    padding: 16px;
+    padding: 16px 16px 120px;
   }
 }
 
