@@ -27,14 +27,8 @@ watch(
     const lessonRaw = route.params.lessonId
     const lessonId = typeof lessonRaw === 'string' ? Number(lessonRaw) : 0
     if (!Number.isInteger(unitId) || !Number.isInteger(lessonId)) return
-    if (
-      wordsStore.currentBookId === bookId &&
-      wordsStore.currentUnitId === unitId &&
-      wordsStore.currentLessonId === lessonId
-    ) {
-      return
-    }
-    wordsStore.setScope(bookId, unitId, lessonId, route.meta.section === 'practice')
+    const section = typeof route.meta.section === 'string' ? route.meta.section : ''
+    wordsStore.applyRouteScope(bookId, unitId, lessonId, section)
   },
   { immediate: true },
 )

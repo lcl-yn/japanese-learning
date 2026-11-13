@@ -23,6 +23,9 @@ export const useWordsStore = defineStore('words', {
     currentBookId: 'all' as string,
     currentUnitId: 0,
     currentLessonId: 0,
+    drawnBookId: '',
+    drawnUnitId: 0,
+    drawnLessonId: 0,
     errorCounts: {} as Record<string, number>,
     mode: 'cn2jp' as 'cn2jp' | 'jp2cn',
     currentWords: [] as Word[],
@@ -132,6 +135,25 @@ export const useWordsStore = defineStore('words', {
       this.currentLessonId = lessonId
       if (restart) this.startTest(16)
     },
+    /**
+     * 按路由同步当前册、单元和课。
+     * 课文和语法只改范围，不重新抽题。打开单词时，抽出的题若不是这一课，按这一课重新抽。
+     *
+     * @param bookId 书籍编号
+     * @param unitId 单元号
+     * @param lessonId 课号，0 表示这一单元的全部课
+     * @param section 路由段落，只有 practice 会重新抽题
+     */
+    applyRouteScope(bookId: string, unitId: number, lessonId: number, section: string) {
+      const scopeUnchanged =
+        this.currentBookId === bookId &&
+        this.currentUnitId === unitId &&
+        this.currentLessonId === lessonId
+      const drawnMatches =
+        this.drawnBookId === bookId && this.drawnUnitId === unitId && this.drawnLessonId === lessonId
+      if (scopeUnchanged && (section !== 'practice' || drawnMatches)) return
+      this.setScope(bookId, unitId, lessonId, section === 'practice')
+    },
     setMode(mode: 'cn2jp' | 'jp2cn') {
       this.mode = mode
       this.startTest(16)
@@ -144,6 +166,9 @@ export const useWordsStore = defineStore('words', {
       this.answerResults = this.currentWords.map(() => emptyResult())
       this.answersChecked = false
       this.correctCount = 0
+      this.drawnBookId = this.currentBookId
+      this.drawnUnitId = this.currentUnitId
+      this.drawnLessonId = this.currentLessonId
     },
     checkAnswers() {
       if (this.answersChecked) return

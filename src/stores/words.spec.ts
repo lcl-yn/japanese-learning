@@ -108,6 +108,48 @@ describe('useWordsStore', () => {
     expect(store.lessonOptions.map((option) => option.label)).toEqual(['本单元全部', '第1课', '第2课'])
   })
 
+  it('redraws the new lesson when practice opens after another lesson only changed the scope', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+
+    store.applyRouteScope('beginner-upper', 1, 1, 'practice')
+    expect(store.currentWords.every((word) => word.lesson === 1)).toBe(true)
+    const lesson1Deck = store.currentWords.map((word) => word.cn)
+
+    store.applyRouteScope('beginner-upper', 1, 2, 'reading')
+    expect(store.currentLessonId).toBe(2)
+    expect(store.currentWords.map((word) => word.cn)).toEqual(lesson1Deck)
+
+    store.applyRouteScope('beginner-upper', 1, 2, 'practice')
+    expect(store.currentWords.length).toBeGreaterThan(0)
+    expect(store.currentWords.every((word) => word.lesson === 2)).toBe(true)
+  })
+
+  it('drops the previous lesson when practice opens on a lesson with no words', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+
+    store.applyRouteScope('beginner-upper', 1, 1, 'practice')
+    store.applyRouteScope('beginner-upper', 1, 4, 'reading')
+    store.applyRouteScope('beginner-upper', 1, 4, 'practice')
+
+    expect(store.currentWords).toEqual([])
+  })
+
+  it('keeps practice answers when leaving and returning to the same lesson', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+
+    store.applyRouteScope('beginner-upper', 1, 1, 'practice')
+    store.userAnswers[0].kana = 'がくせい'
+
+    store.applyRouteScope('beginner-upper', 1, 1, 'reading')
+    store.applyRouteScope('beginner-upper', 1, 1, 'practice')
+
+    expect(store.userAnswers[0].kana).toBe('がくせい')
+    expect(store.currentWords.every((word) => word.lesson === 1)).toBe(true)
+  })
+
   it('selects two words when startTest(2)', async () => {
     const store = useWordsStore()
     await store.loadWords()
