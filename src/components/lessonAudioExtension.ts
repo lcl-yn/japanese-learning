@@ -39,7 +39,7 @@ export const lessonAudioExtension = Node.create({
     return VueNodeViewRenderer(LessonAudioPlayer, {
       stopEvent: ({ event }) => {
         const target = event.target
-        return target instanceof Element && Boolean(target.closest('button, input'))
+        return target instanceof Element && Boolean(target.closest('button, input, select, .el-select'))
       },
     })
   },

@@ -163,16 +163,36 @@ export function orderLessonAudioForLesson(names: readonly string[], lesson: numb
   return [...sorted.filter((name) => name.startsWith(prefix)), ...sorted.filter((name) => !name.startsWith(prefix))]
 }
 
-let playing: { pause: () => void } | null = null
+/** 页面上正在占用播放的那一条。 */
+export interface LessonAudioHandle {
+  pause: () => void
+  /** 取消这一条还没开始的下一遍。 */
+  cancelReplay?: () => void
+}
+
+let playing: LessonAudioHandle | null = null
 
 /**
  * 开始播这一条时停掉正在播的另一条。
+ * 另一条如果还在等循环的下一遍，一并取消。
  *
- * @param audio 即将播放的音频元素
+ * @param audio 即将播放的音频
  */
-export function claimLessonAudio(audio: { pause: () => void }): void {
-  if (playing && playing !== audio) playing.pause()
+export function claimLessonAudio(audio: LessonAudioHandle): void {
+  if (playing && playing !== audio) {
+    playing.cancelReplay?.()
+    playing.pause()
+  }
   playing = audio
+}
+
+/**
+ * 这一条离开页面时放开占用，避免之后的播放去停一个已经不在的元素。
+ *
+ * @param audio 正在占用播放的那一条
+ */
+export function releaseLessonAudio(audio: LessonAudioHandle): void {
+  if (playing === audio) playing = null
 }
 
 function lessonAudioRank(name: string): { lesson: number | null; kind: number | null } {

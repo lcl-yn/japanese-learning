@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   claimLessonAudio,
+  releaseLessonAudio,
   compareLessonAudio,
   lessonAudioLabel,
   lessonAudioNamesForBook,
@@ -84,5 +85,22 @@ describe('claimLessonAudio', () => {
     expect(first.pause).toHaveBeenCalledOnce()
     claimLessonAudio(second)
     expect(second.pause).not.toHaveBeenCalled()
+  })
+
+  it('cancels a pending replay on the previous clip', () => {
+    const first = { pause: vi.fn(), cancelReplay: vi.fn() }
+    const second = { pause: vi.fn() }
+    claimLessonAudio(first)
+    claimLessonAudio(second)
+    expect(first.cancelReplay).toHaveBeenCalledOnce()
+    expect(first.pause).toHaveBeenCalledOnce()
+  })
+
+  it('does not pause a clip after it releases playback', () => {
+    const first = { pause: vi.fn() }
+    claimLessonAudio(first)
+    releaseLessonAudio(first)
+    claimLessonAudio({ pause: vi.fn() })
+    expect(first.pause).not.toHaveBeenCalled()
   })
 })
