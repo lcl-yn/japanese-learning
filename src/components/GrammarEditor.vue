@@ -3,7 +3,8 @@ import { Extension } from '@tiptap/core'
 import { TableKit } from '@tiptap/extension-table'
 import { liftListItem, sinkListItem } from '@tiptap/pm/schema-list'
 import { TextSelection } from '@tiptap/pm/state'
-import { columnResizing } from '@tiptap/pm/tables'
+import { CellSelection, columnResizing } from '@tiptap/pm/tables'
+import type { EditorView } from '@tiptap/pm/view'
 import { EditorContent, useEditor } from '@tiptap/vue-3'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextAlign from '@tiptap/extension-text-align'
@@ -79,6 +80,55 @@ const customRows = ref(2)
 const customCols = ref(2)
 
 const tableCellMinWidth = 48
+
+// 右键按下时先记下多格选区。浏览器接着可能把选区收成光标，菜单弹出前再放回去。
+let pendingCells: { anchor: number; head: number } | null = null
+
+/** 右键是否落在这块已选格子里。 */
+function pointerInsideCellSelection(view: EditorView, selection: CellSelection, event: MouseEvent): boolean {
+  const found = view.posAtCoords({ left: event.clientX, top: event.clientY })
+  if (!found) return false
+  let inside = false
+  selection.forEachCell((node, pos) => {
+    if (found.pos >= pos && found.pos < pos + node.nodeSize) inside = true
+  })
+  return inside
+}
+
+/** 选区是否盖住一个以上的格子。 */
+function cellSelectionSpansMultiple(selection: CellSelection): boolean {
+  let count = 0
+  selection.forEachCell(() => {
+    count += 1
+  })
+  return count > 1
+}
+
+/**
+ * 多格选区上右键时保住这块选区。点在选区外面则返回 false，交给后面收成单格。
+ */
+function keepMultiCellSelection(view: EditorView, event: MouseEvent): boolean {
+  const saved = pendingCells
+  pendingCells = null
+  const current = view.state.selection
+  if (
+    current instanceof CellSelection &&
+    cellSelectionSpansMultiple(current) &&
+    pointerInsideCellSelection(view, current, event)
+  ) {
+    return true
+  }
+  if (!saved) return false
+  let restored: CellSelection
+  try {
+    restored = CellSelection.create(view.state.doc, saved.anchor, saved.head)
+  } catch {
+    return false
+  }
+  if (!cellSelectionSpansMultiple(restored) || !pointerInsideCellSelection(view, restored, event)) return false
+  view.dispatch(view.state.tr.setSelection(restored))
+  return true
+}
 
 // 编辑开关是点「编辑」后才打开的。表格扩展只在创建时看能不能改，列宽拖动要单独挂上。
 const tableColumnResize = Extension.create({
@@ -169,6 +219,23 @@ const editor = useEditor({
       'aria-label': '语法笔记',
     },
     handleDOMEvents: {
+      mousedown(view, event) {
+        if (!(event instanceof MouseEvent) || event.button !== 2) {
+          pendingCells = null
+          return false
+        }
+        const selection = view.state.selection
+        if (
+          selection instanceof CellSelection &&
+          cellSelectionSpansMultiple(selection) &&
+          pointerInsideCellSelection(view, selection, event)
+        ) {
+          pendingCells = { anchor: selection.$anchorCell.pos, head: selection.$headCell.pos }
+        } else {
+          pendingCells = null
+        }
+        return false
+      },
       // 右键落在单元格里才换成本菜单，正文其他位置仍用浏览器菜单。
       contextmenu(view, event) {
         if (!view.editable || !(event instanceof MouseEvent)) return false
@@ -177,12 +244,15 @@ const editor = useEditor({
         const cell = element?.closest('td, th')
         if (!cell || !view.dom.contains(cell)) return false
         event.preventDefault()
-        const found = view.posAtCoords({ left: event.clientX, top: event.clientY })
-        if (found) {
-          const selection = TextSelection.near(view.state.doc.resolve(found.pos))
-          view.dispatch(view.state.tr.setSelection(selection))
+        const multiple = keepMultiCellSelection(view, event)
+        if (!multiple) {
+          const found = view.posAtCoords({ left: event.clientX, top: event.clientY })
+          if (found) {
+            const selection = TextSelection.near(view.state.doc.resolve(found.pos))
+            view.dispatch(view.state.tr.setSelection(selection))
+          }
         }
-        openTableMenu(event.clientX, event.clientY)
+        openTableMenu(event.clientX, event.clientY, multiple)
         return true
       },
     },
@@ -208,11 +278,42 @@ const editor = useEditor({
 })
 
 const tableMenu = ref<{ x: number; y: number } | null>(null)
+const tableMenuMultiple = ref(false)
 
-/** 在右键位置打开删行、删列菜单，并避开窗口边缘。 */
-function openTableMenu(x: number, y: number) {
-  const menuWidth = 128
-  const menuHeight = 76
+const tableMenuInsert = [
+  { action: 'rowBefore', label: '插入上行(A)', key: 'a' },
+  { action: 'rowAfter', label: '插入下行(B)', key: 'b' },
+  { action: 'columnBefore', label: '插入左列(L)', key: 'l' },
+  { action: 'columnAfter', label: '插入右列(R)', key: 'r' },
+] as const
+
+const tableMenuRemove = [
+  { action: 'deleteRow', label: '删除行(D)', key: 'd' },
+  { action: 'deleteColumn', label: '删除列(C)', key: 'c' },
+] as const
+
+const tableMenuTable = [{ action: 'deleteTable', label: '删除表格' }] as const
+
+type TableMenuAction =
+  | (typeof tableMenuInsert)[number]['action']
+  | (typeof tableMenuRemove)[number]['action']
+  | (typeof tableMenuTable)[number]['action']
+
+/**
+ * 在右键位置打开表格菜单，并避开窗口边缘。
+ * 框选多格时只留删行、删列。
+ *
+ * @param multiple 当前是不是多格选区
+ */
+function openTableMenu(x: number, y: number, multiple = false) {
+  tableMenuMultiple.value = multiple
+  const menuWidth = 168
+  const menuItemHeight = 32
+  const itemCount = multiple
+    ? tableMenuRemove.length
+    : tableMenuInsert.length + tableMenuRemove.length + tableMenuTable.length
+  const separatorCount = multiple ? 0 : 2
+  const menuHeight = itemCount * menuItemHeight + 12 + separatorCount * 9
   tableMenu.value = {
     x: Math.max(8, Math.min(x, window.innerWidth - menuWidth - 8)),
     y: Math.max(8, Math.min(y, window.innerHeight - menuHeight - 8)),
@@ -224,31 +325,50 @@ function closeTableMenu() {
 }
 
 /**
- * 从右键菜单删掉当前行或列。
+ * 执行右键菜单里的插行、插列、删行、删列或删表。
  *
- * @param kind 删行还是删列
+ * @param action 菜单项
  */
-function chooseTableMenu(kind: 'row' | 'column') {
+function chooseTableMenu(action: TableMenuAction) {
   closeTableMenu()
-  if (kind === 'row') deleteTableRow()
-  else deleteTableColumn()
+  if (action === 'rowBefore' || action === 'rowAfter') {
+    insertTableRow(action === 'rowBefore' ? 'before' : 'after')
+    return
+  }
+  if (action === 'columnBefore' || action === 'columnAfter') {
+    insertTableColumn(action === 'columnBefore' ? 'before' : 'after')
+    return
+  }
+  if (action === 'deleteRow') deleteTableRow()
+  else if (action === 'deleteColumn') deleteTableColumn()
+  else deleteCurrentTable()
 }
 
 watch(tableMenu, (menu, _, onCleanup) => {
   if (!menu) return
   const onKey = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') closeTableMenu()
+    if (event.key === 'Escape') {
+      closeTableMenu()
+      return
+    }
+    if (event.repeat || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return
+    const items = tableMenuMultiple.value ? tableMenuRemove : [...tableMenuInsert, ...tableMenuRemove]
+    const item = items.find((entry) => entry.key === event.key.toLowerCase())
+    if (!item) return
+    event.preventDefault()
+    event.stopPropagation()
+    chooseTableMenu(item.action)
   }
   const onPointer = (event: Event) => {
     const target = event.target
     if (target instanceof Element && target.closest('.table-menu')) return
     closeTableMenu()
   }
-  window.addEventListener('keydown', onKey)
+  window.addEventListener('keydown', onKey, true)
   window.addEventListener('pointerdown', onPointer)
   window.addEventListener('scroll', closeTableMenu, true)
   onCleanup(() => {
-    window.removeEventListener('keydown', onKey)
+    window.removeEventListener('keydown', onKey, true)
     window.removeEventListener('pointerdown', onPointer)
     window.removeEventListener('scroll', closeTableMenu, true)
   })
@@ -444,7 +564,33 @@ function insertTable(rows: number, cols: number) {
 }
 
 /**
- * 删掉选中单元格所在的整行。选区盖住全部行时，删掉这张表。
+ * 在当前行的上方或下方插入一整行。
+ *
+ * @param where 插在当前行上面还是下面
+ */
+function insertTableRow(where: 'before' | 'after') {
+  const current = editor.value
+  if (!current) return
+  const chain = current.chain().focus()
+  if (where === 'before') chain.addRowBefore().run()
+  else chain.addRowAfter().run()
+}
+
+/**
+ * 在当前列的左侧或右侧插入一整列。
+ *
+ * @param where 插在当前列左边还是右边
+ */
+function insertTableColumn(where: 'before' | 'after') {
+  const current = editor.value
+  if (!current) return
+  const chain = current.chain().focus()
+  if (where === 'before') chain.addColumnBefore().run()
+  else chain.addColumnAfter().run()
+}
+
+/**
+ * 删掉选中单元格所在的行。框选多格时删掉选区盖住的每一行；盖住全部行时，删掉这张表。
  */
 function deleteTableRow() {
   const current = editor.value
@@ -455,7 +601,7 @@ function deleteTableRow() {
 }
 
 /**
- * 删掉选中单元格所在的整列。选区盖住全部列时，删掉这张表。
+ * 删掉选中单元格所在的列。框选多格时删掉选区盖住的每一列；盖住全部列时，删掉这张表。
  */
 function deleteTableColumn() {
   const current = editor.value
@@ -463,6 +609,11 @@ function deleteTableColumn() {
   const chain = current.chain().focus()
   if (current.can().deleteColumn()) chain.deleteColumn().run()
   else chain.deleteTable().run()
+}
+
+/** 删掉光标所在的整张表格。 */
+function deleteCurrentTable() {
+  editor.value?.chain().focus().deleteTable().run()
 }
 
 function openCustomTable() {
@@ -669,8 +820,39 @@ defineExpose({ scrollToHeading })
         :style="{ left: `${tableMenu.x}px`, top: `${tableMenu.y}px` }"
         @mousedown.prevent
       >
-        <button type="button" role="menuitem" @click="chooseTableMenu('row')">删除行</button>
-        <button type="button" role="menuitem" @click="chooseTableMenu('column')">删除列</button>
+        <template v-if="!tableMenuMultiple">
+          <button
+            v-for="item in tableMenuInsert"
+            :key="item.action"
+            type="button"
+            role="menuitem"
+            @click="chooseTableMenu(item.action)"
+          >
+            {{ item.label }}
+          </button>
+          <div class="table-menu-line" role="separator" />
+        </template>
+        <button
+          v-for="item in tableMenuRemove"
+          :key="item.action"
+          type="button"
+          role="menuitem"
+          @click="chooseTableMenu(item.action)"
+        >
+          {{ item.label }}
+        </button>
+        <template v-if="!tableMenuMultiple">
+          <div class="table-menu-line" role="separator" />
+          <button
+            v-for="item in tableMenuTable"
+            :key="item.action"
+            type="button"
+            role="menuitem"
+            @click="chooseTableMenu(item.action)"
+          >
+            {{ item.label }}
+          </button>
+        </template>
       </div>
     </Teleport>
     <el-dialog v-model="tableCustomOpen" title="插入表格" width="360px" append-to-body class="grammar-table-dialog">
@@ -1084,7 +1266,7 @@ defineExpose({ scrollToHeading })
 .table-menu {
   position: fixed;
   z-index: 20;
-  min-width: 112px;
+  min-width: 168px;
   padding: 4px;
   border: 1px solid #e4ddd2;
   border-radius: 8px;
@@ -1102,8 +1284,16 @@ defineExpose({ scrollToHeading })
   color: #1c1917;
   font: inherit;
   font-size: 14px;
+  line-height: 20px;
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
+}
+
+.table-menu-line {
+  height: 1px;
+  margin: 4px 6px;
+  background: #e4ddd2;
 }
 
 .table-menu button:hover {

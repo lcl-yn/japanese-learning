@@ -42,7 +42,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 ## 语法
 
-当前课按需读取 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可删除所在行或列。没有文件时显示「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读。课文仍是占位。
+当前课按需读取 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可在当前单元格上下插入行、左右插入列，也可删除所在行、列或整张表。框选多格后右键只留删行、删列，并删掉选区盖住的全部行或列。没有文件时显示「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读。课文仍是占位。
 
 ## 练习
 
