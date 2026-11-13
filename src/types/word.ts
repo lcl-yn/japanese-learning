@@ -21,15 +21,15 @@ export interface LessonMeta {
 }
 
 export interface UnitMeta {
-  id: number
-  /** 第几单元。筛选和路由用这个，不用 id。 */
+  /** 第几单元。筛选和路由用这个。 */
   unit: number
   name: string
   lessons: LessonMeta[]
 }
 
 export interface BookMeta {
-  id: string
+  /** 册代号。路由、词条和课文语法路径用这个，不用数据库主键。 */
+  code: string
   name: string
   level: BookLevel
   volume: BookVolume

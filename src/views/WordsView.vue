@@ -12,11 +12,11 @@ function startingBook() {
   const withLesson = wordsStore.manifest.books.find((book) =>
     book.units.some((unit) => unit.lessons.length > 0),
   )
-  return withLesson?.id ?? wordsStore.manifest.books[0]?.id ?? ''
+  return withLesson?.code ?? wordsStore.manifest.books[0]?.code ?? ''
 }
 
 function startingUnit(nextBookId: string) {
-  const book = wordsStore.manifest.books.find((item) => item.id === nextBookId)
+  const book = wordsStore.manifest.books.find((item) => item.code === nextBookId)
   if (wordsStore.currentBookId === nextBookId && wordsStore.currentUnitId !== 0) {
     return wordsStore.currentUnitId
   }
@@ -28,7 +28,7 @@ const unitId = ref(startingUnit(bookId.value))
 const lessonId = ref(0)
 
 const units = computed(
-  () => wordsStore.manifest.books.find((book) => book.id === bookId.value)?.units ?? [],
+  () => wordsStore.manifest.books.find((book) => book.code === bookId.value)?.units ?? [],
 )
 const lessons = computed(() => units.value.find((unit) => unit.unit === unitId.value)?.lessons ?? [])
 
@@ -44,7 +44,7 @@ const listedWords = computed(() =>
 const scopeKey = computed(() => `${bookId.value}:${unitId.value}:${lessonId.value}`)
 
 function onBookChange(nextBookId: string) {
-  const book = wordsStore.manifest.books.find((item) => item.id === nextBookId)
+  const book = wordsStore.manifest.books.find((item) => item.code === nextBookId)
   bookId.value = nextBookId
   unitId.value = book?.units[0]?.unit ?? 0
   lessonId.value = 0
@@ -90,9 +90,9 @@ onMounted(async () => {
         >
           <el-option
             v-for="book in wordsStore.manifest.books"
-            :key="book.id"
+            :key="book.code"
             :label="book.name"
-            :value="book.id"
+            :value="book.code"
           />
         </el-select>
         <el-select
@@ -101,7 +101,7 @@ onMounted(async () => {
           placeholder="暂无单元"
           @change="onUnitChange"
         >
-          <el-option v-for="unit in units" :key="unit.id" :label="unit.name" :value="unit.unit" />
+          <el-option v-for="unit in units" :key="unit.unit" :label="unit.name" :value="unit.unit" />
         </el-select>
         <el-select
           class="scope-select lesson-select"

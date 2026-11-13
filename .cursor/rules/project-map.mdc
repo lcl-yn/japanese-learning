@@ -32,7 +32,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 | `/study/:bookId/:unitId/:lessonId/grammar` | `src/views/LessonDocumentView.vue` | `GrammarEditor.vue`。`section` 为 `grammar` |
 | `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts` |
 
-页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。没有课的单元只显示「暂无课」。单词本里的册、单元、课只筛词表，打开单词本时左侧课单保持收起。单元号用清单单元对象上的 `unit`，课号用课对象上的 `lesson`，都不用 `id`。词条 JSON 不写这两个字段。
+页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。没有课的单元只显示「暂无课」。单词本里的册、单元、课只筛词表，打开单词本时左侧课单保持收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
 
 文档标题和简介由 `src/utils/seo.ts` 写入。五十音图、单词本用固定简介；练习、课文、语法会带上当前册、单元和课。课文和语法页标记为 noindex。
 

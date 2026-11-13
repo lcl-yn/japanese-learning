@@ -62,33 +62,33 @@ function onSelect(index: string) {
   >
     <el-menu-item index="/kana">50音图</el-menu-item>
     <el-menu-item index="/words">单词本</el-menu-item>
-    <el-sub-menu v-for="book in wordsStore.manifest.books" :key="book.id" :index="`book:${book.id}`">
+    <el-sub-menu v-for="book in wordsStore.manifest.books" :key="book.code" :index="`book:${book.code}`">
       <template #title>{{ book.name }}</template>
-      <el-menu-item v-if="book.units.length === 0" :index="`empty:${book.id}`" disabled>
+      <el-menu-item v-if="book.units.length === 0" :index="`empty:${book.code}`" disabled>
         暂无单元
       </el-menu-item>
       <el-sub-menu
         v-for="unit in book.units"
-        :key="`${book.id}-${unit.id}`"
-        :index="`unit:${book.id}:${unit.unit}`"
+        :key="`${book.code}-${unit.unit}`"
+        :index="`unit:${book.code}:${unit.unit}`"
       >
         <template #title>{{ unit.name }}</template>
         <el-menu-item
           v-if="unit.lessons.length === 0"
-          :index="`empty-lesson:${book.id}:${unit.unit}`"
+          :index="`empty-lesson:${book.code}:${unit.unit}`"
           disabled
         >
           暂无课
         </el-menu-item>
         <el-sub-menu
           v-for="lesson in unit.lessons"
-          :key="`${book.id}-${unit.id}-${lesson.id}`"
-          :index="`lesson:${book.id}:${unit.unit}:${lesson.lesson}`"
+          :key="`${book.code}-${unit.unit}-${lesson.id}`"
+          :index="`lesson:${book.code}:${unit.unit}:${lesson.lesson}`"
         >
           <template #title>{{ lesson.name }}</template>
-          <el-menu-item :index="`/study/${book.id}/${unit.unit}/${lesson.lesson}/practice`">单词</el-menu-item>
-          <el-menu-item :index="`/study/${book.id}/${unit.unit}/${lesson.lesson}/reading`">课文</el-menu-item>
-          <el-menu-item :index="`/study/${book.id}/${unit.unit}/${lesson.lesson}/grammar`">语法</el-menu-item>
+          <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/practice`">单词</el-menu-item>
+          <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/reading`">课文</el-menu-item>
+          <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/grammar`">语法</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
     </el-sub-menu>

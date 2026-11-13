@@ -18,7 +18,7 @@ interface WordLocation {
 
 /**
  * 把课次 JSON 收成 words 对象。
- * 书籍以清单为准写入。单元号用单元对象的 unit，课号用课对象的 lesson，都不用 id。describe 缺省或 null 时记为空字符串，并丢掉已废弃的 index。
+ * 书籍以清单的 code 写入 bookId。单元号用单元对象的 unit，课号用课对象的 lesson。describe 缺省或 null 时记为空字符串，并丢掉已废弃的 index。
  *
  * @param raw 课次文件里的一条词
  * @param location 该课在清单中的书籍、单元和课号
@@ -74,7 +74,7 @@ export async function loadAllWords(baseUrl = DEFAULT_BASE): Promise<{
       for (const lesson of unit.lessons) {
         tasks.push(
           loadLessonWords(`${baseUrl}/${lesson.file}`, lesson.file, {
-            bookId: book.id,
+            bookId: book.code,
             unit: unit.unit,
             lesson: lesson.lesson,
           }),

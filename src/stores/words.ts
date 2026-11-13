@@ -33,17 +33,17 @@ export const useWordsStore = defineStore('words', {
   }),
   getters: {
     lessonOptions(state): ScopeOption[] {
-      const book = state.manifest.books.find((item) => item.id === state.currentBookId)
+      const book = state.manifest.books.find((item) => item.code === state.currentBookId)
       const unit = book?.units.find((item) => item.unit === state.currentUnitId)
       if (!book || !unit) {
         return [{ bookId: 'all', unitId: 0, lessonId: 0, label: '全部' }]
       }
       const options: ScopeOption[] = [
-        { bookId: book.id, unitId: unit.unit, lessonId: 0, label: '本单元全部' },
+        { bookId: book.code, unitId: unit.unit, lessonId: 0, label: '本单元全部' },
       ]
       for (const lesson of unit.lessons) {
         options.push({
-          bookId: book.id,
+          bookId: book.code,
           unitId: unit.unit,
           lessonId: lesson.lesson,
           label: lesson.name,

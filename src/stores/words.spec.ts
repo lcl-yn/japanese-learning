@@ -14,13 +14,12 @@ import { useWordsStore } from './words'
 const manifest: WordsManifest = {
   books: [
     {
-      id: 'beginner-upper',
+      code: 'beginner-upper',
       name: '初级上册',
       level: 'beginner',
       volume: 'upper',
       units: [
         {
-          id: 201,
           unit: 1,
           name: '第1单元',
           lessons: [
@@ -31,7 +30,7 @@ const manifest: WordsManifest = {
       ],
     },
     {
-      id: 'beginner-lower',
+      code: 'beginner-lower',
       name: '初级下册',
       level: 'beginner',
       volume: 'lower',

@@ -1,13 +1,12 @@
 {
     "books": [
         {
-            "id": "beginner-upper",
+            "code": "beginner-upper",
             "name": "初级上册",
             "level": "beginner",
             "volume": "upper",
             "units": [
                 {
-                    "id": 1,
                     "unit": 1,
                     "name": "第1单元",
                     "lessons": [
@@ -32,7 +31,6 @@
                     ]
                 },
                 {
-                    "id": 2,
                     "unit": 2,
                     "name": "第2单元",
                     "lessons": []
@@ -40,19 +38,17 @@
             ]
         },
         {
-            "id": "beginner-lower",
+            "code": "beginner-lower",
             "name": "初级下册",
             "level": "beginner",
             "volume": "lower",
             "units": [
                 {
-                    "id": 1,
                     "unit": 1,
                     "name": "第1单元",
                     "lessons": []
                 },
                 {
-                    "id": 2,
                     "unit": 2,
                     "name": "第2单元",
                     "lessons": []
@@ -60,28 +56,28 @@
             ]
         },
         {
-            "id": "intermediate-upper",
+            "code": "intermediate-upper",
             "name": "中级上册",
             "level": "intermediate",
             "volume": "upper",
             "units": []
         },
         {
-            "id": "intermediate-lower",
+            "code": "intermediate-lower",
             "name": "中级下册",
             "level": "intermediate",
             "volume": "lower",
             "units": []
         },
         {
-            "id": "advanced-upper",
+            "code": "advanced-upper",
             "name": "高级上册",
             "level": "advanced",
             "volume": "upper",
             "units": []
         },
         {
-            "id": "advanced-lower",
+            "code": "advanced-lower",
             "name": "高级下册",
             "level": "advanced",
             "volume": "lower",

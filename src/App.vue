@@ -45,7 +45,7 @@ const crumbs = computed(() => {
   const bookId = route.params.bookId
   const unitRaw = route.params.unitId
   if (typeof bookId !== 'string' || typeof unitRaw !== 'string') return []
-  const book = wordsStore.manifest.books.find((item) => item.id === bookId)
+  const book = wordsStore.manifest.books.find((item) => item.code === bookId)
   const section = typeof route.meta.title === 'string' ? route.meta.title : ''
   if (!book || !section) return []
   const unitId = Number(unitRaw)

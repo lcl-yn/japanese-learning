@@ -17,7 +17,7 @@ watch(
     if (!loaded) return
     const bookId = String(route.params.bookId ?? '')
     const unitId = Number(route.params.unitId)
-    const book = wordsStore.manifest.books.find((item) => item.id === bookId)
+    const book = wordsStore.manifest.books.find((item) => item.code === bookId)
     const unit = book?.units.find((item) => item.unit === unitId)
     const lesson = unit?.lessons[0]
     if (!book || !unit || !lesson) {

@@ -21,13 +21,12 @@ describe('loadAllWords', () => {
     const manifest: WordsManifest = {
       books: [
         {
-          id: 'beginner-upper',
+          code: 'beginner-upper',
           name: '初级上册',
           level: 'beginner',
           volume: 'upper',
           units: [
             {
-              id: 201,
               unit: 1,
               name: '第1单元',
               lessons: [
@@ -38,7 +37,7 @@ describe('loadAllWords', () => {
           ],
         },
         {
-          id: 'beginner-lower',
+          code: 'beginner-lower',
           name: '初级下册',
           level: 'beginner',
           volume: 'lower',
@@ -100,7 +99,7 @@ describe('loadAllWords', () => {
         bookId: 'beginner-upper',
       },
     ])
-    expect(result.manifest.books[0].id).toBe('beginner-upper')
+    expect(result.manifest.books[0].code).toBe('beginner-upper')
     expect(fetchMock).toHaveBeenCalledTimes(3)
   })
 
@@ -108,13 +107,12 @@ describe('loadAllWords', () => {
     const manifest: WordsManifest = {
       books: [
         {
-          id: 'beginner-upper',
+          code: 'beginner-upper',
           name: '初级上册',
           level: 'beginner',
           volume: 'upper',
           units: [
             {
-              id: 1,
               unit: 1,
               name: '第1单元',
               lessons: [
