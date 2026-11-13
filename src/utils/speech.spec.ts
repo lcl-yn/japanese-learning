@@ -23,7 +23,10 @@ describe('restartJapanese', () => {
         voice: SpeechSynthesisVoice | null = null
         onend: (() => void) | null = null
         onerror: (() => void) | null = null
-        constructor(public text: string) {}
+        text: string
+        constructor(text: string) {
+          this.text = text
+        }
       },
     )
     vi.useFakeTimers()
@@ -71,7 +74,7 @@ describe('restartJapanese', () => {
     await vi.runAllTimersAsync()
 
     const uttered = speak.mock.calls[0][0] as SpeechSynthesisUtterance
-    uttered.onend?.(new Event('end'))
+    uttered.onend?.(new Event('end') as SpeechSynthesisEvent)
     expect(onend).toHaveBeenCalledOnce()
   })
 
