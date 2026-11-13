@@ -25,6 +25,12 @@
       ]
     },
     {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第4课基本课文.m4a"
+      }
+    },
+    {
       "type": "blockquote",
       "content": [
         {
@@ -179,16 +185,16 @@
                 {
                   "type": "textStyle",
                   "attrs": {
-                    "color": "#000000",
-                    "fontFamily": null,
-                    "fontSize": null
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
                   }
                 },
                 {
                   "type": "bold"
                 }
               ],
-              "text": "甲： その　箱の　中に　何が　いますか"
+              "text": "甲：その　箱の　中に　何が　いますか"
             }
           ]
         },
@@ -204,9 +210,9 @@
                 {
                   "type": "textStyle",
                   "attrs": {
-                    "color": "#000000",
-                    "fontFamily": null,
-                    "fontSize": null
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
                   }
                 },
                 {
@@ -227,7 +233,197 @@
           "type": "paragraph",
           "attrs": {
             "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：部屋に　誰が　いますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：だれも　いません"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
           }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：小野さんの　家は　どこに　ありますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：横浜に　あります"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：あそこはいぬがりますね　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "ね"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　确认。“对吧”“是吧”。最后读音为疑问"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：ええ，私の　犬です"
+            }
+          ]
         }
       ]
     },
@@ -238,28 +434,64 @@
       }
     },
     {
-      "type": "paragraph",
+      "type": "heading",
       "attrs": {
-        "textAlign": null
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "应用课文-会社の場所"
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第4课应用课文.m4a"
       }
     },
     {
       "type": "paragraph",
       "attrs": {
         "textAlign": null
-      }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "会社の場所　　ーー公司所在位置，公司地址（偏口语，问大致地点）"
+        }
+      ]
     },
     {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      }
-    },
-    {
-      "type": "paragraph",
-      "attrs": {
-        "textAlign": null
-      }
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "李："
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "小野："
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "paragraph",
