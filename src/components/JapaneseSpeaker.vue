@@ -8,7 +8,10 @@ const EDGE_GAP = 8
 const PLAY_ONCE = 'once'
 const PLAY_LOOP = 'loop'
 /** 循环时，一句读完到下一句开始的间隔 */
-const LOOP_GAP_MS = 1500
+const LOOP_GAP_MS = 1000
+
+/** 输入法正在处理按键，此时回车只确认候选 */
+const IME_PROCESS_KEY = 229
 
 const text = ref('')
 const playMode = ref<typeof PLAY_ONCE | typeof PLAY_LOOP>(PLAY_ONCE)
@@ -121,7 +124,7 @@ function stopLoop() {
 
 /**
  * 循环复读当前输入。
- * 一句自然读完后隔 1.5 秒再从头读。
+ * 一句自然读完后隔 1 秒再从头读。
  */
 function startLoop() {
   const token = ++loopToken
@@ -161,6 +164,16 @@ function onSpeak() {
   if (looping.value) stopLoop()
   restartJapanese(text.value, selectedVoiceUri.value)
 }
+
+/**
+ * 输入框按回车，等同点一次小喇叭。
+ * 输入法还在组字时只确认候选，不朗读。
+ */
+function onInputEnter(event: KeyboardEvent) {
+  event.preventDefault()
+  if (event.isComposing || event.key === 'Process' || event.keyCode === IME_PROCESS_KEY) return
+  onSpeak()
+}
 </script>
 
 <template>
@@ -193,6 +206,7 @@ function onSpeak() {
       aria-label="日语"
       lang="ja"
       clearable
+      @keydown.enter="onInputEnter"
     />
     <button
       type="submit"
