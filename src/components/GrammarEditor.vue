@@ -13,6 +13,7 @@ import StarterKit from '@tiptap/starter-kit'
 import { computed, ref, watch } from 'vue'
 import type { GrammarDocument } from '@/types/grammar'
 import { isGrammarDocument } from '@/utils/grammarDocument'
+import { quoteEnter } from '@/utils/quoteEnter'
 
 const props = withDefaults(
   defineProps<{
@@ -207,6 +208,7 @@ const editor = useEditor({
       codeBlock: false,
       link: false,
     }),
+    quoteEnter,
     TextStyleKit.configure({
       backgroundColor: false,
       lineHeight: false,
