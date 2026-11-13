@@ -2,6 +2,13 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { loadAllWords } from './wordsLoader'
 import type { WordsManifest } from '@/types/word'
 
+/** 测试里的 fetch 入参可能是字符串、URL 或 Request，统一成地址再分支。 */
+function requestUrl(input: RequestInfo | URL): string {
+  if (typeof input === 'string') return input
+  if (input instanceof URL) return input.href
+  return input.url
+}
+
 describe('loadAllWords', () => {
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn())
@@ -62,7 +69,8 @@ describe('loadAllWords', () => {
     ]
 
     const fetchMock = vi.mocked(fetch)
-    fetchMock.mockImplementation(async (url: string) => {
+    fetchMock.mockImplementation(async (input) => {
+      const url = requestUrl(input)
       if (url.endsWith('manifest.json')) return Response.json(manifest)
       if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
       if (url.endsWith('lesson-02.json')) return Response.json(lesson2)
@@ -120,7 +128,8 @@ describe('loadAllWords', () => {
     }
     const lesson1 = [{ cn: '学生', jp: 'がくせい', jp_write: '学生', describe: '', part_of_speech: '名词' }]
 
-    vi.mocked(fetch).mockImplementation(async (url: string) => {
+    vi.mocked(fetch).mockImplementation(async (input) => {
+      const url = requestUrl(input)
       if (url.endsWith('manifest.json')) return Response.json(manifest)
       if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
       if (url.endsWith('lesson-04.json')) {
@@ -144,7 +153,8 @@ describe('loadAllWords', () => {
     ])
     expect(missingPage.manifest.books[0].units[0].lessons).toHaveLength(2)
 
-    vi.mocked(fetch).mockImplementation(async (url: string) => {
+    vi.mocked(fetch).mockImplementation(async (input) => {
+      const url = requestUrl(input)
       if (url.endsWith('manifest.json')) return Response.json(manifest)
       if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
       return new Response('', { status: 404 })
