@@ -4,11 +4,38 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import GrammarEditor from '@/components/GrammarEditor.vue'
 import GrammarOutline from '@/components/GrammarOutline.vue'
-import { loadGrammarDocument, saveGrammarDocument } from '@/services/grammarLoader'
+import { loadLessonDocument, saveLessonDocument } from '@/services/grammarLoader'
 import type { GrammarDocument } from '@/types/grammar'
-import { grammarHasText, isGrammarDocument, isGrammarLocation } from '@/utils/grammarDocument'
+import { grammarHasText, isGrammarDocument, isGrammarLocation, type LessonSection } from '@/utils/grammarDocument'
 import { grammarOutline } from '@/utils/grammarOutline'
-import { GRAMMAR_DESCRIPTION } from '@/utils/seo'
+import { GRAMMAR_DESCRIPTION, READING_DESCRIPTION } from '@/utils/seo'
+
+const props = defineProps<{
+  section: LessonSection
+}>()
+
+const PAGE = {
+  grammar: {
+    description: GRAMMAR_DESCRIPTION,
+    loading: '语法加载中…',
+    empty: '这一课还没有语法。',
+    loadFailed: '语法加载失败',
+    saveFailed: '语法保存失败',
+    placeholder: '写下这一课的语法…',
+    editorLabel: '语法笔记',
+    toolbarLabel: '语法格式',
+  },
+  reading: {
+    description: READING_DESCRIPTION,
+    loading: '课文加载中…',
+    empty: '这一课还没有课文。',
+    loadFailed: '课文加载失败',
+    saveFailed: '课文保存失败',
+    placeholder: '写下这一课的课文…',
+    editorLabel: '课文',
+    toolbarLabel: '课文格式',
+  },
+} as const
 
 const route = useRoute()
 const canEdit = import.meta.env.DEV
@@ -24,6 +51,7 @@ const baseline = ref<GrammarDocument | null>(null)
 const draft = ref<GrammarDocument | null>(null)
 let loadRequest = 0
 
+const page = computed(() => PAGE[props.section])
 const bookId = computed(() => (typeof route.params.bookId === 'string' ? route.params.bookId : ''))
 const unit = computed(() => Number(route.params.unitId))
 const lesson = computed(() => Number(route.params.lessonId))
@@ -38,7 +66,7 @@ const dirty = computed(
 )
 
 watch(
-  [bookId, unit, lesson],
+  [bookId, unit, lesson, () => props.section],
   () => {
     void load()
   },
@@ -49,10 +77,11 @@ onBeforeRouteLeave(() => confirmLeave())
 onBeforeRouteUpdate(() => confirmLeave())
 
 /**
- * 读取当前课的语法。快速切换课次时，只保留最后一次结果。
+ * 读取当前课的课文或语法。快速切换课次时，只保留最后一次结果。
  */
 async function load(): Promise<void> {
   const requestId = ++loadRequest
+  const section = props.section
   loading.value = true
   error.value = ''
   editing.value = false
@@ -65,7 +94,7 @@ async function load(): Promise<void> {
     return
   }
   try {
-    const document = await loadGrammarDocument(bookId.value, unit.value, lesson.value)
+    const document = await loadLessonDocument(section, bookId.value, unit.value, lesson.value)
     if (requestId !== loadRequest) return
     baseline.value = document
     draft.value = copyDocument(document)
@@ -73,7 +102,7 @@ async function load(): Promise<void> {
     if (requestId !== loadRequest) return
     baseline.value = null
     draft.value = null
-    error.value = caught instanceof Error ? caught.message : '语法加载失败'
+    error.value = caught instanceof Error ? caught.message : page.value.loadFailed
   } finally {
     if (requestId === loadRequest) loading.value = false
   }
@@ -89,7 +118,7 @@ async function save(): Promise<void> {
   if (!draft.value || !dirty.value || saving.value) return
   saving.value = true
   try {
-    await saveGrammarDocument({
+    await saveLessonDocument(props.section, {
       bookId: bookId.value,
       unit: unit.value,
       lesson: lesson.value,
@@ -99,7 +128,7 @@ async function save(): Promise<void> {
     editing.value = false
     ElMessage.success('已保存')
   } catch (caught) {
-    ElMessage.error(caught instanceof Error ? caught.message : '语法保存失败')
+    ElMessage.error(caught instanceof Error ? caught.message : page.value.saveFailed)
   } finally {
     saving.value = false
   }
@@ -118,7 +147,7 @@ function onDraft(document: GrammarDocument): void {
 
 function copyDocument(document: GrammarDocument): GrammarDocument {
   const raw: unknown = JSON.parse(JSON.stringify(document))
-  if (!isGrammarDocument(raw)) throw new Error('语法保存失败')
+  if (!isGrammarDocument(raw)) throw new Error(page.value.saveFailed)
   return raw
 }
 
@@ -150,11 +179,11 @@ async function confirmLeave(): Promise<boolean> {
 </script>
 
 <template>
-  <section class="grammar-view" :aria-busy="loading">
-    <div class="grammar-body">
-      <div class="grammar-column">
-        <div class="grammar-bar">
-          <p class="page-lead">{{ GRAMMAR_DESCRIPTION }}</p>
+  <section class="lesson-view" :aria-busy="loading">
+    <div class="lesson-body">
+      <div class="lesson-column">
+        <div class="lesson-bar">
+          <p class="page-lead">{{ page.description }}</p>
           <div v-if="canEdit && !loading && !error" class="actions">
             <el-button v-if="!editing" type="primary" @click="startEdit">
               {{ hasText ? '编辑' : '写这一课' }}
@@ -166,22 +195,25 @@ async function confirmLeave(): Promise<boolean> {
           </div>
         </div>
 
-        <p v-if="loading" class="status">语法加载中…</p>
+        <p v-if="loading" class="status">{{ page.loading }}</p>
         <p v-else-if="error" class="error">{{ error }}</p>
         <template v-else>
-          <p v-if="!editing && !hasText" class="status">这一课还没有语法。</p>
+          <p v-if="!editing && !hasText" class="status">{{ page.empty }}</p>
           <GrammarEditor
             v-else-if="baseline"
             ref="editorRef"
-            :key="`${bookId}-${unit}-${lesson}-${editorKey}`"
+            :key="`${section}-${bookId}-${unit}-${lesson}-${editorKey}`"
             :document="baseline"
             :editable="editing"
+            :placeholder="page.placeholder"
+            :label="page.editorLabel"
+            :toolbar-label="page.toolbarLabel"
             @update="onDraft"
           />
         </template>
       </div>
 
-      <aside v-if="showOutline" class="grammar-outline" aria-label="标题">
+      <aside v-if="showOutline" class="lesson-outline" aria-label="标题">
         <p class="outline-title">标题</p>
         <p v-if="outline.length === 0" class="outline-empty">把段落设成标题后，这里会列出。</p>
         <GrammarOutline v-else :items="outline" :active-index="activeHeading" @select="selectHeading" />
@@ -191,7 +223,7 @@ async function confirmLeave(): Promise<boolean> {
 </template>
 
 <style scoped>
-.grammar-body {
+.lesson-body {
   display: grid;
   grid-template-columns: minmax(0, 8fr) minmax(0, 2fr);
   align-items: start;
@@ -199,11 +231,11 @@ async function confirmLeave(): Promise<boolean> {
   width: 100%;
 }
 
-.grammar-column {
+.lesson-column {
   min-width: 0;
 }
 
-.grammar-bar {
+.lesson-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -230,7 +262,7 @@ async function confirmLeave(): Promise<boolean> {
   color: #9f3d2f;
 }
 
-.grammar-outline {
+.lesson-outline {
   position: sticky;
   top: 0;
   box-sizing: border-box;
@@ -258,11 +290,11 @@ async function confirmLeave(): Promise<boolean> {
 }
 
 @media (max-width: 720px) {
-  .grammar-body {
+  .lesson-body {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .grammar-outline {
+  .lesson-outline {
     position: static;
     max-height: 220px;
   }

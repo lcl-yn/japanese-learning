@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { loadGrammarDocument, saveGrammarDocument } from './grammarLoader'
-import { GRAMMAR_SAVE_PATH, emptyGrammarDocument } from '@/utils/grammarDocument'
+import { loadGrammarDocument, loadLessonDocument, saveGrammarDocument, saveLessonDocument } from './grammarLoader'
+import { GRAMMAR_SAVE_PATH, READING_SAVE_PATH, emptyGrammarDocument } from '@/utils/grammarDocument'
 
 describe('loadGrammarDocument', () => {
   beforeEach(() => {
@@ -51,6 +51,25 @@ describe('loadGrammarDocument', () => {
   })
 })
 
+describe('loadLessonDocument', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('reads a reading file and reports reading errors', async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('', { status: 404 }))
+    await expect(loadLessonDocument('reading', 'beginner-upper', 1, 1, '/')).resolves.toEqual(emptyGrammarDocument())
+    expect(fetch).toHaveBeenCalledWith('/data/reading/beginner-upper/unit-01-lesson-01.json')
+
+    vi.mocked(fetch).mockResolvedValue(new Response('', { status: 500 }))
+    await expect(loadLessonDocument('reading', 'beginner-upper', 1, 1, '/')).rejects.toThrow('课文加载失败')
+  })
+})
+
 describe('saveGrammarDocument', () => {
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn())
@@ -83,5 +102,28 @@ describe('saveGrammarDocument', () => {
       }),
     ).rejects.toThrow('语法保存失败')
     expect(fetch).not.toHaveBeenCalled()
+  })
+})
+
+describe('saveLessonDocument', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('puts a reading document on the reading endpoint', async () => {
+    vi.mocked(fetch).mockResolvedValue(Response.json({ ok: true }))
+    const document = emptyGrammarDocument()
+
+    await saveLessonDocument('reading', { bookId: 'beginner-upper', unit: 1, lesson: 1, document })
+
+    expect(fetch).toHaveBeenCalledWith(READING_SAVE_PATH, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookId: 'beginner-upper', unit: 1, lesson: 1, document }),
+    })
   })
 })

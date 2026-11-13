@@ -3,6 +3,8 @@ import {
   emptyGrammarDocument,
   grammarHasText,
   grammarRelativePath,
+  lessonRelativePath,
+  lessonSavePath,
   isGrammarDocument,
   isGrammarLocation,
   parseGrammarSaveBody,
@@ -28,6 +30,15 @@ describe('grammarRelativePath', () => {
     expect(grammarRelativePath('beginner-upper', 1, 2)).toBe(
       'data/grammar/beginner-upper/unit-01-lesson-02.json',
     )
+  })
+})
+
+describe('lessonRelativePath', () => {
+  it('puts a reading file in its own folder', () => {
+    expect(lessonRelativePath('reading', 'beginner-upper', 1, 2)).toBe(
+      'data/reading/beginner-upper/unit-01-lesson-02.json',
+    )
+    expect(lessonSavePath('reading')).toBe('/__reading')
   })
 })
 

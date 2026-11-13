@@ -37,6 +37,27 @@ function toWord(raw: LessonWord, location: WordLocation): Word {
   }
 }
 
+/**
+ * 读取一课的词条。
+ * 文件不存在时这一课没有词。开发服务器对缺少的静态文件会回退成页面 HTML，同样视为没有词，避免把首页当成 JSON 解析。
+ *
+ * @param fileUrl 课次文件地址
+ * @param file 清单里的相对路径，用于失败提示
+ * @param location 该课在清单中的书籍、单元和课号
+ * @return 这一课的词；文件缺失时为空数组
+ */
+async function loadLessonWords(fileUrl: string, file: string, location: WordLocation): Promise<Word[]> {
+  const res = await fetch(fileUrl)
+  if (res.status === 404) return []
+  if (!res.ok) {
+    throw new Error(`Failed to load ${file}: ${res.status}`)
+  }
+  const contentType = res.headers.get('content-type') ?? ''
+  if (!contentType.includes('application/json')) return []
+  const raw = (await res.json()) as LessonWord[]
+  return raw.map((word) => toWord(word, location))
+}
+
 export async function loadAllWords(baseUrl = DEFAULT_BASE): Promise<{
   manifest: WordsManifest
   words: Word[]
@@ -52,14 +73,10 @@ export async function loadAllWords(baseUrl = DEFAULT_BASE): Promise<{
     for (const unit of book.units) {
       for (const lesson of unit.lessons) {
         tasks.push(
-          fetch(`${baseUrl}/${lesson.file}`).then(async (res) => {
-            if (!res.ok) {
-              throw new Error(`Failed to load ${lesson.file}: ${res.status}`)
-            }
-            const raw = (await res.json()) as LessonWord[]
-            return raw.map((word) =>
-              toWord(word, { bookId: book.id, unit: unit.unit, lesson: lesson.lesson }),
-            )
+          loadLessonWords(`${baseUrl}/${lesson.file}`, lesson.file, {
+            bookId: book.id,
+            unit: unit.unit,
+            lesson: lesson.lesson,
           }),
         )
       }

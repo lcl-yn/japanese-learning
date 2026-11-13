@@ -19,7 +19,7 @@ export const WORDS_DESCRIPTION = '按册、单元和课查阅日语单词，对�
 
 export const PRACTICE_DESCRIPTION = '看中文写假名和手写，或看日语写中文。答错的词下次更容易被抽到。'
 
-export const READING_DESCRIPTION = '日语课文还在整理，暂时没有可阅读的内容。'
+export const READING_DESCRIPTION = '按课阅读课文，包含标题、正文和批注。'
 
 export const GRAMMAR_DESCRIPTION = '按课阅读语法笔记，包含标题、例句和批注。'
 

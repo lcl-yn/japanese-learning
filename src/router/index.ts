@@ -29,13 +29,15 @@ const router = createRouter({
     {
       path: '/study/:bookId/:unitId/:lessonId/reading',
       name: 'reading',
-      component: () => import('@/views/SectionPlaceholder.vue'),
+      component: () => import('@/views/LessonDocumentView.vue'),
+      props: { section: 'reading' },
       meta: { title: '课文', description: READING_DESCRIPTION, robots: 'noindex,follow', section: 'reading' },
     },
     {
       path: '/study/:bookId/:unitId/:lessonId/grammar',
       name: 'grammar',
-      component: () => import('@/views/GrammarView.vue'),
+      component: () => import('@/views/LessonDocumentView.vue'),
+      props: { section: 'grammar' },
       meta: { title: '语法', description: GRAMMAR_DESCRIPTION, robots: 'noindex,follow', section: 'grammar' },
     },
     { path: '/study/:bookId/:unitId/:lessonId/words', redirect: '/words' },

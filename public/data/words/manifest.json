@@ -22,6 +22,12 @@
                             "lesson": 2,
                             "name": "第2课",
                             "file": "beginner-upper/lesson-02.json"
+                        },
+                        {
+                            "id": 4,
+                            "lesson": 4,
+                            "name": "第4课",
+                            "file": "beginner-upper/lesson-04.json"
                         }
                     ]
                 },

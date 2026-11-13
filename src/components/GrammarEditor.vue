@@ -14,10 +14,20 @@ import { computed, ref, watch } from 'vue'
 import type { GrammarDocument } from '@/types/grammar'
 import { isGrammarDocument } from '@/utils/grammarDocument'
 
-const props = defineProps<{
-  document: GrammarDocument
-  editable: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    document: GrammarDocument
+    editable: boolean
+    placeholder?: string
+    label?: string
+    toolbarLabel?: string
+  }>(),
+  {
+    placeholder: '写下这一课的语法…',
+    label: '语法笔记',
+    toolbarLabel: '语法格式',
+  },
+)
 
 const emit = defineEmits<{
   update: [document: GrammarDocument]
@@ -206,7 +216,7 @@ const editor = useEditor({
       alignments: ['left', 'center', 'right', 'justify'],
     }),
     Placeholder.configure({
-      placeholder: '写下这一课的语法…',
+      placeholder: props.placeholder,
     }),
     TableKit.configure({
       table: { resizable: false, cellMinWidth: tableCellMinWidth },
@@ -216,7 +226,7 @@ const editor = useEditor({
   editorProps: {
     attributes: {
       spellcheck: 'false',
-      'aria-label': '语法笔记',
+      'aria-label': props.label,
     },
     handleDOMEvents: {
       mousedown(view, event) {
@@ -660,7 +670,7 @@ defineExpose({ scrollToHeading })
 
 <template>
   <div class="grammar-editor" :class="{ 'is-editing': editable }">
-    <div v-if="editable" class="toolbar" role="toolbar" aria-label="语法格式">
+    <div v-if="editable" class="toolbar" role="toolbar" :aria-label="toolbarLabel">
       <el-select
         class="choice choice-block"
         :model-value="active.block"

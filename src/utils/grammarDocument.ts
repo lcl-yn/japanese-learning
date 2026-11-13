@@ -25,8 +25,14 @@ export interface GrammarSaveRequest {
   document: GrammarDocument
 }
 
+/** 课文和语法共用同一套文档，只是文件目录和保存地址不同。 */
+export type LessonSection = 'grammar' | 'reading'
+
 /** 开发服务器保存语法的地址。打包后的页面没有这个接口。 */
 export const GRAMMAR_SAVE_PATH = '/__grammar'
+
+/** 开发服务器保存课文的地址。打包后的页面没有这个接口。 */
+export const READING_SAVE_PATH = '/__reading'
 
 const BOOK_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const NODE_TYPE = /^[a-zA-Z][a-zA-Z0-9]*$/
@@ -39,16 +45,42 @@ const MAX_ATTR_KEY = 40
 const MAX_ATTR_LIST = 20
 
 /**
- * 判断这一课能不能对应到语法文件。
+ * 判断这一课能不能对应到课文或语法文件。
  * 书籍 id 只允许小写字母、数字和连字符，单元和课号是 1 到 999 的整数。
  *
  * @param bookId 册 id
  * @param unit 单元号
  * @param lesson 课号
- * @return 可以读写这一课的语法文件时为 true
+ * @return 可以读写这一课的文件时为 true
  */
 export function isGrammarLocation(bookId: unknown, unit: unknown, lesson: unknown): boolean {
   return isBookId(bookId) && isLessonNumber(unit) && isLessonNumber(lesson)
+}
+
+/**
+ * 开发服务器保存这一栏的地址。
+ *
+ * @param section 课文或语法
+ * @return 保存接口路径
+ */
+export function lessonSavePath(section: LessonSection): string {
+  return section === 'grammar' ? GRAMMAR_SAVE_PATH : READING_SAVE_PATH
+}
+
+/**
+ * 一课一份文档的相对路径，相对于 public。
+ * 调用前先用 isGrammarLocation 确认参数。
+ *
+ * @param section 课文或语法
+ * @param bookId 册 id
+ * @param unit 单元号
+ * @param lesson 课号
+ * @return 如 data/reading/beginner-upper/unit-01-lesson-01.json
+ */
+export function lessonRelativePath(section: LessonSection, bookId: string, unit: number, lesson: number): string {
+  const unitText = String(unit).padStart(2, '0')
+  const lessonText = String(lesson).padStart(2, '0')
+  return `data/${section}/${bookId}/unit-${unitText}-lesson-${lessonText}.json`
 }
 
 /**
@@ -61,9 +93,7 @@ export function isGrammarLocation(bookId: unknown, unit: unknown, lesson: unknow
  * @return 如 data/grammar/beginner-upper/unit-01-lesson-01.json
  */
 export function grammarRelativePath(bookId: string, unit: number, lesson: number): string {
-  const unitText = String(unit).padStart(2, '0')
-  const lessonText = String(lesson).padStart(2, '0')
-  return `data/grammar/${bookId}/unit-${unitText}-lesson-${lessonText}.json`
+  return lessonRelativePath('grammar', bookId, unit, lesson)
 }
 
 /**

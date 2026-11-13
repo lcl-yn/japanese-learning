@@ -2,12 +2,19 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { dirname, isAbsolute, relative, resolve } from 'node:path'
 import type { Plugin } from 'vite'
-import { GRAMMAR_SAVE_PATH, grammarRelativePath, parseGrammarSaveBody } from '../src/utils/grammarDocument.ts'
+import {
+  lessonRelativePath,
+  lessonSavePath,
+  parseGrammarSaveBody,
+  type LessonSection,
+} from '../src/utils/grammarDocument.ts'
+
+const SECTIONS: LessonSection[] = ['grammar', 'reading']
 
 const MAX_BYTES = 512 * 1024
 
 /**
- * 开发时把语法编辑器的保存写进 public/data/grammar。
+ * 开发时把课文和语法编辑器的保存写进 public/data/reading 或 public/data/grammar。
  * 只在 vite dev 注册，打包后的静态站点没有这个接口。
  */
 export function grammarSavePlugin(): Plugin {
@@ -17,26 +24,32 @@ export function grammarSavePlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const pathname = req.url?.split('?')[0]
-        if (pathname !== GRAMMAR_SAVE_PATH || req.method !== 'PUT') {
+        const section = SECTIONS.find((item) => lessonSavePath(item) === pathname)
+        if (!section || req.method !== 'PUT') {
           next()
           return
         }
-        void persist(server.config.root, req, res)
+        void persist(server.config.root, section, req, res)
       })
     },
   }
 }
 
-async function persist(root: string, req: IncomingMessage, res: ServerResponse): Promise<void> {
+async function persist(
+  root: string,
+  section: LessonSection,
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
   try {
     const parsed = parseGrammarSaveBody(parseJson(await readBody(req)))
     if (!parsed) {
       reply(res, 400)
       return
     }
-    const grammarRoot = resolve(root, 'public', 'data', 'grammar')
-    const filePath = resolve(root, 'public', grammarRelativePath(parsed.bookId, parsed.unit, parsed.lesson))
-    const fromRoot = relative(grammarRoot, filePath)
+    const dataRoot = resolve(root, 'public', 'data', section)
+    const filePath = resolve(root, 'public', lessonRelativePath(section, parsed.bookId, parsed.unit, parsed.lesson))
+    const fromRoot = relative(dataRoot, filePath)
     if (fromRoot.startsWith('..') || isAbsolute(fromRoot)) {
       reply(res, 400)
       return

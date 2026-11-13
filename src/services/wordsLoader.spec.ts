@@ -61,17 +61,11 @@ describe('loadAllWords', () => {
       },
     ]
 
-    const fetchMock = fetch as unknown as ReturnType<typeof vi.fn>
+    const fetchMock = vi.mocked(fetch)
     fetchMock.mockImplementation(async (url: string) => {
-      if (url.endsWith('manifest.json')) {
-        return { ok: true, json: async () => manifest }
-      }
-      if (url.endsWith('lesson-01.json')) {
-        return { ok: true, json: async () => lesson1 }
-      }
-      if (url.endsWith('lesson-02.json')) {
-        return { ok: true, json: async () => lesson2 }
-      }
+      if (url.endsWith('manifest.json')) return Response.json(manifest)
+      if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
+      if (url.endsWith('lesson-02.json')) return Response.json(lesson2)
       throw new Error(`unexpected url ${url}`)
     })
 
@@ -100,5 +94,62 @@ describe('loadAllWords', () => {
     ])
     expect(result.manifest.books[0].id).toBe('beginner-upper')
     expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+
+  it('skips a lesson when its file is missing or the dev server returns the page', async () => {
+    const manifest: WordsManifest = {
+      books: [
+        {
+          id: 'beginner-upper',
+          name: '初级上册',
+          level: 'beginner',
+          volume: 'upper',
+          units: [
+            {
+              id: 1,
+              unit: 1,
+              name: '第1单元',
+              lessons: [
+                { id: 1, lesson: 1, name: '第1课', file: 'beginner-upper/lesson-01.json' },
+                { id: 4, lesson: 4, name: '第4课', file: 'beginner-upper/lesson-04.json' },
+              ],
+            },
+          ],
+        },
+      ],
+    }
+    const lesson1 = [{ cn: '学生', jp: 'がくせい', jp_write: '学生', describe: '', part_of_speech: '名词' }]
+
+    vi.mocked(fetch).mockImplementation(async (url: string) => {
+      if (url.endsWith('manifest.json')) return Response.json(manifest)
+      if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
+      if (url.endsWith('lesson-04.json')) {
+        return new Response('<!doctype html>', { status: 200, headers: { 'content-type': 'text/html' } })
+      }
+      throw new Error(`unexpected url ${url}`)
+    })
+
+    const missingPage = await loadAllWords('/data/words')
+    expect(missingPage.words).toEqual([
+      {
+        cn: '学生',
+        jp: 'がくせい',
+        jp_write: '学生',
+        describe: '',
+        part_of_speech: '名词',
+        lesson: 1,
+        unit: 1,
+        bookId: 'beginner-upper',
+      },
+    ])
+    expect(missingPage.manifest.books[0].units[0].lessons).toHaveLength(2)
+
+    vi.mocked(fetch).mockImplementation(async (url: string) => {
+      if (url.endsWith('manifest.json')) return Response.json(manifest)
+      if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
+      return new Response('', { status: 404 })
+    })
+
+    await expect(loadAllWords('/data/words')).resolves.toEqual(missingPage)
   })
 })
