@@ -38,7 +38,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json` 的 `books`（初级 / 中级 / 高级，各分上册、下册）→ `units` → `lessons`，再并行加载各课 JSON。课次文件不存在，或开发服务器把缺失文件回退成页面 HTML 时，这一课按没有词处理，不中断整份词库。书籍、单元、课号由清单写入，词条 JSON 不写这些位置。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`；内存里另有 `bookId`、`unit`、`lesson`。
 
-练习页的课次下拉只列当前单元的课，含「本单元全部」。单词本的册、单元、课互不影响正在做的练习。
+练习页的课次下拉只列当前单元的课，含「本单元全部」。单词本的册、单元、课互不影响正在做的练习。单词本「显示中文」左侧可搜索中文释义：点输入框里的放大镜或回车后，当前册、单元、课里只留释义（逗号、顿号、分号分开的每一义）以关键字开头的词。组字中的回车不触发搜索。
 
 ## 课文与语法
 

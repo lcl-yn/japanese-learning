@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { Search } from '@element-plus/icons-vue'
 import WordListTable from '@/components/WordListTable.vue'
 import { useWordsStore } from '@/stores/words'
+import { matchesCnPrefix } from '@/utils/cnSearch'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
 import { WORDS_DESCRIPTION } from '@/utils/seo'
+
+/** 输入法组字时回车的 keyCode，只确认候选，不触发搜索。 */
+const IME_PROCESS_KEY = 229
 
 const wordsStore = useWordsStore()
 
@@ -32,16 +37,28 @@ const units = computed(
 )
 const lessons = computed(() => units.value.find((unit) => unit.unit === unitId.value)?.lessons ?? [])
 
+const cnDraft = ref('')
+const cnQuery = ref('')
+
 const listedWords = computed(() =>
   wordsStore.allWords.filter((word) => {
     if (word.bookId !== bookId.value) return false
     if (unitId.value !== 0 && word.unit !== unitId.value) return false
     if (lessonId.value !== 0 && word.lesson !== lessonId.value) return false
-    return true
+    return matchesCnPrefix(word.cn, cnQuery.value)
   }),
 )
 
-const scopeKey = computed(() => `${bookId.value}:${unitId.value}:${lessonId.value}`)
+const scopeKey = computed(() => `${bookId.value}:${unitId.value}:${lessonId.value}:${cnQuery.value}`)
+
+function applyCnSearch() {
+  cnQuery.value = cnDraft.value.trim()
+}
+
+function onCnSearchEnter(event: KeyboardEvent) {
+  if (event.isComposing || event.key === 'Process' || event.keyCode === IME_PROCESS_KEY) return
+  applyCnSearch()
+}
 
 function onBookChange(nextBookId: string) {
   const book = wordsStore.manifest.books.find((item) => item.code === nextBookId)
@@ -112,8 +129,27 @@ onMounted(async () => {
           <el-option label="全部" :value="0" />
           <el-option v-for="lesson in lessons" :key="lesson.id" :label="lesson.name" :value="lesson.lesson" />
         </el-select>
-        <el-switch v-model="showChinese" active-text="显示中文" inactive-text="隐藏中文" />
-        <el-switch v-model="showJapanese" active-text="显示假名" inactive-text="隐藏假名" />
+        <el-input
+          v-model="cnDraft"
+          class="cn-search"
+          placeholder="搜索中文释义"
+          aria-label="按中文释义搜索"
+          @keydown.enter="onCnSearchEnter"
+        >
+          <template #suffix>
+            <button type="button" class="cn-search-icon" aria-label="搜索" @click="applyCnSearch">
+              <el-icon :size="16"><Search /></el-icon>
+            </button>
+          </template>
+        </el-input>
+        <span class="visibility">
+          <el-switch v-model="showChinese" aria-label="显示或隐藏中文" />
+          <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
+        </span>
+        <span class="visibility">
+          <el-switch v-model="showJapanese" aria-label="显示或隐藏假名" />
+          <span>{{ showJapanese ? '显示假名' : '隐藏假名' }}</span>
+        </span>
       </div>
       <div class="voice">
         <span>语音选择:</span>
@@ -170,6 +206,15 @@ onMounted(async () => {
   gap: 16px;
 }
 
+.visibility {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #57534e;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
 .voice {
   display: flex;
   align-items: center;
@@ -182,6 +227,26 @@ onMounted(async () => {
 
 .lesson-select {
   width: 120px;
+}
+
+.cn-search {
+  width: 200px;
+}
+
+.cn-search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #909399;
+  cursor: pointer;
+}
+
+.cn-search-icon:hover {
+  color: #57534e;
 }
 
 .voice-select {
