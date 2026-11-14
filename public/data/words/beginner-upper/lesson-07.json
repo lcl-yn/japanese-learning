@@ -1,0 +1,380 @@
+[
+    {
+        "cn": "咖啡",
+        "jp": "コーヒー",
+        "jp_write": "コーヒー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "可乐",
+        "jp": "コーラ",
+        "jp_write": "コーラ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "茶",
+        "jp": "おちゃ",
+        "jp_write": "お茶",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "葡萄酒",
+        "jp": "ワイン",
+        "jp_write": "ワイン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "面包",
+        "jp": "パン",
+        "jp_write": "パン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "蛋糕",
+        "jp": "ケーキ",
+        "jp_write": "ケーキ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "粥",
+        "jp": "おかゆ",
+        "jp_write": "お粥",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "午饭",
+        "jp": "ひるごはん",
+        "jp_write": "昼ご飯",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "盒饭",
+        "jp": "おべんとう",
+        "jp_write": "お弁当",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "荞麦面",
+        "jp": "そば",
+        "jp_write": "そば",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "面条",
+        "jp": "うどん",
+        "jp_write": "うどん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "鸡肉鸡蛋盖饭",
+        "jp": "おやこどん",
+        "jp_write": "親子丼",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "咖喱(饭)",
+        "jp": "カレー",
+        "jp_write": "カレー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "鸡蛋",
+        "jp": "たまご",
+        "jp_write": "卵",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "干酪",
+        "jp": "チーズ",
+        "jp_write": "チーズ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "苹果",
+        "jp": "リンゴ",
+        "jp_write": "リンゴ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "草莓",
+        "jp": "イチゴ",
+        "jp_write": "イチゴ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "荞麦面馆",
+        "jp": "そばや",
+        "jp_write": "そば屋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "网球",
+        "jp": "テニス",
+        "jp_write": "テニス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "慢跑,跑步",
+        "jp": "ジョギング",
+        "jp_write": "ジョギング",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "足球",
+        "jp": "サッカー",
+        "jp_write": "サッカー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "棒球",
+        "jp": "やきゅう",
+        "jp_write": "野球",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "申请书",
+        "jp": "もうしこみしょ",
+        "jp_write": "申込書",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "信",
+        "jp": "てがみ",
+        "jp_write": "手紙",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "CD",
+        "jp": "シーディー",
+        "jp_write": "ＣＤ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "音乐",
+        "jp": "おんがく",
+        "jp_write": "音楽",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电影",
+        "jp": "えいが",
+        "jp_write": "映画",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "动物园",
+        "jp": "どうぶつえん",
+        "jp_write": "動物園",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "熊猫",
+        "jp": "パンダ",
+        "jp_write": "パンダ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "喝",
+        "jp": "のみます",
+        "jp_write": "飲みます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "买",
+        "jp": "かいます",
+        "jp_write": "買います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "拍照,拍摄",
+        "jp": "とります",
+        "jp_write": "撮ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "写",
+        "jp": "かきます",
+        "jp_write": "書きます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "读",
+        "jp": "よみます",
+        "jp_write": "読みます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "听",
+        "jp": "ききます",
+        "jp_write": "聞きます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "吃",
+        "jp": "たべます",
+        "jp_write": "食べます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "看",
+        "jp": "みます",
+        "jp_write": "見ます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "干,做",
+        "jp": "します",
+        "jp_write": "します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "打扫,扫除",
+        "jp": "そうじします",
+        "jp_write": "掃除します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "从现在起,今后",
+        "jp": "これから",
+        "jp_write": "これから",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "那么(口语)",
+        "jp": "じゃあ",
+        "jp_write": "じゃあ",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "那么(郑重)",
+        "jp": "では",
+        "jp_write": "では",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "欢迎光临",
+        "jp": "いらっしゃいませ",
+        "jp_write": "いらっしゃいませ",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "告辞了,我走了",
+        "jp": "しつれいします",
+        "jp_write": "失礼します",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "打搅了,失礼了",
+        "jp": "しつれいしました",
+        "jp_write": "失礼しました",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "我走了(郑重)",
+        "jp": "いってまいります",
+        "jp_write": "いってまいります",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "我走了",
+        "jp": "いってきます",
+        "jp_write": "いってきます",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "你走好",
+        "jp": "いってらっしゃい",
+        "jp_write": "いってらっしゃい",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "我回来了",
+        "jp": "ただいま",
+        "jp_write": "ただいま",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "你回来了",
+        "jp": "おかえりなさい",
+        "jp_write": "お帰りなさい",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "我知道了",
+        "jp": "かしこまりました",
+        "jp_write": "かしこまりました",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "打扰了",
+        "jp": "おじゃまします",
+        "jp_write": "お邪魔します",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "给我",
+        "jp": "ください",
+        "jp_write": "ください",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "上午",
+        "jp": "ごぜんちゅう",
+        "jp_write": "午前中",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

@@ -1,0 +1,219 @@
+[
+    {
+        "cn": "西服",
+        "jp": "ようふく",
+        "jp_write": "洋服",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "毛衣(sweater)",
+        "jp": "セーター",
+        "jp_write": "セーター",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "笔记本电脑",
+        "jp": "ノートパソコン",
+        "jp_write": "ノートパソコン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "摩托车",
+        "jp": "バイク",
+        "jp_write": "バイク",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "年糕小豆汤",
+        "jp": "おしるこ",
+        "jp_write": "お汁粉",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "天麸罗",
+        "jp": "てんぷら",
+        "jp_write": "天ぷら",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "新年后首次参拜",
+        "jp": "はつもうで",
+        "jp_write": "初詣",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "健康",
+        "jp": "けんこう",
+        "jp_write": "健康",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "恋爱",
+        "jp": "れんあい",
+        "jp_write": "恋愛",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "连续剧(drama)",
+        "jp": "ドラマ",
+        "jp_write": "ドラマ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "对象,对方",
+        "jp": "あいて",
+        "jp_write": "相手",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "恋人",
+        "jp": "こいびと",
+        "jp_write": "恋人",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前辈",
+        "jp": "せんぱい",
+        "jp_write": "先輩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "男性",
+        "jp": "だんせい",
+        "jp_write": "男性",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "外国人",
+        "jp": "がいこくじん",
+        "jp_write": "外国人",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "夏天",
+        "jp": "なつ",
+        "jp_write": "夏",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今年",
+        "jp": "ことし",
+        "jp_write": "今年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "开始",
+        "jp": "はじめます",
+        "jp_write": "始めます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "联系",
+        "jp": "れんらくします",
+        "jp_write": "連絡します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "想要",
+        "jp": "ほしい",
+        "jp_write": "欲しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "美观,杰出",
+        "jp": "りっぱ",
+        "jp_write": "立派",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "下次,这回",
+        "jp": "こんど",
+        "jp_write": "今度",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "一定",
+        "jp": "ぜひ",
+        "jp_write": "ぜひ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "快要",
+        "jp": "そろそろ",
+        "jp_write": "そろそろ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "先,首先",
+        "jp": "まず",
+        "jp_write": "まず",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "贝多芬",
+        "jp": "ベートーベン",
+        "jp_write": "ベートーベン",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "肖邦",
+        "jp": "ショパン",
+        "jp_write": "ショパン",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "故宫",
+        "jp": "こきゅう",
+        "jp_write": "故宮",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "欧洲",
+        "jp": "ヨーロッパ",
+        "jp_write": "ヨーロッパ",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "香港",
+        "jp": "ホンコン",
+        "jp_write": "香港",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "瑞士",
+        "jp": "スイス",
+        "jp_write": "スイス",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    }
+]

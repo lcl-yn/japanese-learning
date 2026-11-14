@@ -1,0 +1,1104 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "基本课文",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "color": "#000000",
+                "fontFamily": null,
+                "fontSize": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第5课基本课文.m4a"
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "orderedList",
+          "attrs": {
+            "start": 1,
+            "type": null
+          },
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "今　四時です"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "森さんは　七時に　起きます　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "に"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　具体时刻后面加に，表示动作发生的时间"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "森さんは　先週　休みました　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "ました"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　ます形的过去肯定"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "私は　昨日　働きませんでした　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "ませんでした"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　ます形的过去否定"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：毎日，何時に　寝ますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：十一時三十分に　寝ます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：昨日，何時から　何時まで　働きましたか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：九時から　六時まで　働きました　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "から～まで"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　从……到……。时间、场所都能用"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：先週　休みましたか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：いいえ，休みませんでした"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：試験は　いつ　始まりますか　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "いつ"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　问“什么时候”，后面不加に"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：来週の　木曜日です"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "应用课文-遅刻"
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第5课应用课文.m4a"
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "遅刻　　ーー迟到"
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：小野さん，李さんの　歓迎会は　いつですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：あさっての　夜です"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：何時からですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：六時からです　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "から"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　从……开始"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：森君，おはよう。今　何時ですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：十時十五分です"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：遅刻ですね"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：すみません，課長。今朝　九時に　起きました"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：森さんは　毎朝　何時に　起きますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：いつもは　七時ごろです。李さんは？　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "ごろ"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　大约的时刻，前面是具体时间"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：私は　６時ごろです"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：北京支社は　何時に　始まりますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：八時です。午前　八時から　午後　五時まで　働きます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：土曜日は？"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：土曜日は　働きません。土曜日と　日曜日は　休みです　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "は"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　拿出来和其他日子对比"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+[
+    {
+        "cn": "声音,响声",
+        "jp": "おと",
+        "jp_write": "音",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "声音",
+        "jp": "こえ",
+        "jp_write": "声",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "空气",
+        "jp": "くうき",
+        "jp_write": "空気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "儿子",
+        "jp": "むすこ",
+        "jp_write": "息子",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "医生",
+        "jp": "いしゃ",
+        "jp_write": "医者",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "令爱",
+        "jp": "おじょうさん",
+        "jp_write": "お嬢さん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "社会的一员,成人",
+        "jp": "しゃかいじん",
+        "jp_write": "社会人",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旅行导游",
+        "jp": "りょこうガイド",
+        "jp_write": "旅行ガイド",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "学者",
+        "jp": "がくしゃ",
+        "jp_write": "学者",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "飞行员",
+        "jp": "パイロット",
+        "jp_write": "パイロット",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "设计者,设计家",
+        "jp": "デザイナー",
+        "jp_write": "デザイナー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "时段廉价销售",
+        "jp": "タイムサービス",
+        "jp_write": "タイムサービス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "新年大甩卖",
+        "jp": "しんしゅんセール",
+        "jp_write": "新春セール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "七折",
+        "jp": "さんわりびき",
+        "jp_write": "３割引",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "定价",
+        "jp": "ていか",
+        "jp_write": "定価",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "半价",
+        "jp": "はんがく",
+        "jp_write": "半額",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "价格",
+        "jp": "ねだん",
+        "jp_write": "値段",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "衬衫",
+        "jp": "シャツ",
+        "jp_write": "シャツ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "裙子",
+        "jp": "スカート",
+        "jp_write": "スカート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "颜色",
+        "jp": "いろ",
+        "jp_write": "色",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "红色",
+        "jp": "あか",
+        "jp_write": "赤",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "蓝色",
+        "jp": "あお",
+        "jp_write": "青",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "过年,新年",
+        "jp": "おしょうがつ",
+        "jp_write": "お正月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "时间",
+        "jp": "じかん",
+        "jp_write": "時間",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "将来",
+        "jp": "しょうらい",
+        "jp_write": "将来",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "准备",
+        "jp": "じゅんび",
+        "jp_write": "準備",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "疾病",
+        "jp": "びょうき",
+        "jp_write": "病気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "变,当,变成,成为",
+        "jp": "なります",
+        "jp_write": "なります",
+        "describe": "一类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "开",
+        "jp": "あきます",
+        "jp_write": "開きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "适合,相称",
+        "jp": "にあいます",
+        "jp_write": "似合います",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "闹,使人心烦",
+        "jp": "うるさい",
+        "jp_write": "うるさい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "单纯,简洁(simple)",
+        "jp": "シンプル",
+        "jp_write": "シンプル",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "马上,一会儿,不久",
+        "jp": "まもなく",
+        "jp_write": "間もなく",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "马上",
+        "jp": "もうすぐ",
+        "jp_write": "もうすぐ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "更加,更",
+        "jp": "さらに",
+        "jp_write": "さらに",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "更,再",
+        "jp": "もっと",
+        "jp_write": "もっと",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "啊,喂",
+        "jp": "さあ",
+        "jp_write": "さあ",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "尽量,尽可能",
+        "jp": "できるだけ",
+        "jp_write": "できるだけ",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "一下子,一起,汇总,汇集",
+        "jp": "まとめて",
+        "jp_write": "まとめて",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "从现在起",
+        "jp": "いまから",
+        "jp_write": "今から",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

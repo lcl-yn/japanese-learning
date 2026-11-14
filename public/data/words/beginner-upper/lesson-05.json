@@ -1,0 +1,373 @@
+[
+    {
+        "cn": "现在",
+        "jp": "いま",
+        "jp_write": "今",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上个星期",
+        "jp": "せんしゅう",
+        "jp_write": "先週",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下个星期",
+        "jp": "らいしゅう",
+        "jp_write": "来週",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下下个星期",
+        "jp": "さらいしゅう",
+        "jp_write": "さ来週",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "这个星期",
+        "jp": "こんしゅう",
+        "jp_write": "今週",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "昨天",
+        "jp": "きのう",
+        "jp_write": "昨日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明天",
+        "jp": "あした",
+        "jp_write": "明日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "后天",
+        "jp": "あさって",
+        "jp_write": "あさって",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前天",
+        "jp": "おととい",
+        "jp_write": "おととい",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每天,每日",
+        "jp": "まいにち",
+        "jp_write": "毎日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每天早晨",
+        "jp": "まいあさ",
+        "jp_write": "毎朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每天晚上",
+        "jp": "まいばん",
+        "jp_write": "毎晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每个星期",
+        "jp": "まいしゅう",
+        "jp_write": "毎週",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上午",
+        "jp": "ごぜん",
+        "jp_write": "午前",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上午(am)",
+        "jp": "エーエム",
+        "jp_write": "am",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下午",
+        "jp": "ごご",
+        "jp_write": "午後",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下午(pm)",
+        "jp": "ピーエム",
+        "jp_write": "pm",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期日",
+        "jp": "にちようび",
+        "jp_write": "日曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期一",
+        "jp": "げつようび",
+        "jp_write": "月曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期二",
+        "jp": "かようび",
+        "jp_write": "火曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期五",
+        "jp": "きんようび",
+        "jp_write": "金曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期六",
+        "jp": "どようび",
+        "jp_write": "土曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天早晨",
+        "jp": "けさ",
+        "jp_write": "今朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天晚上",
+        "jp": "こんばん",
+        "jp_write": "今晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明年",
+        "jp": "らいねん",
+        "jp_write": "来年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "去年",
+        "jp": "きょねん",
+        "jp_write": "去年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "晚上,夜里,夜晚",
+        "jp": "よる",
+        "jp_write": "夜",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "晚上",
+        "jp": "ばん",
+        "jp_write": "晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "早晨",
+        "jp": "あさ",
+        "jp_write": "朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "学校",
+        "jp": "がっこう",
+        "jp_write": "学校",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "考试",
+        "jp": "しけん",
+        "jp_write": "試験",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "工作",
+        "jp": "しごと",
+        "jp_write": "仕事",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "迟到",
+        "jp": "ちこく",
+        "jp_write": "遅刻",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "休息",
+        "jp": "やすみ",
+        "jp_write": "休み",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "出差",
+        "jp": "しゅっちょう",
+        "jp_write": "出張",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "进修",
+        "jp": "けんしゅう",
+        "jp_write": "研修",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旅行",
+        "jp": "りょこう",
+        "jp_write": "旅行",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "展览会",
+        "jp": "てんらんかい",
+        "jp_write": "展覧会",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "欢迎会",
+        "jp": "かんげいかい",
+        "jp_write": "歓迎会",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "联欢会",
+        "jp": "パーティー",
+        "jp_write": "パーティー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "府上,(您)家",
+        "jp": "おたく",
+        "jp_write": "お宅",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "什么时候",
+        "jp": "いつ",
+        "jp_write": "いつ",
+        "describe": "",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "休息(动词)",
+        "jp": "やすみます",
+        "jp_write": "休みます",
+        "describe": "一类动词,自他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "干活,工作",
+        "jp": "はたらきます",
+        "jp_write": "働きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "开始",
+        "jp": "はじまります",
+        "jp_write": "始まります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "结束",
+        "jp": "おわります",
+        "jp_write": "終わります",
+        "describe": "一类动词,自他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "起床",
+        "jp": "おきます",
+        "jp_write": "起きます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "睡觉",
+        "jp": "ねます",
+        "jp_write": "寝ます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "学习",
+        "jp": "べんきょうします",
+        "jp_write": "勉強します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "经常,总是",
+        "jp": "いつも",
+        "jp_write": "いつも",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "北京分社",
+        "jp": "ペキンししゃ",
+        "jp_write": "北京支社",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "神户",
+        "jp": "こうべ",
+        "jp_write": "神戸",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "你早",
+        "jp": "おはよう",
+        "jp_write": "おはよう",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    }
+]

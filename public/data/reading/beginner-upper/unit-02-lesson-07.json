@@ -1,0 +1,1132 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "基本课文",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "color": "#000000",
+                "fontFamily": null,
+                "fontSize": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第7课基本课文.m4a"
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "orderedList",
+          "attrs": {
+            "start": 1,
+            "type": null
+          },
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "李さんは　毎日　コーヒーを　飲みます　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "を"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　动作的对象"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "李さんは　図書館で　勉強します　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "で"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　动作进行的场所"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "私は　毎朝　パンか　お粥を　食べます　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "か"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　A或者B，二者选一"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "コーラと　ケーキを　ください　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "ください"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　请给我……。对象用を"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：李さん，今朝　うちで　新聞を　読みましたか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：いいえ，読みませんでした"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：今朝　何を　食べましたか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：何も　食べませんでした　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "何も"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　什么都没……，后面用否定"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：吉田さん，日曜日　何を　しますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：テニスか　ジョギングを　します"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：いらっしゃいませ"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：この　ノートと　鉛筆を　ください"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "应用课文-昼ご飯"
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第7课应用课文.m4a"
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "昼ご飯　　ーー午饭"
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：李さん，これから　昼ご飯ですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：はい，小野さんと　一緒に　行きます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：課長は？"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：コンビニで　お弁当と　お茶を　買いました"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：いつも　コンビニですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：いいえ。いつもは　そば屋で　そばか　うどんを　食べます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：そうですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：李さん，今日は　そば屋へ　行きますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：そうですね"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：じゃあ，課長，失礼します"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "吉田：いってらっしゃい　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "いってらっしゃい"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　对方要出门时说“你去吧”"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "店員：いらっしゃいませ　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "いらっしゃいませ"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　店铺迎接客人，“欢迎光临”"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：すみません，親子丼を　ください。李さんは？"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：私も　それを　ください　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "それ"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　指刚才提到的那个"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "店員：かしこまりました　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "かしこまりました"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　接受点单或吩咐，“知道了”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    }
+  ]
+}

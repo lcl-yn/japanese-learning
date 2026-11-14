@@ -23,6 +23,12 @@
                             "file": "beginner-upper/lesson-02.json"
                         },
                         {
+                            "id": 3,
+                            "lesson": 3,
+                            "name": "第3课",
+                            "file": "beginner-upper/lesson-03.json"
+                        },
+                        {
                             "id": 4,
                             "lesson": 4,
                             "name": "第4课",
@@ -33,7 +39,152 @@
                 {
                     "unit": 2,
                     "name": "第2单元",
-                    "lessons": []
+                    "lessons": [
+                        {
+                            "id": 5,
+                            "lesson": 5,
+                            "name": "第5课",
+                            "file": "beginner-upper/lesson-05.json"
+                        },
+                        {
+                            "id": 6,
+                            "lesson": 6,
+                            "name": "第6课",
+                            "file": "beginner-upper/lesson-06.json"
+                        },
+                        {
+                            "id": 7,
+                            "lesson": 7,
+                            "name": "第7课",
+                            "file": "beginner-upper/lesson-07.json"
+                        },
+                        {
+                            "id": 8,
+                            "lesson": 8,
+                            "name": "第8课",
+                            "file": "beginner-upper/lesson-08.json"
+                        }
+                    ]
+                },
+                {
+                    "unit": 3,
+                    "name": "第3单元",
+                    "lessons": [
+                        {
+                            "id": 9,
+                            "lesson": 9,
+                            "name": "第9课",
+                            "file": "beginner-upper/lesson-09.json"
+                        },
+                        {
+                            "id": 10,
+                            "lesson": 10,
+                            "name": "第10课",
+                            "file": "beginner-upper/lesson-10.json"
+                        },
+                        {
+                            "id": 11,
+                            "lesson": 11,
+                            "name": "第11课",
+                            "file": "beginner-upper/lesson-11.json"
+                        },
+                        {
+                            "id": 12,
+                            "lesson": 12,
+                            "name": "第12课",
+                            "file": "beginner-upper/lesson-12.json"
+                        }
+                    ]
+                },
+                {
+                    "unit": 4,
+                    "name": "第4单元",
+                    "lessons": [
+                        {
+                            "id": 13,
+                            "lesson": 13,
+                            "name": "第13课",
+                            "file": "beginner-upper/lesson-13.json"
+                        },
+                        {
+                            "id": 14,
+                            "lesson": 14,
+                            "name": "第14课",
+                            "file": "beginner-upper/lesson-14.json"
+                        },
+                        {
+                            "id": 15,
+                            "lesson": 15,
+                            "name": "第15课",
+                            "file": "beginner-upper/lesson-15.json"
+                        },
+                        {
+                            "id": 16,
+                            "lesson": 16,
+                            "name": "第16课",
+                            "file": "beginner-upper/lesson-16.json"
+                        }
+                    ]
+                },
+                {
+                    "unit": 5,
+                    "name": "第5单元",
+                    "lessons": [
+                        {
+                            "id": 17,
+                            "lesson": 17,
+                            "name": "第17课",
+                            "file": "beginner-upper/lesson-17.json"
+                        },
+                        {
+                            "id": 18,
+                            "lesson": 18,
+                            "name": "第18课",
+                            "file": "beginner-upper/lesson-18.json"
+                        },
+                        {
+                            "id": 19,
+                            "lesson": 19,
+                            "name": "第19课",
+                            "file": "beginner-upper/lesson-19.json"
+                        },
+                        {
+                            "id": 20,
+                            "lesson": 20,
+                            "name": "第20课",
+                            "file": "beginner-upper/lesson-20.json"
+                        }
+                    ]
+                },
+                {
+                    "unit": 6,
+                    "name": "第6单元",
+                    "lessons": [
+                        {
+                            "id": 21,
+                            "lesson": 21,
+                            "name": "第21课",
+                            "file": "beginner-upper/lesson-21.json"
+                        },
+                        {
+                            "id": 22,
+                            "lesson": 22,
+                            "name": "第22课",
+                            "file": "beginner-upper/lesson-22.json"
+                        },
+                        {
+                            "id": 23,
+                            "lesson": 23,
+                            "name": "第23课",
+                            "file": "beginner-upper/lesson-23.json"
+                        },
+                        {
+                            "id": 24,
+                            "lesson": 24,
+                            "name": "第24课",
+                            "file": "beginner-upper/lesson-24.json"
+                        }
+                    ]
                 }
             ]
         },

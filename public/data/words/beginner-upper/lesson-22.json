@@ -1,0 +1,198 @@
+[
+    {
+        "cn": "滑雪场",
+        "jp": "スキーじょう",
+        "jp_write": "スキー場",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "欢送会",
+        "jp": "そうべつかい",
+        "jp_write": "送別会",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "方便,情况",
+        "jp": "つごう",
+        "jp_write": "都合",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "预约",
+        "jp": "よてい",
+        "jp_write": "予定",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "玩具",
+        "jp": "おもちゃ",
+        "jp_write": "おもちゃ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "火灾",
+        "jp": "かじ",
+        "jp_write": "火事",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "时间,期间",
+        "jp": "きかん",
+        "jp_write": "期間",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "调动工作",
+        "jp": "てんきん",
+        "jp_write": "転勤",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "手机",
+        "jp": "けいたい",
+        "jp_write": "携帯",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "羽毛球",
+        "jp": "バドミントン",
+        "jp_write": "バドミントン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "球拍",
+        "jp": "ラケット",
+        "jp_write": "ラケット",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "夫人,(别人的)爱人",
+        "jp": "おくさん",
+        "jp_write": "奥さん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "歌手",
+        "jp": "かしゅ",
+        "jp_write": "歌手",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "总统",
+        "jp": "だいとうりょう",
+        "jp_write": "大統領",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "做",
+        "jp": "やります",
+        "jp_write": "やります",
+        "describe": "一类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "高兴",
+        "jp": "うれしい",
+        "jp_write": "うれしい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "困倦",
+        "jp": "ねむい",
+        "jp_write": "眠い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "重,沉重",
+        "jp": "おもい",
+        "jp_write": "重い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "突然,紧急",
+        "jp": "きゅう",
+        "jp_write": "急",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "大致,还算",
+        "jp": "まあまあ",
+        "jp_write": "まあまあ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "太,非常,过于",
+        "jp": "あんまり",
+        "jp_write": "あんまり",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "抱歉,请原谅",
+        "jp": "ごめん",
+        "jp_write": "ごめん",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "不",
+        "jp": "ううん ∕ いや",
+        "jp_write": "ううん∕いや",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "嗯",
+        "jp": "うん",
+        "jp_write": "うん",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "清水",
+        "jp": "しみず",
+        "jp_write": "清水",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "太田",
+        "jp": "おおた",
+        "jp_write": "太田",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "莫扎特",
+        "jp": "モーツァルト",
+        "jp_write": "モーツァルト",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "迪斯尼乐园",
+        "jp": "ディズニーランド",
+        "jp_write": "ディズニーランド",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    }
+]

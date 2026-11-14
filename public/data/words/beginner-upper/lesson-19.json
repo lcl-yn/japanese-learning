@@ -1,0 +1,282 @@
+[
+    {
+        "cn": "物品,商品",
+        "jp": "しなもの",
+        "jp_write": "品物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "盘子",
+        "jp": "おさら",
+        "jp_write": "お皿",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "垃圾",
+        "jp": "ごみ",
+        "jp_write": "ごみ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "初学者",
+        "jp": "しょしんしゃ",
+        "jp_write": "初心者",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "熟练者",
+        "jp": "じょうきゅうしゃ",
+        "jp_write": "上級者",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "高级",
+        "jp": "こうきゅう",
+        "jp_write": "高級",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "高级班",
+        "jp": "じょうきゅうクラス",
+        "jp_write": "上級クラス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "英语会话",
+        "jp": "えいかいわ",
+        "jp_write": "英会話",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "路线,滑道(course)",
+        "jp": "コース",
+        "jp_write": "コース",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "滑雪",
+        "jp": "スキー",
+        "jp_write": "スキー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "报告",
+        "jp": "レポート",
+        "jp_write": "レポート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "护照",
+        "jp": "パスポート",
+        "jp_write": "パスポート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "喉咙",
+        "jp": "のど",
+        "jp_write": "のど",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "碰,触",
+        "jp": "さわります",
+        "jp_write": "触ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "脱",
+        "jp": "ぬぎます",
+        "jp_write": "脱ぎます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "摔,摔倒,跌倒",
+        "jp": "ころびます",
+        "jp_write": "転びます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "渴",
+        "jp": "かわきます",
+        "jp_write": "渇きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "痊愈,医好",
+        "jp": "なおります",
+        "jp_write": "治ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "滑,滑行",
+        "jp": "すべります",
+        "jp_write": "滑ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "呼喊",
+        "jp": "よびます",
+        "jp_write": "呼びます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "归还",
+        "jp": "かえします",
+        "jp_write": "返します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "帮忙",
+        "jp": "てつだいます",
+        "jp_write": "手伝います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "搬运",
+        "jp": "はこびます",
+        "jp_write": "運びます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "丢,丢失",
+        "jp": "なくします",
+        "jp_write": "なくします",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "掉,使落下",
+        "jp": "おとします",
+        "jp_write": "落とします",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "放置",
+        "jp": "おきます",
+        "jp_write": "置きます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "支付",
+        "jp": "はらいます",
+        "jp_write": "払います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "站,立",
+        "jp": "たちます",
+        "jp_write": "立ちます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "忘记",
+        "jp": "わすれます",
+        "jp_write": "忘れます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "慌张,惊慌,着急",
+        "jp": "あわてます",
+        "jp_write": "慌てます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "扔,扔掉",
+        "jp": "すてます",
+        "jp_write": "捨てます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "加班",
+        "jp": "ざんぎょうします",
+        "jp_write": "残業します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "担心",
+        "jp": "しんぱいします",
+        "jp_write": "心配します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "真的,真正",
+        "jp": "ほんとう",
+        "jp_write": "本当",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "早点儿",
+        "jp": "はやく",
+        "jp_write": "早く",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "好不容易,终于",
+        "jp": "やっと",
+        "jp_write": "やっと",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "很,相当地",
+        "jp": "だいぶ",
+        "jp_write": "だいぶ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "第一次",
+        "jp": "はじめて",
+        "jp_write": "初めて",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "先",
+        "jp": "さきに",
+        "jp_write": "先に",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "山田",
+        "jp": "やまだ",
+        "jp_write": "山田",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    }
+]

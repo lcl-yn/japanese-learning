@@ -1,0 +1,1069 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "基本课文",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "color": "#000000",
+                "fontFamily": null,
+                "fontSize": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第18课基本课文.m4a"
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "orderedList",
+          "attrs": {
+            "start": 1,
+            "type": null
+          },
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "携帯電話は　とても　小さく　なりました　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "く　なります"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　一类形容词去い加く，表示变成……"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "テレビの　音を　大きく　します　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "く　します"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　人为地使它变成……"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "息子は　医者に　なりました　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "に　なります"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　名词、二类形容词加に，表示变成……"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "部屋を　きれいに　して　ください　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "に　します"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　名词、二类形容词加に，人为地做成……"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：風邪は　どうですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：ゆうべ　薬を　飲みましたが，まだ　よく　なりません"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：旅行の　荷物は　軽い　ほうが　いいですよ　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "ほうがいい"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　最好……。一类形容词用く形"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：はい。できるだけ　軽く　します"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：お嬢さんは　おいくつですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：今年　七歳に　なりました"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：あのう，ちょっと　うるさいですよ"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：あっ，すみません。静かに　します"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "应用课文-新春セール"
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第18课应用课文.m4a"
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "新春セール　　ーー新年大甩卖"
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：小野さん，今日は　たくさん　買いますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：ええ。お正月は　洋服が　安く　なりますから，まとめて　買います　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "く　なります"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　一类形容词去い加く，表示变成……"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：どのぐらい　安く　なりますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：だいたい　定価の　三割引か　半額に　なります　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "に　なります"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　名词加に，表示变成……"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：半額ですか？わたしも　新しい　洋服が　ほしく　なりました　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "く　なりました"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　ほしい也变成く形，再加なります，表示变得想要"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：赤と　青と，どちらが　いいですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：赤い　ほうが　いいですね。よく　似合いますよ"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：そうですか。じゃあ，これに　します　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "に　します"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　决定选择这个"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "店員：まもなく　タイムサービスの　時間です。さらに　お安く　しますよ"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：もう　すぐ　六時に　なりますから，タイムサービスが　始まります"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：タイムサービス？"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：ええ，今から　七時まで　もっと　安く　なります。さあ，行きましょう"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    }
+  ]
+}

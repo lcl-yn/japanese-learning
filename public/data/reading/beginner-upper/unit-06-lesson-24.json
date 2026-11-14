@@ -1,0 +1,1063 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "基本课文",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "color": "#000000",
+                "fontFamily": null,
+                "fontSize": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第24课基本课文.m4a"
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "orderedList",
+          "attrs": {
+            "start": 1,
+            "type": null
+          },
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "李さんは　もう　すぐ　来ると　思います　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "と思います"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　我觉得。前面用简体"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "陳さんは　パーティーに　行くと　言いました　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "と言いました"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　转述别人的话。前面用简体"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "すみません，頭が　痛いんです　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "んです"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　说明情况或理由。问原因时说どうして～んですか"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": null
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "東京タワーへ　行きたいんですが，どうやって　行きますか　　ーー"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#e30000",
+                            "fontFamily": "",
+                            "fontSize": ""
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "が"
+                    },
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "#000000",
+                            "fontFamily": null,
+                            "fontSize": null
+                          }
+                        },
+                        {
+                          "type": "bold"
+                        }
+                      ],
+                      "text": "　先说出前提，再引出请求或问题"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：日本の　音楽に　ついて　どう　思いますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：すばらしいと　思います"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：課長は　何と　言いましたか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：午後から　出かけると　言いました"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：どうして　食べないんですか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：もう　おなかが　いっぱいなんです"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "甲：李さんを　さがして　いるんですが，どこに　いますか"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "乙：会議室に　いると　思います"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    },
+    {
+      "type": "heading",
+      "attrs": {
+        "textAlign": null,
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "应用课文-見送り"
+        }
+      ]
+    },
+    {
+      "type": "lessonAudio",
+      "attrs": {
+        "src": "/data/audio/beginner-upper/第24课应用课文.m4a"
+      }
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "見送り　　ーー送行"
+        }
+      ]
+    },
+    {
+      "type": "blockquote",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：とうとう　お別れですね"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：ありがとう　ございました。本当に　お世話に　なりました　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "お世話になりました"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　承蒙关照。分别或结束时说"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：こちらこそ。短い　間でしたが，とても　楽しかったですよ"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：課長は　出張中ですが，李さんに　よろしくと　言って　いましたよ　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "と言っていました"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　转述别人的话。と前面用简体"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：そうですか。どうぞ　吉田課長に　よろしく　お伝え　ください"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：ええ，必ず　伝えます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：これ，浴衣です。わたしが　作ったんですが，どうぞ　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "んですが"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　先说明情况，再把话接下去"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：小野さんが　作ったんですか。すごいですね。ありがとう　ございます"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：小野さん，森さん，いつか　北京へ　来て　ください"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "小野：ええ，必ず　行きます。今度は　京劇を　見ましょう。李さん，お元気で　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "お元気で"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　分别时说“请多保重”"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "森：ぼくも　いつか　北京へ　行きたいと　思います。李さん，どうぞ　お気を　つけて。“再见！”　　ーー"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#e30000",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "お気をつけて"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "　请小心。送别时说"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "",
+                    "fontSize": ""
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "李：さようなら。今度は　北京で　会いましょう"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textAlign": null
+      }
+    }
+  ]
+}

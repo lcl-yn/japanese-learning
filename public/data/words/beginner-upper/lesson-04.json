@@ -1,0 +1,352 @@
+[
+    {
+        "cn": "房间,屋子",
+        "jp": "へや",
+        "jp_write": "部屋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "院子",
+        "jp": "にわ",
+        "jp_write": "庭",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "家",
+        "jp": "いえ",
+        "jp_write": "家",
+        "describe": "读作いえ，指房屋、住宅",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "起居室",
+        "jp": "いま",
+        "jp_write": "居間",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "冰箱",
+        "jp": "れいぞうこ",
+        "jp_write": "冷蔵庫",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "墙壁",
+        "jp": "かべ",
+        "jp_write": "壁",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "开关",
+        "jp": "スイッチ",
+        "jp_write": "スイッチ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "书架",
+        "jp": "ほんだな",
+        "jp_write": "本棚",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "床",
+        "jp": "ベッド",
+        "jp_write": "ベッド",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "猫",
+        "jp": "ねこ",
+        "jp_write": "猫",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "狗",
+        "jp": "いぬ",
+        "jp_write": "犬",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "盒子,箱子",
+        "jp": "はこ",
+        "jp_write": "箱",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "眼镜",
+        "jp": "めがね",
+        "jp_write": "眼鏡",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "录像机",
+        "jp": "ビデオ",
+        "jp_write": "ビデオ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "足球",
+        "jp": "サッカーボール",
+        "jp_write": "サッカーボール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "啤酒",
+        "jp": "ビール",
+        "jp_write": "ビール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "威士忌",
+        "jp": "ウイスキー",
+        "jp_write": "ウイスキー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "孩子,小孩",
+        "jp": "こども",
+        "jp_write": "子供",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "兄弟姐妹",
+        "jp": "きょうだい",
+        "jp_write": "兄弟",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "父母,双亲",
+        "jp": "りょうしん",
+        "jp_write": "両親",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "妹妹",
+        "jp": "いもうと",
+        "jp_write": "妹",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "男人,男性",
+        "jp": "おとこ",
+        "jp_write": "男",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "女人,女性",
+        "jp": "おんな",
+        "jp_write": "女",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "学生",
+        "jp": "せいと",
+        "jp_write": "生徒",
+        "describe": "多指中小学生。大学生一般用「学生」",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上面",
+        "jp": "うえ",
+        "jp_write": "上",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "外面",
+        "jp": "そと",
+        "jp_write": "外",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "里面,中间",
+        "jp": "なか",
+        "jp_write": "中",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下面",
+        "jp": "した",
+        "jp_write": "下",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前面",
+        "jp": "まえ",
+        "jp_write": "前",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "后面",
+        "jp": "うしろ",
+        "jp_write": "後ろ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "附近,近旁",
+        "jp": "ちかく",
+        "jp_write": "近く",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "所在地,地方,场所",
+        "jp": "ばしょ",
+        "jp_write": "場所",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "教室",
+        "jp": "きょうしつ",
+        "jp_write": "教室",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "会议室",
+        "jp": "かいぎしつ",
+        "jp_write": "会議室",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "图书室",
+        "jp": "としょしつ",
+        "jp_write": "図書室",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "公园",
+        "jp": "こうえん",
+        "jp_write": "公園",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "花店",
+        "jp": "はなや",
+        "jp_write": "花屋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "小卖部,售货亭",
+        "jp": "ばいてん",
+        "jp_write": "売店",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "车站",
+        "jp": "えき",
+        "jp_write": "駅",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "地铁",
+        "jp": "ちかてつ",
+        "jp_write": "地下鉄",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "树,树木",
+        "jp": "き",
+        "jp_write": "木",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "单身生活",
+        "jp": "ひとりぐらし",
+        "jp_write": "一人暮らし",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "有,在(非意志者)",
+        "jp": "あります",
+        "jp_write": "あります",
+        "describe": "一类动词,自动词。用于花、桌子等没有意志的事物",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "有,在(具意志者)",
+        "jp": "います",
+        "jp_write": "います",
+        "describe": "二类动词,自动词。用于人、动物等有意志的事物",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "啊,嗯",
+        "jp": "ええと",
+        "jp_write": "ええと",
+        "describe": "思考、回忆时的语气词",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "横滨",
+        "jp": "よこはま",
+        "jp_write": "横浜",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "名古屋",
+        "jp": "なごや",
+        "jp_write": "名古屋",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "大阪",
+        "jp": "おおさか",
+        "jp_write": "大阪",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "JR",
+        "jp": "ジェーアール",
+        "jp_write": "JR",
+        "describe": "机构-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "敬称接头语",
+        "jp": "ご～",
+        "jp_write": "ご～",
+        "describe": "接在名词前表示尊敬，如ご家族、ご両親",
+        "part_of_speech": "接头词"
+    }
+]

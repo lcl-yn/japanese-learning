@@ -1,0 +1,205 @@
+[
+    {
+        "cn": "包裹",
+        "jp": "にもつ",
+        "jp_write": "荷物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明信片",
+        "jp": "はがき",
+        "jp_write": "はがき",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "邮票",
+        "jp": "きって",
+        "jp_write": "切手",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "抽屉",
+        "jp": "ひきだし",
+        "jp_write": "引き出し",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "相册",
+        "jp": "アルバム",
+        "jp_write": "アルバム",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "烟,烟草",
+        "jp": "タバコ",
+        "jp_write": "タバコ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "漫画",
+        "jp": "まんが",
+        "jp_write": "漫画",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "车库,汽车房",
+        "jp": "ガレージ",
+        "jp_write": "ガレージ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "修理",
+        "jp": "しゅうり",
+        "jp_write": "修理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "酒馆",
+        "jp": "いざかや",
+        "jp_write": "居酒屋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "生啤",
+        "jp": "なまビール",
+        "jp_write": "生ビール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "烤鸡肉串",
+        "jp": "やきとり",
+        "jp_write": "焼き鳥",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "炸鸡,油炸食品",
+        "jp": "からあげ",
+        "jp_write": "唐揚げ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "土豆炖肉",
+        "jp": "にくじゃが",
+        "jp_write": "肉じゃが",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "保龄球",
+        "jp": "ボーリング",
+        "jp_write": "ボーリング",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "头发",
+        "jp": "かみ",
+        "jp_write": "髪",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "象,大象",
+        "jp": "ぞう",
+        "jp_write": "象",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "白天,中午",
+        "jp": "ひる",
+        "jp_write": "昼",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "另外,其他",
+        "jp": "ほか",
+        "jp_write": "ほか",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "花费(时间,金钱)",
+        "jp": "かかります",
+        "jp_write": "かかります",
+        "describe": "一类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "花开",
+        "jp": "さきます",
+        "jp_write": "咲きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "游泳",
+        "jp": "およぎます",
+        "jp_write": "泳ぎます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "玩,玩耍",
+        "jp": "あそびます",
+        "jp_write": "遊びます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "吸(烟)",
+        "jp": "すいます",
+        "jp_write": "吸います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "剪,切,割",
+        "jp": "きります",
+        "jp_write": "切ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "大约,大概,大体",
+        "jp": "だいたい",
+        "jp_write": "だいたい",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "暂且",
+        "jp": "とりあえず",
+        "jp_write": "とりあえず",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "多久,多少钱(后接名词)",
+        "jp": "どのぐらい",
+        "jp_write": "どのぐらい",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "多久,多少钱",
+        "jp": "どれぐらい",
+        "jp_write": "どれぐらい",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

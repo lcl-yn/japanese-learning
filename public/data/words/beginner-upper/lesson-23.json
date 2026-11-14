@@ -1,0 +1,142 @@
+[
+    {
+        "cn": "周末",
+        "jp": "しゅうまつ",
+        "jp_write": "週末",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "滑冰,溜冰",
+        "jp": "スケート",
+        "jp_write": "スケート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "口味,(食物的)味道",
+        "jp": "あじ",
+        "jp_write": "味",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每次,每回",
+        "jp": "まいかい",
+        "jp_write": "毎回",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上下班,通勤",
+        "jp": "つうきん",
+        "jp_write": "通勤",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "船",
+        "jp": "ふね",
+        "jp_write": "船",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "布料,衣料",
+        "jp": "きじ",
+        "jp_write": "生地",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "关门时间",
+        "jp": "へいてんじこく",
+        "jp_write": "閉店時刻",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "毕业典礼",
+        "jp": "そつぎょうしき",
+        "jp_write": "卒業式",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "不同,不一样",
+        "jp": "ちがいます",
+        "jp_write": "違います",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "拥挤,混杂",
+        "jp": "こみます",
+        "jp_write": "込みます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "定,决定",
+        "jp": "きまります",
+        "jp_write": "決まります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "告诉",
+        "jp": "しらせます",
+        "jp_write": "知らせます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "查(看),弄清",
+        "jp": "たしかめます",
+        "jp_write": "確かめます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "(口味)重,浓",
+        "jp": "こい",
+        "jp_write": "濃い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "(口味)轻,薄",
+        "jp": "うすい",
+        "jp_write": "薄い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "早",
+        "jp": "はやい",
+        "jp_write": "早い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "晚,慢",
+        "jp": "おそい",
+        "jp_write": "遅い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "可能,大概",
+        "jp": "たぶん",
+        "jp_write": "たぶん",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "东京站",
+        "jp": "とうきょうえき",
+        "jp_write": "東京駅",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    }
+]

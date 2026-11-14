@@ -1,0 +1,310 @@
+[
+    {
+        "cn": "下个月",
+        "jp": "らいげつ",
+        "jp_write": "来月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上个月",
+        "jp": "せんげつ",
+        "jp_write": "先月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "午夜,半夜",
+        "jp": "よなか",
+        "jp_write": "夜中",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "昨天晚上",
+        "jp": "ゆうべ",
+        "jp_write": "ゆうべ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "音乐会",
+        "jp": "コンサート",
+        "jp_write": "コンサート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "圣诞节",
+        "jp": "クリスマス",
+        "jp_write": "クリスマス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "生日",
+        "jp": "たんじょうび",
+        "jp_write": "誕生日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "儿童节",
+        "jp": "こどものひ",
+        "jp_write": "こどもの日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "暑假",
+        "jp": "なつやすみ",
+        "jp_write": "夏休み",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "交通工具",
+        "jp": "こうつうきかん",
+        "jp_write": "交通機関",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "新干线",
+        "jp": "しんかんせん",
+        "jp_write": "新幹線",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "飞机",
+        "jp": "ひこうき",
+        "jp_write": "飛行機",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "渡轮",
+        "jp": "フェリー",
+        "jp_write": "フェリー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电车",
+        "jp": "でんしゃ",
+        "jp_write": "電車",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "公共汽车",
+        "jp": "バス",
+        "jp_write": "バス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "出租车",
+        "jp": "タクシー",
+        "jp_write": "タクシー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "美术馆",
+        "jp": "びじゅつかん",
+        "jp_write": "美術館",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "公寓",
+        "jp": "アパート",
+        "jp_write": "アパート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "家",
+        "jp": "うち",
+        "jp_write": "うち",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "游泳池",
+        "jp": "プール",
+        "jp_write": "プール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "朋友",
+        "jp": "ともだち",
+        "jp_write": "友達",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "弟弟",
+        "jp": "おとうと",
+        "jp_write": "弟",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "去",
+        "jp": "いきます",
+        "jp_write": "行きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "回来,回去",
+        "jp": "かえります",
+        "jp_write": "帰ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "来",
+        "jp": "きます",
+        "jp_write": "来ます",
+        "describe": "三类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "好像是,大概,的确",
+        "jp": "たしか",
+        "jp_write": "たしか",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "径直,笔直",
+        "jp": "まっすぐ",
+        "jp_write": "まっすぐ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "一起",
+        "jp": "いっしょに",
+        "jp_write": "いっしょに",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "佐藤",
+        "jp": "さとう",
+        "jp_write": "佐藤",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "北京",
+        "jp": "ペキン",
+        "jp_write": "北京",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "美国",
+        "jp": "アメリカ",
+        "jp_write": "アメリカ",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "韩国",
+        "jp": "かんこく",
+        "jp_write": "韓国",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "法国",
+        "jp": "フランス",
+        "jp_write": "フランス",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "广岛",
+        "jp": "ひろしま",
+        "jp_write": "広島",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "京都",
+        "jp": "きょうと",
+        "jp_write": "京都",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "北海道",
+        "jp": "ほっかいどう",
+        "jp_write": "北海道",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "箱根",
+        "jp": "はこね",
+        "jp_write": "箱根",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "银座",
+        "jp": "ぎんざ",
+        "jp_write": "銀座",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "涩谷",
+        "jp": "しぶや",
+        "jp_write": "渋谷",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "新宿",
+        "jp": "しんじゅく",
+        "jp_write": "新宿",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "够累的",
+        "jp": "おつかれさまでした",
+        "jp_write": "お疲れ様でした",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "我先走了,我先告辞了",
+        "jp": "おさきにしつれいします",
+        "jp_write": "お先に失礼します",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "步行",
+        "jp": "あるいて",
+        "jp_write": "歩いて",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "真不容易,够受的,不得了",
+        "jp": "たいへんですね",
+        "jp_write": "大変ですね",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

@@ -1,0 +1,520 @@
+[
+    {
+        "cn": "菜肴,饭菜",
+        "jp": "りょうり",
+        "jp_write": "料理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "四川菜",
+        "jp": "しせんりょうり",
+        "jp_write": "四川料理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "汤",
+        "jp": "スープ",
+        "jp_write": "スープ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "北京烤鸭",
+        "jp": "ぺキンダック",
+        "jp_write": "北京ダック",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "食物,食品",
+        "jp": "たべもの",
+        "jp_write": "食べ物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "日式牛肉火锅",
+        "jp": "すきやき",
+        "jp_write": "すき焼き",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "温泉",
+        "jp": "おんせん",
+        "jp_write": "温泉",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "热水,开水",
+        "jp": "おゆ",
+        "jp_write": "お湯",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "水,凉水",
+        "jp": "みず",
+        "jp_write": "水",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "浴衣,夏季和服",
+        "jp": "ゆかた",
+        "jp_write": "浴衣",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "景色,风景",
+        "jp": "ながめ",
+        "jp_write": "眺め",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "药",
+        "jp": "くすり",
+        "jp_write": "薬",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "天气",
+        "jp": "てんき",
+        "jp_write": "天気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "大海",
+        "jp": "うみ",
+        "jp_write": "海",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "山",
+        "jp": "やま",
+        "jp_write": "山",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "纸",
+        "jp": "かみ",
+        "jp_write": "紙",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "新闻",
+        "jp": "ニュース",
+        "jp_write": "ニュース",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "女性",
+        "jp": "じょせい",
+        "jp_write": "女性",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "来宾",
+        "jp": "おきゃくさま",
+        "jp_write": "お客様",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "玻璃杯",
+        "jp": "グラス",
+        "jp_write": "グラス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "歌舞伎",
+        "jp": "かぶき",
+        "jp_write": "歌舞伎",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "心情",
+        "jp": "きもち",
+        "jp_write": "気持ち",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "很多",
+        "jp": "たくさん",
+        "jp_write": "たくさん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "辣",
+        "jp": "からい",
+        "jp_write": "辛い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "甜",
+        "jp": "あまい",
+        "jp_write": "甘い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "咸",
+        "jp": "しおからい",
+        "jp_write": "塩辛い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "咸(口语)",
+        "jp": "しょっぱい",
+        "jp_write": "しょっぱい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "酸",
+        "jp": "すっぱい",
+        "jp_write": "酸っぱい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "苦",
+        "jp": "にがい",
+        "jp_write": "苦い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "好吃,可口",
+        "jp": "おいしい",
+        "jp_write": "おいしい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "不好吃,难吃",
+        "jp": "まずい",
+        "jp_write": "まずい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "热,烫",
+        "jp": "あつい",
+        "jp_write": "あつい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "凉",
+        "jp": "つめたい",
+        "jp_write": "冷たい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "愉快,快乐",
+        "jp": "たのしい",
+        "jp_write": "楽しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "有趣,有意思",
+        "jp": "おもしろい",
+        "jp_write": "おもしろい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "无聊",
+        "jp": "つまらない",
+        "jp_write": "つまらない",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "广阔,宽敞",
+        "jp": "ひろい",
+        "jp_write": "広い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "狭窄",
+        "jp": "せまい",
+        "jp_write": "狭い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "大",
+        "jp": "おおきい",
+        "jp_write": "大きい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "小",
+        "jp": "ちいさい",
+        "jp_write": "小さい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "忙,忙碌",
+        "jp": "いそがしい",
+        "jp_write": "忙しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "好",
+        "jp": "いい",
+        "jp_write": "いい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "不好,坏",
+        "jp": "わるい",
+        "jp_write": "悪い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "极好,绝佳",
+        "jp": "すばらしい",
+        "jp_write": "すばらしい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "远",
+        "jp": "とおい",
+        "jp_write": "遠い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "近",
+        "jp": "ちかい",
+        "jp_write": "近い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "高,贵",
+        "jp": "たかい",
+        "jp_write": "高い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "低",
+        "jp": "ひくい",
+        "jp_write": "低い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "便宜",
+        "jp": "やすい",
+        "jp_write": "安い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "寒冷",
+        "jp": "さむい",
+        "jp_write": "寒い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "(天气)热",
+        "jp": "あつい",
+        "jp_write": "暑い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "蓝色的",
+        "jp": "あおい",
+        "jp_write": "青い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "白色的",
+        "jp": "しろい",
+        "jp_write": "白い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "新",
+        "jp": "あたらしい",
+        "jp_write": "新しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "旧",
+        "jp": "ふるい",
+        "jp_write": "古い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "难",
+        "jp": "むずかしい",
+        "jp_write": "難しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "容易",
+        "jp": "やさしい",
+        "jp_write": "易しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "多",
+        "jp": "おおい",
+        "jp_write": "多い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "少",
+        "jp": "すくない",
+        "jp_write": "少ない",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "可爱",
+        "jp": "かわいい",
+        "jp_write": "かわいい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "真的,实在是",
+        "jp": "ほんとうに",
+        "jp_write": "本当に",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "不(太)～,不很～",
+        "jp": "あまり",
+        "jp_write": "あまり",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "很,非常",
+        "jp": "とても",
+        "jp_write": "とても",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "非常,相当",
+        "jp": "たいへん",
+        "jp_write": "たいへん",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "一点儿",
+        "jp": "すこし",
+        "jp_write": "少し",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "一点儿(口语)",
+        "jp": "ちょっと",
+        "jp_write": "ちょっと",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "根本(不),全然(不)",
+        "jp": "ぜんぜん",
+        "jp_write": "全然",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "正好,恰好",
+        "jp": "ちょうど",
+        "jp_write": "ちょうど",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "哎呀,咦",
+        "jp": "あら",
+        "jp_write": "あら",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "哎呀(想起时)",
+        "jp": "あれ",
+        "jp_write": "あれ",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "啊",
+        "jp": "ああ",
+        "jp_write": "ああ",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "天安门",
+        "jp": "てんあんもん",
+        "jp_write": "天安門",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "万里长城",
+        "jp": "ばんりのちょうじょう",
+        "jp_write": "万里の長城",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "感觉舒服,心情愉快",
+        "jp": "きもちがいい",
+        "jp_write": "気持ちがいい",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

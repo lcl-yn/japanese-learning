@@ -1,0 +1,282 @@
+[
+    {
+        "cn": "爱好",
+        "jp": "しゅみ",
+        "jp_write": "趣味",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "特长,拿手的技术",
+        "jp": "とくぎ",
+        "jp_write": "特技",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "兴趣",
+        "jp": "きょうみ",
+        "jp_write": "興味",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "梦,理想",
+        "jp": "ゆめ",
+        "jp_write": "夢",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "吉他",
+        "jp": "ギター",
+        "jp_write": "ギター",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "胡琴",
+        "jp": "こきゅう",
+        "jp_write": "胡弓",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "书法",
+        "jp": "しょどう",
+        "jp_write": "書道",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钓鱼",
+        "jp": "つり",
+        "jp_write": "釣り",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "兜风,开汽车远游",
+        "jp": "ドライブ",
+        "jp_write": "ドライブ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "编制,编织品",
+        "jp": "あみもの",
+        "jp_write": "編み物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "手工做,自己做,手制",
+        "jp": "てづくり",
+        "jp_write": "手作り",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "中华街",
+        "jp": "ちゅうかがい",
+        "jp_write": "中華街",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "中国菜",
+        "jp": "ちゅうかりょうり",
+        "jp_write": "中華料理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "饺子",
+        "jp": "ギョーザ",
+        "jp_write": "餃子",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "皮",
+        "jp": "かわ",
+        "jp_write": "皮",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "春节",
+        "jp": "しゅんせつ",
+        "jp_write": "春節",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "狮子舞",
+        "jp": "ししまい",
+        "jp_write": "獅子舞",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "宿舍",
+        "jp": "りょう",
+        "jp_write": "寮",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "洗衣机",
+        "jp": "せんたくき",
+        "jp_write": "洗濯機",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "淋浴",
+        "jp": "シャワー",
+        "jp_write": "シャワー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "肚子",
+        "jp": "おなか",
+        "jp_write": "おなか",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "授课,上课",
+        "jp": "じゅぎょう",
+        "jp_write": "授業",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "资料",
+        "jp": "しりょう",
+        "jp_write": "資料",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "法语",
+        "jp": "フランスご",
+        "jp_write": "フランス語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "小说",
+        "jp": "しょうせつ",
+        "jp_write": "小説",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "海岸",
+        "jp": "かいがん",
+        "jp_write": "海岸",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "寒假",
+        "jp": "ふゆやすみ",
+        "jp_write": "冬休み",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "野营",
+        "jp": "キャンプ",
+        "jp_write": "キャンプ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "大家",
+        "jp": "みんな",
+        "jp_write": "みんな",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "自己",
+        "jp": "じぶん",
+        "jp_write": "自分",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "全员",
+        "jp": "ぜんいん",
+        "jp_write": "全員",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "弹",
+        "jp": "ひきます",
+        "jp_write": "弾きます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "(肚子)饿,空",
+        "jp": "すきます",
+        "jp_write": "すきます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "登,上",
+        "jp": "のぼります",
+        "jp_write": "登ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "收集",
+        "jp": "あつめます",
+        "jp_write": "集めます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "淋,浇",
+        "jp": "あびます",
+        "jp_write": "浴びます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "请客,摆盛宴",
+        "jp": "ごちそうします",
+        "jp_write": "ごちそうします",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "回国",
+        "jp": "きこくします",
+        "jp_write": "帰国します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "特别",
+        "jp": "とくに",
+        "jp_write": "特に",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "肚子饿",
+        "jp": "おなかがすきます",
+        "jp_write": "おなかがすきます",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

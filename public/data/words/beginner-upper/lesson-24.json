@@ -1,0 +1,212 @@
+[
+    {
+        "cn": "郊游,远足",
+        "jp": "ハイキング",
+        "jp_write": "ハイキング",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "分别,分手",
+        "jp": "おわかれ",
+        "jp_write": "お別れ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "说话",
+        "jp": "はなし",
+        "jp_write": "話",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "送行,送别",
+        "jp": "みおくり",
+        "jp_write": "見送り",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "时间,期间",
+        "jp": "あいだ",
+        "jp_write": "間",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "法律",
+        "jp": "ほうりつ",
+        "jp_write": "法律",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "想,思考",
+        "jp": "おもいます",
+        "jp_write": "思います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "说,讲",
+        "jp": "いいます",
+        "jp_write": "言います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "找,寻找,寻求",
+        "jp": "さがします",
+        "jp_write": "探します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "笑",
+        "jp": "わらいます",
+        "jp_write": "笑います",
+        "describe": "一类动词,自他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "戒,停止,放弃",
+        "jp": "やめます",
+        "jp_write": "やめます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "决定",
+        "jp": "きめます",
+        "jp_write": "決めます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "睡懒觉",
+        "jp": "ねぼうします",
+        "jp_write": "寝坊します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "外出,出去",
+        "jp": "がいしゅつします",
+        "jp_write": "外出します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "研究",
+        "jp": "けんきゅうします",
+        "jp_write": "研究します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "可笑,滑稽",
+        "jp": "おかしい",
+        "jp_write": "おかしい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "满",
+        "jp": "いっぱい",
+        "jp_write": "いっぱい",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "惊人的,了不起",
+        "jp": "すごい",
+        "jp_write": "すごい",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "终于,终究,到底",
+        "jp": "とうとう",
+        "jp_write": "とうとう",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "一定,必定",
+        "jp": "かならず",
+        "jp_write": "必ず",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "绝对",
+        "jp": "ぜったいに",
+        "jp_write": "絶対に",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "马",
+        "jp": "ば",
+        "jp_write": "馬",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "承蒙照顾",
+        "jp": "おせわになりました",
+        "jp_write": "お世話になりました",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "请代问好",
+        "jp": "よろしくおつたえください",
+        "jp_write": "よろしくお伝えください",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "请多保重",
+        "jp": "おげんきで",
+        "jp_write": "お元気で",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "小心点儿",
+        "jp": "おきをつけて",
+        "jp_write": "お気をつけて",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "再见",
+        "jp": "さようなら",
+        "jp_write": "さようなら",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "怎样,如何",
+        "jp": "どうやって",
+        "jp_write": "どうやって",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "有用",
+        "jp": "やくにたちます",
+        "jp_write": "役に立ちます",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "吃饱,饱",
+        "jp": "おなかがいっぱいです",
+        "jp_write": "おなかがいっぱいです",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

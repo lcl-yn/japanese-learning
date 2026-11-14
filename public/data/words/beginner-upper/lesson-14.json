@@ -1,0 +1,380 @@
+[
+    {
+        "cn": "海运",
+        "jp": "ふなびん",
+        "jp_write": "船便",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "文件,文稿",
+        "jp": "しょるい",
+        "jp_write": "書類",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "稿子,原稿",
+        "jp": "げんこう",
+        "jp_write": "原稿",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "报道",
+        "jp": "きじ",
+        "jp_write": "記事",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "记录",
+        "jp": "メモ",
+        "jp_write": "メモ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "车站一带",
+        "jp": "えきまえ",
+        "jp_write": "駅前",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "桥,桥梁",
+        "jp": "はし",
+        "jp_write": "橋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "拐角",
+        "jp": "かど",
+        "jp_write": "角",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "人行横道",
+        "jp": "おうだんほどう",
+        "jp_write": "横断歩道",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "右,右边",
+        "jp": "みぎ",
+        "jp_write": "右",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "左,左边",
+        "jp": "ひだり",
+        "jp_write": "左",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "十字路口",
+        "jp": "こうさてん",
+        "jp_write": "交差点",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "路,道路",
+        "jp": "みち",
+        "jp_write": "道",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "门",
+        "jp": "ドア",
+        "jp_write": "ドア",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电,电力",
+        "jp": "でんき",
+        "jp_write": "電気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "太极拳",
+        "jp": "たいきょくけん",
+        "jp_write": "太極拳",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "早饭",
+        "jp": "あさごはん",
+        "jp_write": "朝ご飯",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "晚饭",
+        "jp": "ばんごはん",
+        "jp_write": "晩ご飯",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "户外烧烤",
+        "jp": "バーベキュー",
+        "jp_write": "バーベキュー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "通过,经过",
+        "jp": "とおります",
+        "jp_write": "通ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "急,急忙",
+        "jp": "いそぎます",
+        "jp_write": "急ぎます",
+        "describe": "一类动词,自他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "飞,飞行",
+        "jp": "とびます",
+        "jp_write": "飛びます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "死,死亡",
+        "jp": "しにます",
+        "jp_write": "死にます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "等待,等候",
+        "jp": "まちます",
+        "jp_write": "待ちます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "卖,销售",
+        "jp": "うります",
+        "jp_write": "売ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "说话,说",
+        "jp": "はなします",
+        "jp_write": "話します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "过(桥,河),穿过(马路)",
+        "jp": "わたります",
+        "jp_write": "渡ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "取,卸货",
+        "jp": "おろします",
+        "jp_write": "下ろします",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "挑选,选择",
+        "jp": "えらびます",
+        "jp_write": "選びます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "关(灯),消除,去除",
+        "jp": "けします",
+        "jp_write": "消します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "步行,行走",
+        "jp": "あるきます",
+        "jp_write": "歩きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "拐弯,曲折",
+        "jp": "まがります",
+        "jp_write": "曲がります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "洗,洗涤",
+        "jp": "あらいます",
+        "jp_write": "洗います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "离开",
+        "jp": "でます",
+        "jp_write": "出ます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "外出,出门",
+        "jp": "でかけます",
+        "jp_write": "出かけます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "开,打开,开启",
+        "jp": "あけます",
+        "jp_write": "開けます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "过",
+        "jp": "すぎます",
+        "jp_write": "過ぎます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "给～看,出示",
+        "jp": "みせます",
+        "jp_write": "見せます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "开(灯)",
+        "jp": "つけます",
+        "jp_write": "つけます",
+        "describe": "二类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "下(车,山)",
+        "jp": "おります",
+        "jp_write": "降ります",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "买东西",
+        "jp": "かいものします",
+        "jp_write": "買い物します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "毕业",
+        "jp": "そつぎょうします",
+        "jp_write": "卒業します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "吃饭,用餐",
+        "jp": "しょくじします",
+        "jp_write": "食事します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "整理",
+        "jp": "せいりします",
+        "jp_write": "整理します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "复印",
+        "jp": "コピーします",
+        "jp_write": "コピーします",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "黑暗,昏暗",
+        "jp": "くらい",
+        "jp_write": "暗い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "够受的,不得了",
+        "jp": "たいへん",
+        "jp_write": "大変",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "相当,很,非常",
+        "jp": "なかなか",
+        "jp_write": "なかなか",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "这样,如此",
+        "jp": "こう",
+        "jp_write": "こう",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "那样",
+        "jp": "そう",
+        "jp_write": "そう",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "那样(更远)",
+        "jp": "ああ",
+        "jp_write": "ああ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "过会儿",
+        "jp": "あとで",
+        "jp_write": "後で",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "然后",
+        "jp": "それから",
+        "jp_write": "それから",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "对不起……,劳驾……",
+        "jp": "すみませんが",
+        "jp_write": "すみませんが",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    }
+]

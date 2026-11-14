@@ -1,0 +1,485 @@
+[
+    {
+        "cn": "操作,操纵",
+        "jp": "そうさ",
+        "jp_write": "操作",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "机械,机器",
+        "jp": "きかい",
+        "jp_write": "機械",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旅行社",
+        "jp": "りょこうがいしゃ",
+        "jp_write": "旅行会社",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "航空公司",
+        "jp": "こうくうがいしゃ",
+        "jp_write": "航空会社",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "营业部",
+        "jp": "えいぎょうぶ",
+        "jp_write": "営業部",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "IT产业,信息技术产业",
+        "jp": "アイティーさんぎょう",
+        "jp_write": "ＩＴ産業",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "产品",
+        "jp": "せいひん",
+        "jp_write": "製品",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "建筑师",
+        "jp": "けんちくか",
+        "jp_write": "建築家",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "设计",
+        "jp": "せっけい",
+        "jp_write": "設計",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "设计(图),(制作)图案",
+        "jp": "デザイン",
+        "jp_write": "デザイン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "造型,形状,形式",
+        "jp": "かたち",
+        "jp_write": "形",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "最新",
+        "jp": "さいしん",
+        "jp_write": "最新",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "领带",
+        "jp": "ネクタイ",
+        "jp_write": "ネクタイ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钱包",
+        "jp": "さいふ",
+        "jp_write": "財布",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "革,皮革",
+        "jp": "かわ",
+        "jp_write": "革",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "布,布匹",
+        "jp": "ぬの",
+        "jp_write": "布",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "水壶,水筒",
+        "jp": "すいとう",
+        "jp_write": "水筒",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "绿,绿色",
+        "jp": "みどり",
+        "jp_write": "緑",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "脚",
+        "jp": "あし",
+        "jp_write": "足",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "手指,指头",
+        "jp": "ゆび",
+        "jp_write": "指",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "眼,眼睛",
+        "jp": "め",
+        "jp_write": "目",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "鼻,鼻子",
+        "jp": "はな",
+        "jp_write": "鼻",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "脸,颜面",
+        "jp": "かお",
+        "jp_write": "顔",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "头,头脑",
+        "jp": "あたま",
+        "jp_write": "頭",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "身份证件",
+        "jp": "アイディーカード",
+        "jp_write": "ＩＤカード",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "错误,失误",
+        "jp": "まちがい",
+        "jp_write": "間違い",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "问题",
+        "jp": "もんだい",
+        "jp_write": "問題",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "广告",
+        "jp": "こうこく",
+        "jp_write": "広告",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "牌子",
+        "jp": "かんばん",
+        "jp_write": "看板",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "展览会场",
+        "jp": "てんじじょう",
+        "jp_write": "展示場",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "门票,进场费",
+        "jp": "にゅうじょうりょう",
+        "jp_write": "入場料",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "服务",
+        "jp": "サービス",
+        "jp_write": "サービス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "天棚",
+        "jp": "てんじょう",
+        "jp_write": "天井",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "戒备,警备",
+        "jp": "けいび",
+        "jp_write": "警備",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "圣诞树",
+        "jp": "クリスマスツリー",
+        "jp_write": "クリスマスツリー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "澳大利亚人",
+        "jp": "オーストラリアじん",
+        "jp_write": "オーストラリア人",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "大家,诸位",
+        "jp": "みなさん",
+        "jp_write": "皆さん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "孩子",
+        "jp": "こ",
+        "jp_write": "子",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旁边,侧面",
+        "jp": "よこ",
+        "jp_write": "横",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "有,拥有,持有",
+        "jp": "もちます",
+        "jp_write": "持ちます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "住,居住",
+        "jp": "すみます",
+        "jp_write": "住みます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "认识,知道,了解",
+        "jp": "しります",
+        "jp_write": "知ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "改,修改,改正",
+        "jp": "なおします",
+        "jp_write": "直します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "收拾,整理",
+        "jp": "かたづけます",
+        "jp_write": "片づけます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "练习",
+        "jp": "れんしゅうします",
+        "jp_write": "練習します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "结婚",
+        "jp": "けっこんします",
+        "jp_write": "結婚します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "安心,放心",
+        "jp": "あんしんします",
+        "jp_write": "安心します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "明亮,开朗",
+        "jp": "あかるい",
+        "jp_write": "明るい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "长,长久,长远",
+        "jp": "ながい",
+        "jp_write": "長い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "短,短暂",
+        "jp": "みじかい",
+        "jp_write": "短い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "轻巧,轻,轻松,轻微",
+        "jp": "かるい",
+        "jp_write": "軽い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "和蔼,温和,体贴",
+        "jp": "やさしい",
+        "jp_write": "優しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "小,细长,纤细",
+        "jp": "ほそい",
+        "jp_write": "細い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "粗,胖",
+        "jp": "ふとい",
+        "jp_write": "太い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "黑,黑色",
+        "jp": "くろい",
+        "jp_write": "黒い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "独特,唯一",
+        "jp": "ユニーク",
+        "jp_write": "ユニーク",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "安全",
+        "jp": "あんぜん",
+        "jp_write": "安全",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "耀眼,花哨",
+        "jp": "はで",
+        "jp_write": "派手",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "朴素,质朴",
+        "jp": "じみ",
+        "jp_write": "地味",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "森严,严格",
+        "jp": "げんじゅう",
+        "jp_write": "厳重",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "认真,严肃",
+        "jp": "まじめ",
+        "jp_write": "まじめ",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "重要,珍贵",
+        "jp": "たいせつ",
+        "jp_write": "大切",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "复杂,繁杂",
+        "jp": "ふくざつ",
+        "jp_write": "複雑",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "好好地,的确,完全",
+        "jp": "ちゃんと",
+        "jp_write": "ちゃんと",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "马上,立即",
+        "jp": "すぐ",
+        "jp_write": "すぐ",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "相当,非常,很",
+        "jp": "ずいぶん",
+        "jp_write": "ずいぶん",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "你看,瞧,喂",
+        "jp": "ほら",
+        "jp_write": "ほら",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "日中电器",
+        "jp": "にっちゅうでんき",
+        "jp_write": "日中電気",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "脑子好,聪明",
+        "jp": "あたまがいい",
+        "jp_write": "頭がいい",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

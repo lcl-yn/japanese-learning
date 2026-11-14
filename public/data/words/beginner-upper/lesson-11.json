@@ -1,0 +1,380 @@
+[
+    {
+        "cn": "歌,歌曲",
+        "jp": "うた",
+        "jp_write": "歌",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "卡拉OK",
+        "jp": "カラオケ",
+        "jp_write": "カラオケ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "摇滚乐",
+        "jp": "ロック",
+        "jp_write": "ロック",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "流行音乐",
+        "jp": "ポップス",
+        "jp_write": "ポップス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "西方古典音乐",
+        "jp": "クラシック",
+        "jp_write": "クラシック",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钢琴",
+        "jp": "ピアノ",
+        "jp_write": "ピアノ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "画儿",
+        "jp": "え",
+        "jp_write": "絵",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "英语",
+        "jp": "えいご",
+        "jp_write": "英語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "西班牙语",
+        "jp": "スペインご",
+        "jp_write": "スペイン語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "体育,运动",
+        "jp": "スポーツ",
+        "jp_write": "スポーツ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "游泳",
+        "jp": "すいえい",
+        "jp_write": "水泳",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "高尔夫球",
+        "jp": "ゴルフ",
+        "jp_write": "ゴルフ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "开车",
+        "jp": "うんてん",
+        "jp_write": "運転",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "饮料",
+        "jp": "のみもの",
+        "jp_write": "飲み物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "酒,酒类",
+        "jp": "おさけ",
+        "jp_write": "お酒",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "肉",
+        "jp": "にく",
+        "jp_write": "肉",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "蔬菜",
+        "jp": "やさい",
+        "jp_write": "野菜",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "水果",
+        "jp": "くだもの",
+        "jp_write": "果物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "向日葵",
+        "jp": "ヒマワリ",
+        "jp_write": "ヒマワリ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "蔷薇,玫瑰",
+        "jp": "バラ",
+        "jp_write": "バラ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "计算机,电脑",
+        "jp": "コンピュータ",
+        "jp_write": "コンピュータ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "窗,窗户",
+        "jp": "まど",
+        "jp_write": "窓",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "结婚典礼",
+        "jp": "けっこんしき",
+        "jp_write": "結婚式",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "摄影展",
+        "jp": "しゃしんてん",
+        "jp_write": "写真展",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旅馆,旅店",
+        "jp": "りょかん",
+        "jp_write": "旅館",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "别墅",
+        "jp": "べっそう",
+        "jp_write": "別荘",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "木片儿拼花工艺品",
+        "jp": "よせぎざいく",
+        "jp_write": "寄木細工",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "花纹,纹案",
+        "jp": "もよう",
+        "jp_write": "模様",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "外国",
+        "jp": "がいこく",
+        "jp_write": "外国",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "会议",
+        "jp": "かいぎ",
+        "jp_write": "会議",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "腿",
+        "jp": "あし",
+        "jp_write": "脚",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "我(男性自称)",
+        "jp": "ぼく",
+        "jp_write": "ぼく",
+        "describe": "",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "懂,明白",
+        "jp": "わかります",
+        "jp_write": "分かります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "犹豫,难以决定",
+        "jp": "まよいます",
+        "jp_write": "迷います",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "会,能,完成",
+        "jp": "できます",
+        "jp_write": "できます",
+        "describe": "二类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "关闭,关门",
+        "jp": "しめます",
+        "jp_write": "閉めます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "疲倦,疲惫",
+        "jp": "つかれます",
+        "jp_write": "疲れます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "散步",
+        "jp": "さんぽします",
+        "jp_write": "散歩します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "害怕,恐怖",
+        "jp": "こわい",
+        "jp_write": "怖い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "红",
+        "jp": "あかい",
+        "jp_write": "赤い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "疼,疼痛",
+        "jp": "いたい",
+        "jp_write": "痛い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "擅长,高明,水平高",
+        "jp": "じょうず",
+        "jp_write": "上手",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "不高明,水平低",
+        "jp": "へた",
+        "jp_write": "下手",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "不擅长,不善于",
+        "jp": "にがて",
+        "jp_write": "苦手",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "有时,时不时",
+        "jp": "ときどき",
+        "jp_write": "時々",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "经常,常常",
+        "jp": "よく",
+        "jp_write": "よく",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "偶尔,很少",
+        "jp": "たまに",
+        "jp_write": "たまに",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "还,再,又",
+        "jp": "また",
+        "jp_write": "また",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "为什么",
+        "jp": "どうして",
+        "jp_write": "どうして",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "所以,因此",
+        "jp": "だから",
+        "jp_write": "だから",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "所以,因此(郑重)",
+        "jp": "ですから",
+        "jp_write": "ですから",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "嗯……,这个……",
+        "jp": "うーん",
+        "jp_write": "うーん",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "不用,不要",
+        "jp": "けっこうです",
+        "jp_write": "結構です",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "喜欢,中意",
+        "jp": "きにいります",
+        "jp_write": "気に入ります",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

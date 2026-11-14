@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import type { MenuInstance } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useWordsStore } from '@/stores/words'
 
@@ -26,7 +27,11 @@ const active = computed(() => {
   return ''
 })
 
-/** 单词本不带动目录，进去时课单保持收起。 */
+const menuRef = ref<MenuInstance>()
+/** 已经展开的册、单元和课。换课只追加，不在这里删掉用户打开的项。 */
+const openedKeys = ref<string[]>([])
+
+/** 单词本和五十音图不带动目录。当前课要展开，别的已展开项留着。 */
 const openeds = computed(() => {
   if (route.meta.section === 'words') return []
   const bookId = route.params.bookId
@@ -37,6 +42,38 @@ const openeds = computed(() => {
   const lessonId = typeof lessonRaw === 'string' ? Number(lessonRaw) : 0
   return locationKeys(bookId, unitId, lessonId)
 })
+
+openedKeys.value = openeds.value.slice()
+
+/** 展开当前课所在的册、单元和课，不收起其他已经打开的目录。 */
+function revealCurrentLesson(keys: string[]) {
+  const lessonKey = keys[keys.length - 1]
+  if (!lessonKey) return
+  menuRef.value?.open(lessonKey)
+}
+
+/** 离开课页时收起全部目录。 */
+function collapseMenus() {
+  const closing = openedKeys.value.slice()
+  openedKeys.value = []
+  for (const key of closing) menuRef.value?.close(key)
+}
+
+watch(openeds, (keys) => {
+  if (keys.length === 0) {
+    collapseMenus()
+    return
+  }
+  revealCurrentLesson(keys)
+})
+
+function onOpen(index: string) {
+  if (!openedKeys.value.includes(index)) openedKeys.value.push(index)
+}
+
+function onClose(index: string) {
+  openedKeys.value = openedKeys.value.filter((key) => key !== index)
+}
 
 function locationKeys(bookId: string, unitId: number, lessonId: number) {
   if (!bookId || bookId === 'all') return []
@@ -54,10 +91,12 @@ function onSelect(index: string) {
 
 <template>
   <el-menu
-    :key="`${active}|${openeds.join('|')}`"
+    ref="menuRef"
     class="side-menu"
     :default-active="active"
-    :default-openeds="openeds"
+    :default-openeds="openedKeys"
+    @open="onOpen"
+    @close="onClose"
     @select="onSelect"
   >
     <el-menu-item index="/kana">50音图</el-menu-item>

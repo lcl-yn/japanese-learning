@@ -1,0 +1,240 @@
+[
+    {
+        "cn": "季节",
+        "jp": "きせつ",
+        "jp_write": "季節",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "冬天,冬季",
+        "jp": "ふゆ",
+        "jp_write": "冬",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "春天,春季",
+        "jp": "はる",
+        "jp_write": "春",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "日式饭菜",
+        "jp": "にほんりょうり",
+        "jp_write": "日本料理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "寿司",
+        "jp": "すし",
+        "jp_write": "寿司",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "梨",
+        "jp": "ナシ",
+        "jp_write": "ナシ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "香蕉",
+        "jp": "バナナ",
+        "jp_write": "バナナ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "橘子",
+        "jp": "ミカン",
+        "jp_write": "ミカン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "烧酒",
+        "jp": "しょうちゅう",
+        "jp_write": "焼酎",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "日本酒",
+        "jp": "にほんしゅ",
+        "jp_write": "日本酒",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "红茶",
+        "jp": "こうちゃ",
+        "jp_write": "紅茶",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "乌龙茶",
+        "jp": "ウーロンちゃ",
+        "jp_write": "ウーロン茶",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "茉莉花茶",
+        "jp": "ジャスミンちゃ",
+        "jp_write": "ジャスミン茶",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "绿茶",
+        "jp": "りょくちゃ",
+        "jp_write": "緑茶",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "果汁",
+        "jp": "ジュース",
+        "jp_write": "ジュース",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "声望,受欢迎",
+        "jp": "にんき",
+        "jp_write": "人気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "座位,席位",
+        "jp": "せき",
+        "jp_write": "席",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "班级",
+        "jp": "クラス",
+        "jp_write": "クラス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "种类",
+        "jp": "しゅるい",
+        "jp_write": "種類",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "个子",
+        "jp": "せ",
+        "jp_write": "背",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "哥哥,兄长",
+        "jp": "あに",
+        "jp_write": "兄",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "最近,近来",
+        "jp": "さいきん",
+        "jp_write": "最近",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下(雨,雪),降(雨,雪)",
+        "jp": "ふります",
+        "jp_write": "降ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "年轻",
+        "jp": "わかい",
+        "jp_write": "若い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "暖和,温暖",
+        "jp": "あたたかい",
+        "jp_write": "暖かい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "凉爽",
+        "jp": "すずしい",
+        "jp_write": "涼しい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "快",
+        "jp": "はやい",
+        "jp_write": "速い",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "非常喜欢",
+        "jp": "だいすき",
+        "jp_write": "大好き",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "最,第一",
+        "jp": "いちばん",
+        "jp_write": "いちばん",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "～得多",
+        "jp": "ずっと",
+        "jp_write": "ずっと",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "仍然,还是",
+        "jp": "やはり",
+        "jp_write": "やはり",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "仍然,还是(口语)",
+        "jp": "やっぱり",
+        "jp_write": "やっぱり",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "珠穆朗玛峰",
+        "jp": "チョモランマ",
+        "jp_write": "チョモランマ",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "受欢迎",
+        "jp": "にんきがあります",
+        "jp_write": "人気があります",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

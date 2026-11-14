@@ -1,0 +1,184 @@
+[
+    {
+        "cn": "语言",
+        "jp": "ことば",
+        "jp_write": "言葉",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "邮件地址",
+        "jp": "メールアドレス",
+        "jp_write": "メールアドレス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "连休",
+        "jp": "れんきゅう",
+        "jp_write": "連休",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "黄金周",
+        "jp": "ゴールデンウィーク",
+        "jp_write": "ゴールデンウィーク",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "结束",
+        "jp": "おわり",
+        "jp_write": "終わり",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "休息时间",
+        "jp": "きゅうけいじかん",
+        "jp_write": "休憩時間",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "京剧",
+        "jp": "きょうげき",
+        "jp_write": "京劇",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "票(券)",
+        "jp": "きっぷ",
+        "jp_write": "切符",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "身体",
+        "jp": "からだ",
+        "jp_write": "体",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "地震",
+        "jp": "じしん",
+        "jp_write": "地震",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "小偷,盗贼",
+        "jp": "どろぼう",
+        "jp_write": "泥棒",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "停车场",
+        "jp": "ちゅうしゃじょう",
+        "jp_write": "駐車場",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "交给",
+        "jp": "わたします",
+        "jp_write": "渡します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "迟到",
+        "jp": "おくれます",
+        "jp_write": "遅れます",
+        "describe": "二类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "考虑",
+        "jp": "かんがえます",
+        "jp_write": "考えます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "调查",
+        "jp": "しらべます",
+        "jp_write": "調べます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "穿",
+        "jp": "きます",
+        "jp_write": "着ます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "预约",
+        "jp": "よやくします",
+        "jp_write": "予約します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "感谢",
+        "jp": "かんしゃします",
+        "jp_write": "感謝します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "运动",
+        "jp": "うんどうします",
+        "jp_write": "運動します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "洗涤,洗",
+        "jp": "せんたくします",
+        "jp_write": "洗濯します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "报告",
+        "jp": "ほうこくします",
+        "jp_write": "報告します",
+        "describe": "三类动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "危险",
+        "jp": "あぶない",
+        "jp_write": "危ない",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "还是,或者",
+        "jp": "それとも",
+        "jp_write": "それとも",
+        "describe": "",
+        "part_of_speech": "接续词"
+    },
+    {
+        "cn": "东京塔",
+        "jp": "とうきょうタワー",
+        "jp_write": "東京タワー",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "那么",
+        "jp": "そんなに",
+        "jp_write": "そんなに",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

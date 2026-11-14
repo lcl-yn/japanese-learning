@@ -1,0 +1,331 @@
+[
+    {
+        "cn": "百货商店",
+        "jp": "デパート",
+        "jp_write": "デパート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "食堂",
+        "jp": "しょくどう",
+        "jp_write": "食堂",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "邮局",
+        "jp": "ゆうびんきょく",
+        "jp_write": "郵便局",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "银行",
+        "jp": "ぎんこう",
+        "jp_write": "銀行",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "图书馆",
+        "jp": "としょかん",
+        "jp_write": "図書館",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "高级公寓",
+        "jp": "マンション",
+        "jp_write": "マンション",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "宾馆",
+        "jp": "ホテル",
+        "jp_write": "ホテル",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "便利店",
+        "jp": "コンビニ",
+        "jp_write": "コンビニ",
+        "describe": "コンビニエンスストア的略称",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "咖啡馆",
+        "jp": "きっさてん",
+        "jp_write": "喫茶店",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "医院",
+        "jp": "びょういん",
+        "jp_write": "病院",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "书店",
+        "jp": "ほんや",
+        "jp_write": "本屋",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "餐馆,西餐馆",
+        "jp": "レストラン",
+        "jp_write": "レストラン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "大楼,大厦",
+        "jp": "ビル",
+        "jp_write": "ビル",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "大楼,建筑物",
+        "jp": "たてもの",
+        "jp_write": "建物",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "柜台,出售处",
+        "jp": "うりば",
+        "jp_write": "売り場",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "厕所,盥洗室",
+        "jp": "トイレ",
+        "jp_write": "トイレ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "入口",
+        "jp": "いりぐち",
+        "jp_write": "入り口",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "事务所,办事处",
+        "jp": "じむしょ",
+        "jp_write": "事務所",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "接待处",
+        "jp": "うけつけ",
+        "jp_write": "受付",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "降价处理大卖场",
+        "jp": "バーゲンかいじょう",
+        "jp_write": "バーゲン会場",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "自动扶梯",
+        "jp": "エスカレーター",
+        "jp_write": "エスカレーター",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "衣服",
+        "jp": "ふく",
+        "jp_write": "服",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "风衣,大衣",
+        "jp": "コート",
+        "jp_write": "コート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "数码相机",
+        "jp": "デジカメ",
+        "jp_write": "デジカメ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "国,国家",
+        "jp": "くに",
+        "jp_write": "国",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "地图",
+        "jp": "ちず",
+        "jp_write": "地図",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "旁边",
+        "jp": "となり",
+        "jp_write": "隣",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "附近,周边",
+        "jp": "しゅうへん",
+        "jp_write": "周辺",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天",
+        "jp": "きょう",
+        "jp_write": "今日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期三",
+        "jp": "すいようび",
+        "jp_write": "水曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期四",
+        "jp": "もくようび",
+        "jp_write": "木曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "这里,这儿",
+        "jp": "ここ",
+        "jp_write": "ここ",
+        "describe": "指离说话人近的场所",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那里,那儿(靠近对方)",
+        "jp": "そこ",
+        "jp_write": "そこ",
+        "describe": "指离听话人近的场所",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那里,那儿(远离双方)",
+        "jp": "あそこ",
+        "jp_write": "あそこ",
+        "describe": "指离双方都远的场所",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "这儿,这边",
+        "jp": "こちら",
+        "jp_write": "こちら",
+        "describe": "ここ的礼貌说法，指离说话人近的场所或方向",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那儿,那边(靠近对方)",
+        "jp": "そちら",
+        "jp_write": "そちら",
+        "describe": "そこ的礼貌说法",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那儿,那边(远离双方)",
+        "jp": "あちら",
+        "jp_write": "あちら",
+        "describe": "あそこ的礼貌说法",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "哪里,哪儿",
+        "jp": "どこ",
+        "jp_write": "どこ",
+        "describe": "",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "哪儿,哪边",
+        "jp": "どちら",
+        "jp_write": "どちら",
+        "describe": "どこ的礼貌说法，也可用于二者选一",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "请问,对不起",
+        "jp": "あのう",
+        "jp_write": "あのう",
+        "describe": "向别人搭话、询问前的招呼",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "上海",
+        "jp": "シャンハイ",
+        "jp_write": "上海",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "东京",
+        "jp": "とうきょう",
+        "jp_write": "東京",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "多少钱",
+        "jp": "いくら",
+        "jp_write": "いくら",
+        "describe": "询问价格",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "美化语",
+        "jp": "お～",
+        "jp_write": "お～",
+        "describe": "接在名词前使语气更礼貌，如お茶、お菓子",
+        "part_of_speech": "接头词"
+    },
+    {
+        "cn": "~层",
+        "jp": "～かい",
+        "jp_write": "～階",
+        "describe": "接在数字后表示楼层。一階读いっかい，三階常读さんがい",
+        "part_of_speech": "后缀"
+    },
+    {
+        "cn": "~日元",
+        "jp": "～えん",
+        "jp_write": "～円",
+        "describe": "接在数字后表示日元",
+        "part_of_speech": "后缀"
+    },
+    {
+        "cn": "星期~",
+        "jp": "～ようび",
+        "jp_write": "～曜日",
+        "describe": "接在周二到周六的名称后，如水曜日",
+        "part_of_speech": "后缀"
+    }
+]

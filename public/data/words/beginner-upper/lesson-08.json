@@ -1,0 +1,373 @@
+[
+    {
+        "cn": "礼物",
+        "jp": "プレゼント",
+        "jp_write": "プレゼント",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "票",
+        "jp": "チケット",
+        "jp_write": "チケット",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "小册子",
+        "jp": "パンフレット",
+        "jp_write": "パンフレット",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "纪念品",
+        "jp": "きねんひん",
+        "jp_write": "記念品",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "日程表",
+        "jp": "スケジュールひょう",
+        "jp_write": "スケジュール表",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "影集",
+        "jp": "しゃしんしゅう",
+        "jp_write": "写真集",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "花",
+        "jp": "はな",
+        "jp_write": "花",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钱,金钱",
+        "jp": "おかね",
+        "jp_write": "お金",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "圆珠笔",
+        "jp": "ボールペン",
+        "jp_write": "ボールペン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "作业",
+        "jp": "しゅくだい",
+        "jp_write": "宿題",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "航空邮件",
+        "jp": "こうくうびん",
+        "jp_write": "航空便",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "速递,快件",
+        "jp": "そくたつ",
+        "jp_write": "速達",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "传真",
+        "jp": "ファックス",
+        "jp_write": "ファックス",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "邮件",
+        "jp": "メール",
+        "jp_write": "メール",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电话号码",
+        "jp": "でんわばんごう",
+        "jp_write": "電話番号",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "住址",
+        "jp": "じゅうしょ",
+        "jp_write": "住所",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "姓名",
+        "jp": "なまえ",
+        "jp_write": "名前",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "事件,事情",
+        "jp": "けん",
+        "jp_write": "件",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "报纸",
+        "jp": "しんぶんし",
+        "jp_write": "新聞紙",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "纸折的飞机",
+        "jp": "かみひこうき",
+        "jp_write": "紙飛行機",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "巧克力",
+        "jp": "チョコレート",
+        "jp_write": "チョコレート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "冰激凌",
+        "jp": "アイスクリーム",
+        "jp_write": "アイスクリーム",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "面粉",
+        "jp": "こむぎこ",
+        "jp_write": "小麦粉",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "筷子",
+        "jp": "はし",
+        "jp_write": "はし",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "勺子",
+        "jp": "スプーン",
+        "jp_write": "スプーン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "哥哥",
+        "jp": "おにいさん",
+        "jp_write": "お兄さん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "韩语",
+        "jp": "かんこくご",
+        "jp_write": "韓国語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "傍晚",
+        "jp": "ゆうがた",
+        "jp_write": "夕方",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "午休",
+        "jp": "ひるやすみ",
+        "jp_write": "昼休み",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "拿到,得到",
+        "jp": "もらいます",
+        "jp_write": "もらいます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "见",
+        "jp": "あいます",
+        "jp_write": "会います",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "寄",
+        "jp": "おくります",
+        "jp_write": "送ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "做,制造",
+        "jp": "つくります",
+        "jp_write": "作ります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "胖",
+        "jp": "ふとります",
+        "jp_write": "太ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "寄(信)",
+        "jp": "だします",
+        "jp_write": "出します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "收到,送到,寄到",
+        "jp": "とどきます",
+        "jp_write": "届きます",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "画",
+        "jp": "かきます",
+        "jp_write": "かきます",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "借出,借给",
+        "jp": "かします",
+        "jp_write": "貸します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "学习",
+        "jp": "ならいます",
+        "jp_write": "習います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "给",
+        "jp": "あげます",
+        "jp_write": "あげます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "打(电话)",
+        "jp": "かけます",
+        "jp_write": "かけます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "(向别人)借",
+        "jp": "かります",
+        "jp_write": "借ります",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "教",
+        "jp": "おしえます",
+        "jp_write": "教えます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "已经",
+        "jp": "もう",
+        "jp_write": "もう",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "刚才",
+        "jp": "さっき",
+        "jp_write": "さっき",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "刚刚",
+        "jp": "たったいま",
+        "jp_write": "たった今",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "再一次",
+        "jp": "もういちど",
+        "jp_write": "もう一度",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "以前",
+        "jp": "まえに",
+        "jp_write": "前に",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "陈",
+        "jp": "ちん",
+        "jp_write": "陳",
+        "describe": "专有名词",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "怎样,如何",
+        "jp": "どうですか",
+        "jp_write": "どうですか",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "拜托了",
+        "jp": "おねがいします",
+        "jp_write": "お願いします",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "明白了",
+        "jp": "わかりました",
+        "jp_write": "分かりました",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "太好了",
+        "jp": "よかったです",
+        "jp_write": "よかったです",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

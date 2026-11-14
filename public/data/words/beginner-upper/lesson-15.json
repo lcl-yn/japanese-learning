@@ -1,0 +1,310 @@
+[
+    {
+        "cn": "小船,小艇",
+        "jp": "ボート",
+        "jp_write": "ボート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "长椅,长凳",
+        "jp": "ベンチ",
+        "jp_write": "ベンチ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "市政府",
+        "jp": "しやくしょ",
+        "jp_write": "市役所",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "手机",
+        "jp": "けいたいでんわ",
+        "jp_write": "携帯電話",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "禁止吸烟",
+        "jp": "きんえん",
+        "jp_write": "禁煙",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "感冒",
+        "jp": "かぜ",
+        "jp_write": "風邪",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "发烧,体温",
+        "jp": "ねつ",
+        "jp_write": "熱",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "睡眠",
+        "jp": "すいみん",
+        "jp_write": "睡眠",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "澡堂,浴室",
+        "jp": "おふろ",
+        "jp_write": "お風呂",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "药店",
+        "jp": "やっきょく",
+        "jp_write": "薬局",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "空调",
+        "jp": "クーラー",
+        "jp_write": "クーラー",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "火",
+        "jp": "ひ",
+        "jp_write": "火",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "精神,意识",
+        "jp": "き",
+        "jp_write": "気",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "事先商量,碰头,商洽",
+        "jp": "うちあわせ",
+        "jp_write": "打ち合わせ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "勉强,难以办到",
+        "jp": "むり",
+        "jp_write": "無理",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "禁止停车",
+        "jp": "ちゅうしゃきんし",
+        "jp_write": "駐車禁止",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "禁止进入",
+        "jp": "たちいりきんし",
+        "jp_write": "立入禁止",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "严禁烟火",
+        "jp": "かきげんきん",
+        "jp_write": "火気厳禁",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "禁止拍照",
+        "jp": "さつえいきんし",
+        "jp_write": "撮影禁止",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "乘坐,乘",
+        "jp": "のります",
+        "jp_write": "乗ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "用,使用",
+        "jp": "つかいます",
+        "jp_write": "使います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "坐,落座",
+        "jp": "すわります",
+        "jp_write": "座ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "进入,加入",
+        "jp": "はいります",
+        "jp_write": "入ります",
+        "describe": "一类动词,自动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "是,说,讲,告诉",
+        "jp": "もうします",
+        "jp_write": "申します",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "取,取得",
+        "jp": "とります",
+        "jp_write": "とります",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "唱,歌唱",
+        "jp": "うたいます",
+        "jp_write": "歌います",
+        "describe": "一类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "说,传达,转告",
+        "jp": "つたえます",
+        "jp_write": "伝えます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "停,制止",
+        "jp": "とめます",
+        "jp_write": "止めます",
+        "describe": "二类动词,他动词",
+        "part_of_speech": "动词"
+    },
+    {
+        "cn": "热乎,温暖",
+        "jp": "あたたかい",
+        "jp_write": "暖かい",
+        "describe": "一类形容词",
+        "part_of_speech": "形容词"
+    },
+    {
+        "cn": "没关系,放心",
+        "jp": "だいじょうぶ",
+        "jp_write": "大丈夫",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "不行,不可以(口语)",
+        "jp": "だめ",
+        "jp_write": "だめ",
+        "describe": "二类形容词",
+        "part_of_speech": "形容动词"
+    },
+    {
+        "cn": "好好地,充足地",
+        "jp": "じゅうぶん",
+        "jp_write": "十分",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "当然,不用说",
+        "jp": "もちろん",
+        "jp_write": "もちろん",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "好好地,安静地",
+        "jp": "ゆっくり",
+        "jp_write": "ゆっくり",
+        "describe": "",
+        "part_of_speech": "副词"
+    },
+    {
+        "cn": "喂",
+        "jp": "もしもし",
+        "jp_write": "もしもし",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "不,不是",
+        "jp": "いえ",
+        "jp_write": "いえ",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "请多保重",
+        "jp": "おだいじに",
+        "jp_write": "お大事に",
+        "describe": "",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "不行,不可以",
+        "jp": "いけません",
+        "jp_write": "いけません",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "没关系,不要紧",
+        "jp": "かまいません",
+        "jp_write": "かまいません",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "还没有,仍然……没有",
+        "jp": "まだです",
+        "jp_write": "まだです",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "注意",
+        "jp": "きをつけます",
+        "jp_write": "気をつけます",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "勉强",
+        "jp": "むりをします",
+        "jp_write": "無理をします",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "睡觉",
+        "jp": "すいみんをとります",
+        "jp_write": "睡眠をとります",
+        "describe": "",
+        "part_of_speech": "词组"
+    },
+    {
+        "cn": "洗澡",
+        "jp": "おふろに@はいります",
+        "jp_write": "お風呂にはいります",
+        "describe": "",
+        "part_of_speech": "词组"
+    }
+]

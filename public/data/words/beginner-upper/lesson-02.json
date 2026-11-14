@@ -1,5 +1,278 @@
 [
     {
+        "cn": "书",
+        "jp": "ほん",
+        "jp_write": "本",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "包,公文包",
+        "jp": "かばん",
+        "jp_write": "かばん",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "笔记本,本子",
+        "jp": "ノート",
+        "jp_write": "ノート",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "铅笔",
+        "jp": "えんぴつ",
+        "jp_write": "鉛筆",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "伞",
+        "jp": "かさ",
+        "jp_write": "傘",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "鞋",
+        "jp": "くつ",
+        "jp_write": "靴",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "报纸",
+        "jp": "しんぶん",
+        "jp_write": "新聞",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "杂志",
+        "jp": "ざっし",
+        "jp_write": "雑誌",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "词典",
+        "jp": "じしょ",
+        "jp_write": "辞書",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "照相机",
+        "jp": "カメラ",
+        "jp_write": "カメラ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电视机",
+        "jp": "テレビ",
+        "jp_write": "テレビ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "个人电脑",
+        "jp": "パソコン",
+        "jp_write": "パソコン",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "收音机",
+        "jp": "ラジオ",
+        "jp_write": "ラジオ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "电话",
+        "jp": "でんわ",
+        "jp_write": "電話",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "桌子,书桌",
+        "jp": "つくえ",
+        "jp_write": "机",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "椅子",
+        "jp": "いす",
+        "jp_write": "いす",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钥匙,锁",
+        "jp": "かぎ",
+        "jp_write": "かぎ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "钟,表",
+        "jp": "とけい",
+        "jp_write": "時計",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "记事本",
+        "jp": "てちょう",
+        "jp_write": "手帳",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "照片",
+        "jp": "しゃしん",
+        "jp_write": "写真",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "车",
+        "jp": "くるま",
+        "jp_write": "車",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "自行车",
+        "jp": "じてんしゃ",
+        "jp_write": "自転車",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "礼物",
+        "jp": "おみやげ",
+        "jp_write": "お土産",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "特产,名产",
+        "jp": "めいさんひん",
+        "jp_write": "名産品",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "丝绸",
+        "jp": "シルク",
+        "jp_write": "シルク",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "手绢",
+        "jp": "ハンカチ",
+        "jp_write": "ハンカチ",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "公司",
+        "jp": "かいしゃ",
+        "jp_write": "会社",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "(敬称)位,人",
+        "jp": "かた",
+        "jp_write": "方",
+        "describe": "人的敬称，比「人」客气",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "人",
+        "jp": "ひと",
+        "jp_write": "人",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "家人,家属",
+        "jp": "かぞく",
+        "jp_write": "家族",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "(我)母亲",
+        "jp": "はは",
+        "jp_write": "母",
+        "describe": "用于说自己的母亲，不当面称呼",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "母亲",
+        "jp": "おかあさん",
+        "jp_write": "お母さん",
+        "describe": "称呼别人的母亲，也可当面称呼自己的母亲",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "日语",
+        "jp": "にほんご",
+        "jp_write": "日本語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "汉语,中文",
+        "jp": "ちゅうごくご",
+        "jp_write": "中国語",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "这,这个",
+        "jp": "これ",
+        "jp_write": "これ",
+        "describe": "指离说话人近的事物",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那,那个(靠近对方)",
+        "jp": "それ",
+        "jp_write": "それ",
+        "describe": "指离听话人近的事物",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "那,那个(远离双方)",
+        "jp": "あれ",
+        "jp_write": "あれ",
+        "describe": "指离说话人和听话人都远的事物",
+        "part_of_speech": "代词"
+    },
+    {
+        "cn": "哪个",
+        "jp": "どれ",
+        "jp_write": "どれ",
+        "describe": "三个以上的事物里问是哪一个，单独使用",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "什么",
+        "jp": "なん",
+        "jp_write": "何",
+        "describe": "后续です、の时读なん；单独或后续が、を时多读なに",
+        "part_of_speech": "疑问词"
+    },
+    {
         "cn": "谁",
         "jp": "だれ",
         "jp_write": "誰",
@@ -7,10 +280,115 @@
         "part_of_speech": "疑问词"
     },
     {
-        "cn": "谁",
+        "cn": "哪位",
         "jp": "どなた",
         "jp_write": "何方",
-        "describe": "だれ 的礼貌用法",
+        "describe": "だれ的礼貌说法，用于尊长",
         "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "这个(后接名词)",
+        "jp": "この",
+        "jp_write": "この",
+        "describe": "修饰名词，指离说话人近的事物",
+        "part_of_speech": "连体词"
+    },
+    {
+        "cn": "那个(后接名词,靠近对方)",
+        "jp": "その",
+        "jp_write": "その",
+        "describe": "修饰名词，指离听话人近的事物",
+        "part_of_speech": "连体词"
+    },
+    {
+        "cn": "那个(后接名词,远离双方)",
+        "jp": "あの",
+        "jp_write": "あの",
+        "describe": "修饰名词，指离双方都远的事物",
+        "part_of_speech": "连体词"
+    },
+    {
+        "cn": "哪个(后接名词)",
+        "jp": "どの",
+        "jp_write": "どの",
+        "describe": "三个以上的事物里问是哪一个，后面接名词",
+        "part_of_speech": "连体词"
+    },
+    {
+        "cn": "啊",
+        "jp": "えっ",
+        "jp_write": "えっ",
+        "describe": "表示惊讶",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "哇",
+        "jp": "わあ",
+        "jp_write": "わあ",
+        "describe": "",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "(应答)嗯,是",
+        "jp": "ええ",
+        "jp_write": "ええ",
+        "describe": "应答时表示肯定",
+        "part_of_speech": "感叹词"
+    },
+    {
+        "cn": "长岛",
+        "jp": "ながしま",
+        "jp_write": "長島",
+        "describe": "专有名词姓氏",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "日本",
+        "jp": "にほん",
+        "jp_write": "日本",
+        "describe": "国家-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "汕头",
+        "jp": "スワトウ",
+        "jp_write": "スワトウ",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "伦敦",
+        "jp": "ロンドン",
+        "jp_write": "ロンドン",
+        "describe": "地点-专有名",
+        "part_of_speech": "专"
+    },
+    {
+        "cn": "谢谢",
+        "jp": "ありがとうございます",
+        "jp_write": "ありがとうございます",
+        "describe": "郑重的感谢，比ありがとう更礼貌",
+        "part_of_speech": "寒暄语"
+    },
+    {
+        "cn": "多大",
+        "jp": "おいくつ",
+        "jp_write": "おいくつ",
+        "describe": "询问年龄的礼貌说法",
+        "part_of_speech": "疑问词"
+    },
+    {
+        "cn": "什么~",
+        "jp": "なん～",
+        "jp_write": "何～",
+        "describe": "接在名词前，如「何歳」",
+        "part_of_speech": "接头词"
+    },
+    {
+        "cn": "~岁",
+        "jp": "～さい",
+        "jp_write": "～歳",
+        "describe": "接在数字后表示年龄",
+        "part_of_speech": "后缀"
     }
 ]
