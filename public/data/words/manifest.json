@@ -34,6 +34,18 @@
                             "name": "第4课",
                             "file": "beginner-upper/lesson-04.json"
                         }
+                    ],
+                    "pages": [
+                        {
+                            "id": "scenes",
+                            "name": "单元末-实用场景对话"
+                        },
+                        {
+                            "id": "spring",
+                            "name": "单元末-词语之泉",
+                            "lesson": 101,
+                            "file": "beginner-upper/unit-01-spring.json"
+                        }
                     ]
                 },
                 {

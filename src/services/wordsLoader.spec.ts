@@ -160,4 +160,42 @@ describe('loadAllWords', () => {
 
     await expect(loadAllWords('/data/words')).resolves.toEqual(missingPage)
   })
+
+  it('loads a unit word page with the lesson number from the manifest', async () => {
+    const manifest: WordsManifest = {
+      books: [
+        {
+          code: 'beginner-upper',
+          name: '初级上册',
+          level: 'beginner',
+          volume: 'upper',
+          units: [
+            {
+              unit: 1,
+              name: '第1单元',
+              lessons: [{ id: 1, lesson: 1, name: '第1课', file: 'beginner-upper/lesson-01.json' }],
+              pages: [
+                { id: 'scenes', name: '单元末-实用场景对话' },
+                { id: 'spring', name: '单元末-词语之泉', lesson: 101, file: 'beginner-upper/unit-01-spring.json' },
+              ],
+            },
+          ],
+        },
+      ],
+    }
+    const lesson1 = [{ cn: '学生', jp: 'がくせい', jp_write: '学生', describe: '', part_of_speech: '名' }]
+    const spring = [{ cn: '玄关', jp: 'げんかん', jp_write: '玄関', describe: '', part_of_speech: '名' }]
+
+    vi.mocked(fetch).mockImplementation(async (input) => {
+      const url = requestUrl(input)
+      if (url.endsWith('manifest.json')) return Response.json(manifest)
+      if (url.endsWith('lesson-01.json')) return Response.json(lesson1)
+      if (url.endsWith('unit-01-spring.json')) return Response.json(spring)
+      throw new Error(`unexpected url ${url}`)
+    })
+
+    const result = await loadAllWords('/data/words')
+    expect(result.words.map((word) => word.lesson)).toEqual([1, 101])
+    expect(result.words[1]).toMatchObject({ cn: '玄关', unit: 1, bookId: 'beginner-upper' })
+  })
 })

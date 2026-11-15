@@ -10,6 +10,7 @@ import {
 } from '@/utils/answerCheck'
 import { selectRandomWordsWithWeights, wordKey } from '@/utils/weightedRandom'
 import type { ScopeOption, Word, WordsManifest } from '@/types/word'
+import { wordPages } from '@/utils/unitPages'
 
 const ERROR_STORAGE_KEY = 'wordErrorCounts'
 
@@ -50,6 +51,14 @@ export const useWordsStore = defineStore('words', {
           unitId: unit.unit,
           lessonId: lesson.lesson,
           label: lesson.name,
+        })
+      }
+      for (const page of wordPages(unit)) {
+        options.push({
+          bookId: book.code,
+          unitId: unit.unit,
+          lessonId: page.lesson,
+          label: page.name,
         })
       }
       return options

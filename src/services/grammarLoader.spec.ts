@@ -1,5 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { loadGrammarDocument, loadLessonDocument, saveGrammarDocument, saveLessonDocument } from './grammarLoader'
+import {
+  loadGrammarDocument,
+  loadLessonDocument,
+  loadUnitPageDocument,
+  saveGrammarDocument,
+  saveLessonDocument,
+  saveUnitPageDocument,
+} from './grammarLoader'
 import { GRAMMAR_SAVE_PATH, READING_SAVE_PATH, emptyGrammarDocument } from '@/utils/grammarDocument'
 
 describe('loadGrammarDocument', () => {
@@ -102,6 +109,50 @@ describe('saveGrammarDocument', () => {
       }),
     ).rejects.toThrow('语法保存失败')
     expect(fetch).not.toHaveBeenCalled()
+  })
+})
+
+describe('loadUnitPageDocument', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('reads the unit page file', async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('', { status: 404 }))
+    await expect(loadUnitPageDocument('beginner-upper', 1, 'scenes', '/')).resolves.toEqual(emptyGrammarDocument())
+    expect(fetch).toHaveBeenCalledWith('/data/reading/beginner-upper/unit-01-page-scenes.json')
+  })
+
+  it('does not fetch an invalid page', async () => {
+    await expect(loadUnitPageDocument('beginner-upper', 1, '../secret', '/')).rejects.toThrow('找不到这一页')
+    expect(fetch).not.toHaveBeenCalled()
+  })
+})
+
+describe('saveUnitPageDocument', () => {
+  beforeEach(() => {
+    vi.stubGlobal('fetch', vi.fn())
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('puts the page on the reading endpoint without a lesson number', async () => {
+    vi.mocked(fetch).mockResolvedValue(Response.json({ ok: true }))
+    const document = emptyGrammarDocument()
+
+    await saveUnitPageDocument({ bookId: 'beginner-upper', unit: 1, pageId: 'scenes', document })
+
+    expect(fetch).toHaveBeenCalledWith(READING_SAVE_PATH, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookId: 'beginner-upper', unit: 1, pageId: 'scenes', document }),
+    })
   })
 })
 

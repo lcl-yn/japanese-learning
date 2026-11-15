@@ -19,7 +19,7 @@ watch(
   () =>
     [route.params.bookId, route.params.unitId, route.params.lessonId, route.meta.section, wordsStore.loaded] as const,
   () => {
-    if (!wordsStore.loaded || route.meta.section === 'words') return
+    if (!wordsStore.loaded || route.meta.section === 'words' || route.meta.section === 'unit-page') return
     const bookId = route.params.bookId
     const unitRaw = route.params.unitId
     if (typeof bookId !== 'string' || typeof unitRaw !== 'string') return
@@ -46,13 +46,23 @@ const crumbs = computed(() => {
   if (unitId === 0) return [book.name, section]
   const unit = book.units.find((item) => item.unit === unitId)
   if (!unit) return [book.name, section]
+  const pageRaw = route.params.pageId
+  if (typeof pageRaw === 'string') {
+    const page = unit.pages?.find((item) => item.id === pageRaw)
+    return page ? [book.name, unit.name, page.name] : [book.name, unit.name]
+  }
   const lessonRaw = route.params.lessonId
   const lesson =
     typeof lessonRaw === 'string' && lessonRaw !== '0'
       ? unit.lessons.find((item) => String(item.lesson) === lessonRaw)
       : undefined
+  const wordPage =
+    !lesson && typeof lessonRaw === 'string'
+      ? unit.pages?.find((item) => String(item.lesson) === lessonRaw)
+      : undefined
   const names = [book.name, unit.name]
   if (lesson) names.push(lesson.name)
+  else if (wordPage) names.push(wordPage.name)
   names.push(section)
   return names
 })

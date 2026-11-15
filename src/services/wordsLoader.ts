@@ -1,4 +1,5 @@
 import type { Word, WordsManifest } from '@/types/word'
+import { wordPages } from '@/utils/unitPages'
 
 const DEFAULT_BASE = `${import.meta.env.BASE_URL}data/words`
 
@@ -77,6 +78,15 @@ export async function loadAllWords(baseUrl = DEFAULT_BASE): Promise<{
             bookId: book.code,
             unit: unit.unit,
             lesson: lesson.lesson,
+          }),
+        )
+      }
+      for (const page of wordPages(unit)) {
+        tasks.push(
+          loadLessonWords(`${baseUrl}/${page.file}`, page.file, {
+            bookId: book.code,
+            unit: unit.unit,
+            lesson: page.lesson,
           }),
         )
       }

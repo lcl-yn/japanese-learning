@@ -29,20 +29,21 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 | `/study/:bookId/:unitId/:lessonId/practice` | `src/views/PracticeView.vue` | `PracticeTable.vue`、`AnswerField.vue`、`LessonFilter.vue` |
 | `/words` | `src/views/WordsView.vue` | 单词本。册、单元、课只筛列表，不带动左侧目录 |
 | `/study/:bookId/:unitId/:lessonId/reading` | `src/views/LessonDocumentView.vue` | 课文。与语法共用编辑器，`section` 为 `reading` |
+| `/study/:bookId/:unitId/page/:pageId` | `src/views/UnitPageView.vue` | 和课同级的单元页面。初级上册第1单元有「单元末-实用场景对话」（课文，`unit-01-page-scenes.json`）和「单元末-词语之泉」（词表，`public/data/words/beginner-upper/unit-01-spring.json`，课号 101） |
 | `/study/:bookId/:unitId/:lessonId/grammar` | `src/views/LessonDocumentView.vue` | `GrammarEditor.vue`。`section` 为 `grammar` |
 | `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts` |
 
-页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。没有课的单元只显示「暂无课」。从一课点到另一课时，已经展开的册、单元和课保持展开。单词本里的册、单元、课只筛词表，打开单词本或五十音图时左侧课单收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
+页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。单元上的 `pages` 和课排在同一层，是直接打开的页面，不再展开单词、课文、语法。初级上册第1单元末有「单元末-实用场景对话」和「单元末-词语之泉」。没有课、也没有这种页面的单元只显示「暂无课」。从一课点到另一课时，已经展开的册、单元和课保持展开。单词本里的册、单元、课只筛词表，打开单词本或五十音图时左侧课单收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
 
-文档标题和简介由 `src/utils/seo.ts` 写入。五十音图、单词本用固定简介；练习、课文、语法会带上当前册、单元和课。课文和语法页标记为 noindex。
+文档标题和简介由 `src/utils/seo.ts` 写入。五十音图、单词本用固定简介；练习、课文、语法会带上当前册、单元和课。课文、语法和单元页面标记为 noindex。打开单元页面不改练习正在抽的课。
 
-词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json` 的 `books`（初级 / 中级 / 高级，各分上册、下册）→ `units` → `lessons`，再并行加载各课 JSON。课次文件不存在，或开发服务器把缺失文件回退成页面 HTML 时，这一课按没有词处理，不中断整份词库。书籍、单元、课号由清单写入，词条 JSON 不写这些位置。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`；内存里另有 `bookId`、`unit`、`lesson`。
+词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json` 的 `books`（初级 / 中级 / 高级，各分上册、下册）→ `units` → `lessons`，再并行加载各课 JSON。带 `file` 和 `lesson` 的单元页面一并加载，课号由清单写入。课次文件不存在，或开发服务器把缺失文件回退成页面 HTML 时，这一课按没有词处理，不中断整份词库。书籍、单元、课号由清单写入，词条 JSON 不写这些位置。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`；内存里另有 `bookId`、`unit`、`lesson`。
 
-练习页的课次下拉只列当前单元的课，含「本单元全部」。单词本的册、单元、课互不影响正在做的练习。单词本「显示中文」左侧可搜索中文释义：点输入框里的放大镜或回车后，当前册、单元、课里只留释义（逗号、顿号、分号分开的每一义）以关键字开头的词。组字中的回车不触发搜索。
+练习页的课次下拉列出当前单元的课和带词表的单元页面，含「本单元全部」。选「本单元全部」时，词语之泉和各课的词一起抽。单词本的课次下拉同样多出这些词表，选「全部」时一起列出。单词本的册、单元、课互不影响正在做的练习。单词本「显示中文」左侧可搜索中文释义：点输入框里的放大镜或回车后，当前册、单元、课里只留释义（逗号、顿号、分号分开的每一义）以关键字开头的词。组字中的回车不触发搜索。
 
 ## 课文与语法
 
-课文和语法共用 `LessonDocumentView.vue` 与 `GrammarEditor.vue`。当前课按需读取 `public/data/reading/{bookId}/unit-XX-lesson-XX.json` 或 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可在当前单元格上下插入行、左右插入列，也可删除所在行、列或整张表。框选多格后右键只留删行、删列，并删掉选区盖住的全部行或列。课文编辑时可以从 `public/data/audio/{bookId}` 插入当前册的播放条，初级上册在 `beginner-upper`。播放条带进度、播放和暂停，播放按钮旁可选一次或循环；循环在播完后隔 1 秒再从头播。地址写入课文 JSON，播放模式不写入。没有文件时分别显示「这一课还没有课文」「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__reading` 或 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读，播放条仍可播放。引用里连续回车仍留在同一段引用中。
+课文和语法共用 `LessonDocumentView.vue` 与 `GrammarEditor.vue`。当前课按需读取 `public/data/reading/{bookId}/unit-XX-lesson-XX.json` 或 `public/data/grammar/{bookId}/unit-XX-lesson-XX.json`，不进词库加载。没有词表的单元页面走同一编辑器，文件是 `public/data/reading/{bookId}/unit-XX-page-{pageId}.json`，开发时仍经 `PUT /__reading` 保存。没有文件时显示「这一页还没有内容。」带词表的单元页面用单词表，不进课文编辑器。文档是 Tiptap JSON。一级到四级标题列在正文右侧，点击后滚到对应标题。编辑时格式栏吸在主区顶部，可以插入表格，拖列宽。光标在表格里时右键可在当前单元格上下插入行、左右插入列，也可删除所在行、列或整张表。框选多格后右键只留删行、删列，并删掉选区盖住的全部行或列。课文编辑时可以从 `public/data/audio/{bookId}` 插入当前册的播放条，初级上册在 `beginner-upper`。播放条带进度、播放和暂停，播放按钮旁可选一次或循环；循环在播完后隔 1 秒再从头播。地址写入课文 JSON，播放模式不写入。没有文件时分别显示「这一课还没有课文」「这一课还没有语法」。`npm run dev` 里可以编辑，保存经 `PUT /__reading` 或 `PUT /__grammar` 写回该文件。还在编辑时离开这一页会先确认。打包后的页面只读，播放条仍可播放。引用里连续回车仍留在同一段引用中。
 
 ## 练习
 

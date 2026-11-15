@@ -5,9 +5,12 @@ import {
   grammarRelativePath,
   lessonRelativePath,
   lessonSavePath,
+  unitPageRelativePath,
   isGrammarDocument,
   isGrammarLocation,
+  isUnitPageLocation,
   parseGrammarSaveBody,
+  parseUnitPageSaveBody,
 } from './grammarDocument'
 
 describe('isGrammarLocation', () => {
@@ -29,6 +32,26 @@ describe('grammarRelativePath', () => {
   it('pads the unit and lesson', () => {
     expect(grammarRelativePath('beginner-upper', 1, 2)).toBe(
       'data/grammar/beginner-upper/unit-01-lesson-02.json',
+    )
+  })
+})
+
+describe('isUnitPageLocation', () => {
+  it('accepts a page id on a real unit', () => {
+    expect(isUnitPageLocation('beginner-upper', 1, 'scenes')).toBe(true)
+  })
+
+  it('rejects a path hiding in the page id', () => {
+    expect(isUnitPageLocation('beginner-upper', 1, '../secret')).toBe(false)
+    expect(isUnitPageLocation('beginner-upper', 1, 'Scenes')).toBe(false)
+    expect(isUnitPageLocation('beginner-upper', 0, 'scenes')).toBe(false)
+  })
+})
+
+describe('unitPageRelativePath', () => {
+  it('keeps the page beside lesson files', () => {
+    expect(unitPageRelativePath('beginner-upper', 1, 'scenes')).toBe(
+      'data/reading/beginner-upper/unit-01-page-scenes.json',
     )
   })
 })
@@ -126,6 +149,19 @@ describe('parseGrammarSaveBody', () => {
         content: [{ type: 'paragraph', attrs: { colwidth: ['wide'] } }],
       }),
     ).toBe(false)
+  })
+
+  it('keeps a unit page and leaves lesson saves alone', () => {
+    expect(parseUnitPageSaveBody({ bookId: 'beginner-upper', unit: 1, pageId: 'scenes', document })).toEqual({
+      bookId: 'beginner-upper',
+      unit: 1,
+      pageId: 'scenes',
+      document,
+    })
+    expect(parseUnitPageSaveBody({ bookId: 'beginner-upper', unit: 1, lesson: 1, pageId: 'scenes', document })).toBe(
+      null,
+    )
+    expect(parseUnitPageSaveBody({ bookId: '../secret', unit: 1, pageId: 'scenes', document })).toBe(null)
   })
 
   it('rejects a document that is not a grammar tree', () => {

@@ -20,11 +20,23 @@ export interface LessonMeta {
   file: string
 }
 
+export interface UnitPageMeta {
+  /** 路由片段，如 scenes。 */
+  id: string
+  name: string
+  /** 词表页的课号。筛选和抽题用，不进入课的子菜单。 */
+  lesson?: number
+  /** 词表文件，相对 public/data/words。 */
+  file?: string
+}
+
 export interface UnitMeta {
   /** 第几单元。筛选和路由用这个。 */
   unit: number
   name: string
   lessons: LessonMeta[]
+  /** 和课同级的独立页面，点开直接进入，不再展开单词、课文、语法。 */
+  pages?: UnitPageMeta[]
 }
 
 export interface BookMeta {

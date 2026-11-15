@@ -4,6 +4,7 @@ import { Search } from '@element-plus/icons-vue'
 import WordListTable from '@/components/WordListTable.vue'
 import { useWordsStore } from '@/stores/words'
 import { matchesCnPrefix } from '@/utils/cnSearch'
+import { wordPages } from '@/utils/unitPages'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
 import { WORDS_DESCRIPTION } from '@/utils/seo'
 
@@ -35,7 +36,18 @@ const lessonId = ref(0)
 const units = computed(
   () => wordsStore.manifest.books.find((book) => book.code === bookId.value)?.units ?? [],
 )
-const lessons = computed(() => units.value.find((unit) => unit.unit === unitId.value)?.lessons ?? [])
+const lessons = computed(() => {
+  const unit = units.value.find((item) => item.unit === unitId.value)
+  const choices = (unit?.lessons ?? []).map((lesson) => ({
+    key: `lesson-${lesson.id}`,
+    lesson: lesson.lesson,
+    name: lesson.name,
+  }))
+  for (const page of wordPages(unit)) {
+    choices.push({ key: `page-${page.id}`, lesson: page.lesson, name: page.name })
+  }
+  return choices
+})
 
 const cnDraft = ref('')
 const cnQuery = ref('')
@@ -127,7 +139,7 @@ onMounted(async () => {
           @change="onLessonChange"
         >
           <el-option label="全部" :value="0" />
-          <el-option v-for="lesson in lessons" :key="lesson.id" :label="lesson.name" :value="lesson.lesson" />
+          <el-option v-for="lesson in lessons" :key="lesson.key" :label="lesson.name" :value="lesson.lesson" />
         </el-select>
         <el-input
           v-model="cnDraft"
@@ -226,7 +238,7 @@ onMounted(async () => {
 }
 
 .lesson-select {
-  width: 120px;
+  width: 200px;
 }
 
 .cn-search {

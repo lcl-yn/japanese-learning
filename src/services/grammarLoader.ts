@@ -1,11 +1,15 @@
-import type { GrammarDocument, GrammarSaveRequest } from '@/types/grammar'
+import type { GrammarDocument, GrammarSaveRequest, UnitPageSaveRequest } from '@/types/grammar'
 import {
   emptyGrammarDocument,
   isGrammarDocument,
   isGrammarLocation,
+  isUnitPageLocation,
   lessonRelativePath,
   lessonSavePath,
   parseGrammarSaveBody,
+  parseUnitPageSaveBody,
+  unitPageRelativePath,
+  READING_SAVE_PATH,
   type LessonSection,
 } from '@/utils/grammarDocument'
 
@@ -95,4 +99,56 @@ export async function saveLessonDocument(section: LessonSection, request: Gramma
  */
 export function saveGrammarDocument(request: GrammarSaveRequest): Promise<void> {
   return saveLessonDocument('grammar', request)
+}
+
+/**
+ * 读取单元里和课同级的阅读页。
+ * 文件不存在或被开发服务器回退成页面 HTML 时，按还没有内容处理。
+ *
+ * @param bookId 册 id
+ * @param unit 单元号
+ * @param pageId 页面 id
+ * @param baseUrl 站点公共前缀，测试时传入
+ * @return 这一页的文档
+ */
+export async function loadUnitPageDocument(
+  bookId: string,
+  unit: number,
+  pageId: string,
+  baseUrl = import.meta.env.BASE_URL,
+): Promise<GrammarDocument> {
+  const error = SECTION_ERROR.reading
+  if (!isUnitPageLocation(bookId, unit, pageId)) {
+    throw new Error('找不到这一页')
+  }
+  const prefix = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
+  const res = await fetch(`${prefix}${unitPageRelativePath(bookId, unit, pageId)}`)
+  if (res.status === 404) return emptyGrammarDocument()
+  if (!res.ok) throw new Error(error.load)
+  const contentType = res.headers.get('content-type') ?? ''
+  if (!contentType.includes('application/json')) return emptyGrammarDocument()
+  let raw: unknown
+  try {
+    raw = (await res.json()) as unknown
+  } catch {
+    throw new Error(error.format)
+  }
+  if (!isGrammarDocument(raw)) throw new Error(error.format)
+  return raw
+}
+
+/**
+ * 把单元页面交给开发服务器，写回对应的 JSON 文件。
+ *
+ * @param request 册、单元、页面和文档
+ */
+export async function saveUnitPageDocument(request: UnitPageSaveRequest): Promise<void> {
+  const parsed = parseUnitPageSaveBody(request)
+  if (!parsed) throw new Error(SECTION_ERROR.reading.save)
+  const res = await fetch(READING_SAVE_PATH, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(parsed),
+  })
+  if (!res.ok) throw new Error(SECTION_ERROR.reading.save)
 }

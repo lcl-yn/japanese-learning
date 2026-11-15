@@ -26,6 +26,10 @@ const manifest: WordsManifest = {
             { id: 101, lesson: 1, name: '第1课', file: 'beginner-upper/lesson-01.json' },
             { id: 102, lesson: 2, name: '第2课', file: 'beginner-upper/lesson-02.json' },
           ],
+          pages: [
+            { id: 'scenes', name: '单元末-实用场景对话' },
+            { id: 'spring', name: '单元末-词语之泉', lesson: 101, file: 'beginner-upper/unit-01-spring.json' },
+          ],
         },
       ],
     },
@@ -70,6 +74,16 @@ const words: Word[] = [
     unit: 1,
     bookId: 'beginner-upper',
   },
+  {
+    cn: '玄关',
+    jp: 'げんかん',
+    jp_write: '玄関',
+    describe: '',
+    part_of_speech: '名',
+    lesson: 101,
+    unit: 1,
+    bookId: 'beginner-upper',
+  },
 ]
 
 describe('useWordsStore', () => {
@@ -105,7 +119,21 @@ describe('useWordsStore', () => {
 
     store.setScope('beginner-upper', 1, 0)
 
-    expect(store.lessonOptions.map((option) => option.label)).toEqual(['本单元全部', '第1课', '第2课'])
+    expect(store.lessonOptions.map((option) => option.label)).toEqual([
+      '本单元全部',
+      '第1课',
+      '第2课',
+      '单元末-词语之泉',
+    ])
+  })
+
+  it('keeps the unit word page when that lesson is selected', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+
+    store.setScope('beginner-upper', 1, 101)
+
+    expect(store.filteredWords.map((word) => word.cn)).toEqual(['玄关'])
   })
 
   it('redraws the new lesson when practice opens after another lesson only changed the scope', async () => {

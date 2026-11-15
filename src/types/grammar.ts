@@ -4,4 +4,5 @@ export type {
   GrammarDocumentNode,
   GrammarMark,
   GrammarSaveRequest,
+  UnitPageSaveRequest,
 } from '@/utils/grammarDocument'

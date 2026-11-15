@@ -40,6 +40,17 @@ const router = createRouter({
       props: { section: 'grammar' },
       meta: { title: '语法', description: GRAMMAR_DESCRIPTION, robots: 'noindex,follow', section: 'grammar' },
     },
+    {
+      path: '/study/:bookId/:unitId/page/:pageId',
+      name: 'unit-page',
+      component: () => import('@/views/UnitPageView.vue'),
+      meta: {
+        title: '单元末',
+        description: '单元末的课文或词表。',
+        robots: 'noindex,follow',
+        section: 'unit-page',
+      },
+    },
     { path: '/study/:bookId/:unitId/:lessonId/words', redirect: '/words' },
     { path: '/study/:bookId/:unitId/words', redirect: '/words' },
     {

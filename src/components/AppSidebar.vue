@@ -18,6 +18,15 @@ const active = computed(() => {
   if (route.path.startsWith('/kana')) return '/kana'
   const bookId = route.params.bookId
   const unitId = route.params.unitId
+  const pageId = route.params.pageId
+  if (
+    route.meta.section === 'unit-page' &&
+    typeof bookId === 'string' &&
+    typeof unitId === 'string' &&
+    typeof pageId === 'string'
+  ) {
+    return `/study/${bookId}/${unitId}/page/${pageId}`
+  }
   const lessonId = route.params.lessonId
   if (typeof bookId !== 'string' || typeof unitId !== 'string' || typeof lessonId !== 'string') return ''
   if (lessonId === '0') return ''
@@ -113,7 +122,7 @@ function onSelect(index: string) {
       >
         <template #title>{{ unit.name }}</template>
         <el-menu-item
-          v-if="unit.lessons.length === 0"
+          v-if="unit.lessons.length === 0 && !(unit.pages && unit.pages.length > 0)"
           :index="`empty-lesson:${book.code}:${unit.unit}`"
           disabled
         >
@@ -129,6 +138,13 @@ function onSelect(index: string) {
           <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/reading`">课文</el-menu-item>
           <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/grammar`">语法</el-menu-item>
         </el-sub-menu>
+        <el-menu-item
+          v-for="page in unit.pages ?? []"
+          :key="`${book.code}-${unit.unit}-${page.id}`"
+          :index="`/study/${book.code}/${unit.unit}/page/${page.id}`"
+        >
+          {{ page.name }}
+        </el-menu-item>
       </el-sub-menu>
     </el-sub-menu>
   </el-menu>

@@ -46,6 +46,6 @@ function onScopeChange(value: string) {
 
 <style scoped>
 .lesson-filter {
-  width: 160px;
+  width: 200px;
 }
 </style>

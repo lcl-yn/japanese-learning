@@ -4,9 +4,15 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import GrammarEditor from '@/components/GrammarEditor.vue'
 import GrammarOutline from '@/components/GrammarOutline.vue'
-import { loadLessonDocument, saveLessonDocument } from '@/services/grammarLoader'
+import { loadLessonDocument, loadUnitPageDocument, saveLessonDocument, saveUnitPageDocument } from '@/services/grammarLoader'
 import type { GrammarDocument } from '@/types/grammar'
-import { grammarHasText, isGrammarDocument, isGrammarLocation, type LessonSection } from '@/utils/grammarDocument'
+import {
+  grammarHasText,
+  isGrammarDocument,
+  isGrammarLocation,
+  isUnitPageLocation,
+  type LessonSection,
+} from '@/utils/grammarDocument'
 import { grammarOutline } from '@/utils/grammarOutline'
 import { GRAMMAR_DESCRIPTION, READING_DESCRIPTION } from '@/utils/seo'
 
@@ -55,6 +61,7 @@ const page = computed(() => PAGE[props.section])
 const bookId = computed(() => (typeof route.params.bookId === 'string' ? route.params.bookId : ''))
 const unit = computed(() => Number(route.params.unitId))
 const lesson = computed(() => Number(route.params.lessonId))
+const pageId = computed(() => (typeof route.params.pageId === 'string' ? route.params.pageId : ''))
 const hasText = computed(() => baseline.value !== null && grammarHasText(baseline.value))
 const outline = computed(() => {
   const document = editing.value ? draft.value : baseline.value
@@ -66,7 +73,7 @@ const dirty = computed(
 )
 
 watch(
-  [bookId, unit, lesson, () => props.section],
+  [bookId, unit, lesson, pageId, () => props.section],
   () => {
     void load()
   },
@@ -86,7 +93,16 @@ async function load(): Promise<void> {
   error.value = ''
   editing.value = false
   activeHeading.value = null
-  if (!isGrammarLocation(bookId.value, unit.value, lesson.value)) {
+  const unitPage = pageId.value
+  if (unitPage) {
+    if (!isUnitPageLocation(bookId.value, unit.value, unitPage)) {
+      baseline.value = null
+      draft.value = null
+      error.value = '找不到这一页'
+      loading.value = false
+      return
+    }
+  } else if (!isGrammarLocation(bookId.value, unit.value, lesson.value)) {
     baseline.value = null
     draft.value = null
     error.value = '找不到这一课'
@@ -94,7 +110,9 @@ async function load(): Promise<void> {
     return
   }
   try {
-    const document = await loadLessonDocument(section, bookId.value, unit.value, lesson.value)
+    const document = unitPage
+      ? await loadUnitPageDocument(bookId.value, unit.value, unitPage)
+      : await loadLessonDocument(section, bookId.value, unit.value, lesson.value)
     if (requestId !== loadRequest) return
     baseline.value = document
     draft.value = copyDocument(document)
@@ -118,12 +136,21 @@ async function save(): Promise<void> {
   if (!draft.value || !dirty.value || saving.value) return
   saving.value = true
   try {
-    await saveLessonDocument(props.section, {
-      bookId: bookId.value,
-      unit: unit.value,
-      lesson: lesson.value,
-      document: draft.value,
-    })
+    if (pageId.value) {
+      await saveUnitPageDocument({
+        bookId: bookId.value,
+        unit: unit.value,
+        pageId: pageId.value,
+        document: draft.value,
+      })
+    } else {
+      await saveLessonDocument(props.section, {
+        bookId: bookId.value,
+        unit: unit.value,
+        lesson: lesson.value,
+        document: draft.value,
+      })
+    }
     baseline.value = copyDocument(draft.value)
     editing.value = false
     ElMessage.success('已保存')
@@ -165,12 +192,17 @@ function selectHeading(index: number): void {
 async function confirmLeave(): Promise<boolean> {
   if (!editing.value) return true
   try {
-    await ElMessageBox.confirm('这一课还在编辑，离开后没有保存的修改会丢掉。', '离开这一课', {
-      confirmButtonText: '离开',
-      cancelButtonText: '留在这里',
-      type: 'warning',
-      closeOnClickModal: false,
-    })
+    const editingPage = pageId.value !== ''
+    await ElMessageBox.confirm(
+      editingPage ? '这一页还在编辑，离开后没有保存的修改会丢掉。' : '这一课还在编辑，离开后没有保存的修改会丢掉。',
+      editingPage ? '离开这一页' : '离开这一课',
+      {
+        confirmButtonText: '离开',
+        cancelButtonText: '留在这里',
+        type: 'warning',
+        closeOnClickModal: false,
+      },
+    )
     return true
   } catch {
     return false
@@ -183,10 +215,10 @@ async function confirmLeave(): Promise<boolean> {
     <div class="lesson-body">
       <div class="lesson-column">
         <div class="lesson-bar">
-          <p class="page-lead">{{ page.description }}</p>
+          <p class="page-lead">{{ pageId ? '按课文阅读这一页，知识点用红色标出。' : page.description }}</p>
           <div v-if="canEdit && !loading && !error" class="actions">
             <el-button v-if="!editing" type="primary" @click="startEdit">
-              {{ hasText ? '编辑' : '写这一课' }}
+              {{ hasText ? '编辑' : pageId ? '写这一页' : '写这一课' }}
             </el-button>
             <template v-else>
               <el-button type="primary" :loading="saving" :disabled="!dirty" @click="save">保存</el-button>
@@ -198,11 +230,11 @@ async function confirmLeave(): Promise<boolean> {
         <p v-if="loading" class="status">{{ page.loading }}</p>
         <p v-else-if="error" class="error">{{ error }}</p>
         <template v-else>
-          <p v-if="!editing && !hasText" class="status">{{ page.empty }}</p>
+          <p v-if="!editing && !hasText" class="status">{{ pageId ? '这一页还没有内容。' : page.empty }}</p>
           <GrammarEditor
             v-else-if="baseline"
             ref="editorRef"
-            :key="`${section}-${bookId}-${unit}-${lesson}-${editorKey}`"
+            :key="`${section}-${bookId}-${unit}-${pageId || lesson}-${editorKey}`"
             :document="baseline"
             :editable="editing"
             :placeholder="page.placeholder"

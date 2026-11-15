@@ -27,6 +27,14 @@ export interface GrammarSaveRequest {
   document: GrammarDocument
 }
 
+/** 单元末这类和课同级的页面。pageId 只作文件名，不占用课号。 */
+export interface UnitPageSaveRequest {
+  bookId: string
+  unit: number
+  pageId: string
+  document: GrammarDocument
+}
+
 /** 课文和语法共用同一套文档，只是文件目录和保存地址不同。 */
 export type LessonSection = 'grammar' | 'reading'
 
@@ -39,6 +47,7 @@ export const READING_SAVE_PATH = '/__reading'
 const BOOK_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const NODE_TYPE = /^[a-zA-Z][a-zA-Z0-9]*$/
 const MAX_BOOK_ID_LENGTH = 64
+const MAX_PAGE_ID_LENGTH = 32
 const MAX_LESSON_NUMBER = 999
 const MAX_NODES = 5000
 const MAX_DEPTH = 30
@@ -57,6 +66,19 @@ const MAX_ATTR_LIST = 20
  */
 export function isGrammarLocation(bookId: unknown, unit: unknown, lesson: unknown): boolean {
   return isBookId(bookId) && isLessonNumber(unit) && isLessonNumber(lesson)
+}
+
+/**
+ * 判断单元页面能不能对应到阅读文件。
+ * 页面 id 只允许小写字母、数字和连字符，避免写到目录外面。
+ *
+ * @param bookId 册 id
+ * @param unit 单元号
+ * @param pageId 页面 id，如 scenes
+ * @return 可以读写这一页的文件时为 true
+ */
+export function isUnitPageLocation(bookId: unknown, unit: unknown, pageId: unknown): boolean {
+  return isBookId(bookId) && isLessonNumber(unit) && isPageId(pageId)
 }
 
 /**
@@ -83,6 +105,20 @@ export function lessonRelativePath(section: LessonSection, bookId: string, unit:
   const unitText = String(unit).padStart(2, '0')
   const lessonText = String(lesson).padStart(2, '0')
   return `data/${section}/${bookId}/unit-${unitText}-lesson-${lessonText}.json`
+}
+
+/**
+ * 单元页面的相对路径，相对于 public。和课次文件分开，避免被当成某一课。
+ * 调用前先用 isUnitPageLocation 确认参数。
+ *
+ * @param bookId 册 id
+ * @param unit 单元号
+ * @param pageId 页面 id
+ * @return 如 data/reading/beginner-upper/unit-01-page-scenes.json
+ */
+export function unitPageRelativePath(bookId: string, unit: number, pageId: string): string {
+  const unitText = String(unit).padStart(2, '0')
+  return `data/reading/${bookId}/unit-${unitText}-page-${pageId}.json`
 }
 
 /**
@@ -145,12 +181,30 @@ export function parseGrammarSaveBody(value: unknown): GrammarSaveRequest | null 
   return { bookId, unit, lesson, document }
 }
 
+/**
+ * 确认单元页面的保存请求。带课号的正文仍走课次保存，避免写错文件。
+ *
+ * @param value 请求体
+ * @return 合法时返回请求；否则为 null
+ */
+export function parseUnitPageSaveBody(value: unknown): UnitPageSaveRequest | null {
+  if (!isRecord(value) || 'lesson' in value) return null
+  const { bookId, unit, pageId, document } = value
+  if (!isBookId(bookId) || !isLessonNumber(unit) || !isPageId(pageId)) return null
+  if (!isGrammarDocument(document)) return null
+  return { bookId, unit, pageId, document }
+}
+
 function isBookId(value: unknown): value is string {
   return typeof value === 'string' && value.length <= MAX_BOOK_ID_LENGTH && BOOK_ID.test(value)
 }
 
 function isLessonNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= MAX_LESSON_NUMBER
+}
+
+function isPageId(value: unknown): value is string {
+  return typeof value === 'string' && value.length <= MAX_PAGE_ID_LENGTH && BOOK_ID.test(value)
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

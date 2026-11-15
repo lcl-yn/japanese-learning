@@ -6,6 +6,8 @@ import {
   lessonRelativePath,
   lessonSavePath,
   parseGrammarSaveBody,
+  parseUnitPageSaveBody,
+  unitPageRelativePath,
   type LessonSection,
 } from '../src/utils/grammarDocument.ts'
 
@@ -42,13 +44,25 @@ async function persist(
   res: ServerResponse,
 ): Promise<void> {
   try {
-    const parsed = parseGrammarSaveBody(parseJson(await readBody(req)))
+    const raw = parseJson(await readBody(req))
+    const page = section === 'reading' ? parseUnitPageSaveBody(raw) : null
+    const lesson = page ? null : parseGrammarSaveBody(raw)
+    const parsed = page ?? lesson
     if (!parsed) {
       reply(res, 400)
       return
     }
+    const relativePath = page
+      ? unitPageRelativePath(page.bookId, page.unit, page.pageId)
+      : lesson
+        ? lessonRelativePath(section, lesson.bookId, lesson.unit, lesson.lesson)
+        : ''
+    if (!relativePath) {
+      reply(res, 400)
+      return
+    }
     const dataRoot = resolve(root, 'public', 'data', section)
-    const filePath = resolve(root, 'public', lessonRelativePath(section, parsed.bookId, parsed.unit, parsed.lesson))
+    const filePath = resolve(root, 'public', relativePath)
     const fromRoot = relative(dataRoot, filePath)
     if (fromRoot.startsWith('..') || isAbsolute(fromRoot)) {
       reply(res, 400)
