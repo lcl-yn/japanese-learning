@@ -423,7 +423,7 @@
         "cn": "半夜",
         "jp": "よなか",
         "jp_write": "夜中",
-        "describe": "",
+        "describe": "指过了12点、凌晨那段安静的时间",
         "part_of_speech": "名"
     },
     {
@@ -507,14 +507,14 @@
         "cn": "他",
         "jp": "かれ",
         "jp_write": "彼",
-        "describe": "",
+        "describe": "例句：彼は学生です",
         "part_of_speech": "代词"
     },
     {
         "cn": "她",
         "jp": "かのじょ",
         "jp_write": "彼女",
-        "describe": "",
+        "describe": "彼女は先生です。​ → 她是老师。",
         "part_of_speech": "代词"
     }
 ]

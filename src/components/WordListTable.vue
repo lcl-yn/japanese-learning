@@ -8,6 +8,7 @@ import { visibleDescribe } from '@/utils/wordDisplay'
 const props = withDefaults(
   defineProps<{
     showChinese: boolean
+    showJpWrite: boolean
     showJapanese: boolean
     voiceUri?: string
     /** 传入时用这批词，不再跟练习当前课走。 */
@@ -23,6 +24,7 @@ const wordsStore = useWordsStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
 const hiddenKey = ref<string[]>([])
+const hiddenWriteKey = ref<string[]>([])
 
 const sourceWords = computed(() => props.words ?? wordsStore.filteredWords)
 
@@ -56,6 +58,10 @@ function isRowHidden(order: number) {
   return hiddenKey.value.includes(rowKey(order))
 }
 
+function isWriteHidden(order: number) {
+  return hiddenWriteKey.value.includes(rowKey(order))
+}
+
 function toggleHide(order: number) {
   const key = rowKey(order)
   if (isRowHidden(order)) {
@@ -63,6 +69,15 @@ function toggleHide(order: number) {
     return
   }
   hiddenKey.value = [...hiddenKey.value, key]
+}
+
+function toggleWriteHide(order: number) {
+  const key = rowKey(order)
+  if (isWriteHidden(order)) {
+    hiddenWriteKey.value = hiddenWriteKey.value.filter((item) => item !== key)
+    return
+  }
+  hiddenWriteKey.value = [...hiddenWriteKey.value, key]
 }
 
 function onSpeak(word: Word) {
@@ -94,9 +109,17 @@ function speechOf(word: Word) {
         </template>
       </el-table-column>
 
-      <el-table-column label="日文书写" min-width="140" align="center">
+      <el-table-column label="日文书写" min-width="180" align="center">
         <template #default="{ row }">
-          <span class="jp-write">{{ row.word.jp_write }}</span>
+          <div v-if="showJpWrite" class="jp-write-cell">
+            <span class="jp-write" :class="{ 'hidden-text': isWriteHidden(row.order) }">
+              {{ isWriteHidden(row.order) ? '***隐藏***' : row.word.jp_write }}
+            </span>
+            <el-button size="small" @click="toggleWriteHide(row.order)">
+              {{ isWriteHidden(row.order) ? '显示' : '隐藏' }}
+            </el-button>
+          </div>
+          <span v-else class="hidden-text">***隐藏***</span>
         </template>
       </el-table-column>
 
@@ -163,7 +186,16 @@ function speechOf(word: Word) {
   gap: 10px;
 }
 
+.jp-write-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .jp-write {
+  flex: 1;
+  text-align: left;
   font-weight: bold;
 }
 

@@ -22,6 +22,7 @@ const words = computed(() =>
 )
 
 const showChinese = ref(true)
+const showJpWrite = ref(true)
 const showJapanese = ref(true)
 const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
@@ -47,6 +48,10 @@ onMounted(async () => {
         <span class="visibility">
           <el-switch v-model="showChinese" aria-label="显示或隐藏中文" />
           <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
+        </span>
+        <span class="visibility">
+          <el-switch v-model="showJpWrite" aria-label="显示或隐藏日文" />
+          <span>{{ showJpWrite ? '显示日文' : '隐藏日文' }}</span>
         </span>
         <span class="visibility">
           <el-switch v-model="showJapanese" aria-label="显示或隐藏假名" />
@@ -77,6 +82,7 @@ onMounted(async () => {
       :words="words"
       :scope-key="`${bookId}:${unit}:${lesson}`"
       :show-chinese="showChinese"
+      :show-jp-write="showJpWrite"
       :show-japanese="showJapanese"
       :voice-uri="selectedVoiceUri"
     />

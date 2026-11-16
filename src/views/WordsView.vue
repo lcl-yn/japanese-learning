@@ -89,6 +89,7 @@ function onLessonChange(nextLessonId: number) {
 }
 
 const showChinese = ref(true)
+const showJpWrite = ref(true)
 const showJapanese = ref(true)
 const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
@@ -159,6 +160,10 @@ onMounted(async () => {
           <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
         </span>
         <span class="visibility">
+          <el-switch v-model="showJpWrite" aria-label="显示或隐藏日文" />
+          <span>{{ showJpWrite ? '显示日文' : '隐藏日文' }}</span>
+        </span>
+        <span class="visibility">
           <el-switch v-model="showJapanese" aria-label="显示或隐藏假名" />
           <span>{{ showJapanese ? '显示假名' : '隐藏假名' }}</span>
         </span>
@@ -188,6 +193,7 @@ onMounted(async () => {
       :words="listedWords"
       :scope-key="scopeKey"
       :show-chinese="showChinese"
+      :show-jp-write="showJpWrite"
       :show-japanese="showJapanese"
       :voice-uri="selectedVoiceUri"
     />
