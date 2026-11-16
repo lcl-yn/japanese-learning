@@ -96,7 +96,7 @@ function speechOf(word: Word) {
 
       <el-table-column label="日文书写" min-width="140" align="center">
         <template #default="{ row }">
-          {{ row.word.jp_write }}
+          <span class="jp-write">{{ row.word.jp_write }}</span>
         </template>
       </el-table-column>
 
@@ -139,7 +139,8 @@ function speechOf(word: Word) {
 
 .cn-cell {
   line-height: 1.4;
-/* text-align: left; */
+  text-align: left;
+  font-weight: bold;
 }
 
 .cn-speech {
@@ -162,10 +163,15 @@ function speechOf(word: Word) {
   gap: 10px;
 }
 
+.jp-write {
+  font-weight: bold;
+}
+
 .jp-text {
   flex: 1;
   padding-right: 10px;
   text-align: left;
+  font-weight: bold;
 }
 
 .jp-actions {

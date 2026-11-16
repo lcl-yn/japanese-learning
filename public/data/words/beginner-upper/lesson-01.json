@@ -10,14 +10,7 @@
         "cn": "学生",
         "jp": "がくせい",
         "jp_write": "学生",
-        "describe": "",
-        "part_of_speech": "名"
-    },
-    {
-        "cn": "先生",
-        "jp": "せんせい",
-        "jp_write": "先生",
-        "describe": "",
+        "describe": "大学生及以上（高中毕业之后）的“学生”，也泛指“求学的人”，更正式、更尊重，强调“做学问的人”",
         "part_of_speech": "名"
     },
     {
@@ -25,6 +18,20 @@
         "jp": "だいがく",
         "jp_write": "大学",
         "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "先生",
+        "jp": "せんせい",
+        "jp_write": "先生",
+        "describe": "日语「先生 / せんせい」≈ 中文“老师 + 大师 + 专家”的尊称合体，核心就是“值得尊敬的指导者/专业人士”",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "老师",
+        "jp": "きょうし",
+        "jp_write": "教師",
+        "describe": "强调从事老师的职业身份",
         "part_of_speech": "名"
     },
     {
@@ -49,7 +56,7 @@
         "part_of_speech": "感叹词"
     },
     {
-        "cn": "不知道,不明白",
+        "cn": "不知道,不明白,不懂",
         "jp": "わかりません",
         "jp_write": "分かりません",
         "describe": "",
@@ -88,13 +95,6 @@
         "jp": "フランスじん",
         "jp_write": "フランス人",
         "describe": "",
-        "part_of_speech": "名"
-    },
-    {
-        "cn": "老师",
-        "jp": "きょうし",
-        "jp_write": "教師",
-        "describe": "强调从事老师的职业身份",
         "part_of_speech": "名"
     },
     {
@@ -290,7 +290,7 @@
         "cn": "约翰逊",
         "jp": "ジョンソン",
         "jp_write": "ジョンソン",
-        "describe": "Jsonhnson-专有名词姓氏",
+        "describe": "Johnson -专有名词姓氏",
         "part_of_speech": "专"
     },
     {
