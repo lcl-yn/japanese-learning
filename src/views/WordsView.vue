@@ -11,6 +11,12 @@ import { WORDS_DESCRIPTION } from '@/utils/seo'
 /** 输入法组字时回车的 keyCode，只确认候选，不触发搜索。 */
 const IME_PROCESS_KEY = 229
 
+/** 单词本里「全部册」的取值，不对应清单里的某一册。 */
+const ALL_BOOKS = 'all'
+
+/** 单词本里「全部单元」的取值。 */
+const ALL_UNITS = 0
+
 const wordsStore = useWordsStore()
 
 function startingBook() {
@@ -54,8 +60,8 @@ const cnQuery = ref('')
 
 const listedWords = computed(() =>
   wordsStore.allWords.filter((word) => {
-    if (word.bookId !== bookId.value) return false
-    if (unitId.value !== 0 && word.unit !== unitId.value) return false
+    if (bookId.value !== ALL_BOOKS && word.bookId !== bookId.value) return false
+    if (unitId.value !== ALL_UNITS && word.unit !== unitId.value) return false
     if (lessonId.value !== 0 && word.lesson !== lessonId.value) return false
     return matchesCnPrefix(word.cn, cnQuery.value)
   }),
@@ -73,9 +79,14 @@ function onCnSearchEnter(event: KeyboardEvent) {
 }
 
 function onBookChange(nextBookId: string) {
-  const book = wordsStore.manifest.books.find((item) => item.code === nextBookId)
   bookId.value = nextBookId
-  unitId.value = book?.units[0]?.unit ?? 0
+  if (nextBookId === ALL_BOOKS) {
+    unitId.value = ALL_UNITS
+    lessonId.value = 0
+    return
+  }
+  const book = wordsStore.manifest.books.find((item) => item.code === nextBookId)
+  unitId.value = book?.units[0]?.unit ?? ALL_UNITS
   lessonId.value = 0
 }
 
@@ -118,6 +129,7 @@ onMounted(async () => {
           placeholder="册"
           @change="onBookChange"
         >
+          <el-option label="全部" :value="ALL_BOOKS" />
           <el-option
             v-for="book in wordsStore.manifest.books"
             :key="book.code"
@@ -127,10 +139,11 @@ onMounted(async () => {
         </el-select>
         <el-select
           class="scope-select"
-          :model-value="unitId || undefined"
-          placeholder="暂无单元"
+          :model-value="unitId"
+          placeholder="单元"
           @change="onUnitChange"
         >
+          <el-option label="全部" :value="ALL_UNITS" />
           <el-option v-for="unit in units" :key="unit.unit" :label="unit.name" :value="unit.unit" />
         </el-select>
         <el-select
