@@ -122,6 +122,9 @@ export const useWordsStore = defineStore('words', {
         this.loading = false
       }
     },
+    appendWord(word: Word) {
+      this.allWords.push(word)
+    },
     getWeight(word: Word) {
       return 1 + (this.errorCounts[wordKey(word)] || 0)
     },
