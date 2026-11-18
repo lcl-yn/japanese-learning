@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { ElMessage } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import WordListTable from '@/components/WordListTable.vue'
+import { saveNewWord } from '@/services/wordSave'
 import { useWordsStore } from '@/stores/words'
+import { parseWordAppendBody } from '@/utils/wordAppend'
 import { matchesCnPrefix } from '@/utils/cnSearch'
 import { wordPages } from '@/utils/unitPages'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
@@ -38,6 +41,130 @@ function startingUnit(nextBookId: string) {
 const bookId = ref(startingBook())
 const unitId = ref(startingUnit(bookId.value))
 const lessonId = ref(0)
+
+const canAddWord = import.meta.env.DEV
+
+const addOpen = ref(false)
+const adding = ref(false)
+const showFieldError = ref(false)
+const formBookId = ref('')
+const formUnitId = ref(0)
+const formLessonId = ref(0)
+const formCn = ref('')
+const formJp = ref('')
+const formJpWrite = ref('')
+const formDescribe = ref('')
+const formPart = ref('')
+
+const locationLocked = computed(
+  () => bookId.value !== ALL_BOOKS && unitId.value !== ALL_UNITS && lessonId.value !== 0,
+)
+
+const lockedLabel = computed(() => {
+  const book = wordsStore.manifest.books.find((item) => item.code === bookId.value)
+  const unit = book?.units.find((item) => item.unit === unitId.value)
+  const lessonName =
+    unit?.lessons.find((item) => item.lesson === lessonId.value)?.name ??
+    wordPages(unit).find((item) => item.lesson === lessonId.value)?.name ??
+    ''
+  return [book?.name, unit?.name, lessonName].filter(Boolean).join(' / ')
+})
+
+const formUnits = computed(
+  () => wordsStore.manifest.books.find((item) => item.code === formBookId.value)?.units ?? [],
+)
+
+const formLessons = computed(() => {
+  const unit = formUnits.value.find((item) => item.unit === formUnitId.value)
+  const choices = (unit?.lessons ?? []).map((lesson) => ({
+    key: `lesson-${lesson.id}`,
+    lesson: lesson.lesson,
+    name: lesson.name,
+  }))
+  for (const page of wordPages(unit)) {
+    choices.push({ key: `page-${page.id}`, lesson: page.lesson, name: page.name })
+  }
+  return choices
+})
+
+function openAddDialog() {
+  showFieldError.value = false
+  formCn.value = ''
+  formJp.value = ''
+  formJpWrite.value = ''
+  formDescribe.value = ''
+  formPart.value = ''
+  formBookId.value = bookId.value === ALL_BOOKS ? '' : bookId.value
+  formUnitId.value = bookId.value !== ALL_BOOKS && unitId.value !== ALL_UNITS ? unitId.value : 0
+  formLessonId.value = locationLocked.value ? lessonId.value : 0
+  addOpen.value = true
+}
+
+function onFormBookChange(nextBookId: string) {
+  formBookId.value = nextBookId
+  formUnitId.value = 0
+  formLessonId.value = 0
+}
+
+function onFormUnitChange(nextUnitId: number) {
+  formUnitId.value = nextUnitId
+  formLessonId.value = 0
+}
+
+function onFormLessonChange(nextLessonId: number) {
+  formLessonId.value = nextLessonId
+}
+
+async function submitAddWord() {
+  const cnBlank = formCn.value.trim() === ''
+  const jpBlank = formJp.value.trim() === ''
+  const writeBlank = formJpWrite.value.trim() === ''
+  if (cnBlank || jpBlank || writeBlank) {
+    showFieldError.value = true
+    return
+  }
+  const targetBook = locationLocked.value ? bookId.value : formBookId.value
+  const targetUnit = locationLocked.value ? unitId.value : formUnitId.value
+  const targetLesson = locationLocked.value ? lessonId.value : formLessonId.value
+  if (!locationLocked.value && (targetBook === '' || targetUnit === 0 || targetLesson === 0)) {
+    ElMessage.error('请选择册、单元和课')
+    return
+  }
+  const parsed = parseWordAppendBody({
+    bookId: targetBook,
+    unit: targetUnit,
+    lesson: targetLesson,
+    cn: formCn.value,
+    jp: formJp.value,
+    jp_write: formJpWrite.value,
+    describe: formDescribe.value,
+    part_of_speech: formPart.value,
+  })
+  if (!parsed.ok) {
+    ElMessage.error(parsed.message)
+    return
+  }
+  adding.value = true
+  try {
+    await saveNewWord(parsed.value)
+    wordsStore.appendWord({
+      cn: parsed.value.cn,
+      jp: parsed.value.jp,
+      jp_write: parsed.value.jp_write,
+      describe: parsed.value.describe,
+      part_of_speech: parsed.value.part_of_speech,
+      bookId: parsed.value.bookId,
+      unit: parsed.value.unit,
+      lesson: parsed.value.lesson,
+    })
+    ElMessage.success('已添加')
+    addOpen.value = false
+  } catch (error) {
+    ElMessage.error(error instanceof Error ? error.message : '添加失败')
+  } finally {
+    adding.value = false
+  }
+}
 
 const units = computed(
   () => wordsStore.manifest.books.find((book) => book.code === bookId.value)?.units ?? [],
@@ -168,6 +295,7 @@ onMounted(async () => {
             </button>
           </template>
         </el-input>
+        <el-button v-if="canAddWord" type="primary" @click="openAddDialog">添加单词</el-button>
         <span class="visibility">
           <el-switch v-model="showChinese" aria-label="显示或隐藏中文" />
           <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
@@ -210,6 +338,55 @@ onMounted(async () => {
       :show-japanese="showJapanese"
       :voice-uri="selectedVoiceUri"
     />
+    <el-dialog
+      v-model="addOpen"
+      title="添加单词"
+      width="480px"
+      append-to-body
+      @keydown.enter.prevent
+    >
+      <p v-if="locationLocked">{{ lockedLabel }}</p>
+      <div v-else class="add-word-location">
+        <el-select :model-value="formBookId" placeholder="册" @change="onFormBookChange">
+          <el-option v-for="book in wordsStore.manifest.books" :key="book.code" :label="book.name" :value="book.code" />
+        </el-select>
+        <el-select
+          :model-value="formUnitId || undefined"
+          placeholder="单元"
+          :disabled="formBookId === ''"
+          @change="onFormUnitChange"
+        >
+          <el-option v-for="unit in formUnits" :key="unit.unit" :label="unit.name" :value="unit.unit" />
+        </el-select>
+        <el-select
+          :model-value="formLessonId || undefined"
+          placeholder="课"
+          :disabled="formUnitId === 0"
+          @change="onFormLessonChange"
+        >
+          <el-option v-for="lesson in formLessons" :key="lesson.key" :label="lesson.name" :value="lesson.lesson" />
+        </el-select>
+      </div>
+      <el-form-item label="中文" :error="showFieldError && formCn.trim() === '' ? '请填写中文' : ''">
+        <el-input v-model="formCn" />
+      </el-form-item>
+      <el-form-item label="假名" :error="showFieldError && formJp.trim() === '' ? '请填写假名' : ''">
+        <el-input v-model="formJp" />
+      </el-form-item>
+      <el-form-item label="手写" :error="showFieldError && formJpWrite.trim() === '' ? '请填写手写' : ''">
+        <el-input v-model="formJpWrite" />
+      </el-form-item>
+      <el-form-item label="说明">
+        <el-input v-model="formDescribe" type="textarea" :rows="2" />
+      </el-form-item>
+      <el-form-item label="词性">
+        <el-input v-model="formPart" type="textarea" :rows="2" />
+      </el-form-item>
+      <template #footer>
+        <el-button @click="addOpen = false">取消</el-button>
+        <el-button type="button" :loading="adding" @click="submitAddWord">提交</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -262,6 +439,12 @@ onMounted(async () => {
 
 .cn-search {
   width: 200px;
+}
+
+.add-word-location {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .cn-search-icon {
