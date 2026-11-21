@@ -23,3 +23,13 @@ Task 8: complete (commits 3c2c434..975a814, review clean; minor: no ja voice env
 Task 9: complete (commits 975a814..b15fb15, review clean)
 Final review: merge-ready (no Critical/Important)
 
+
+## add-word 2026-11-18
+Branch: feature/add-word
+Base: 8560730
+Plan: docs/superpowers/plans/2026-11-18-add-word.md
+
+Task 1: complete (commits 8560730..cf6219e, review clean; minor: duplicate append not asserted; word-page `..` reports missing via wordPages)
+Task 2: complete (commits cf6219e..b2aed3b, review clean; minor: middleware untested, stalled request can block queue, new-file test checks length only)
+Task 2: complete (commits cf6219e..b2aed3b, review clean; minor: middleware untested, stalled request can block queue, new-file test checks length only)
+Task 3: complete (commits b2aed3b..7225361, review clean; minor: appendWord has no Chinese comment, plan snippet omitted it)

@@ -35,9 +35,93 @@
         "part_of_speech": "名"
     },
     {
+        "cn": "上上个月",
+        "jp": "せんせんげつ",
+        "jp_write": "先々月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "上个月",
+        "jp": "せんげつ",
+        "jp_write": "先月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "这个月",
+        "jp": "こんげつ",
+        "jp_write": "今月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下个月",
+        "jp": "らいげつ",
+        "jp_write": "来月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "下下个月",
+        "jp": "さらいげつ",
+        "jp_write": "さ来月",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前年",
+        "jp": "おととし",
+        "jp_write": "おととし",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "去年",
+        "jp": "きょねん",
+        "jp_write": "去年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今年",
+        "jp": "ことし",
+        "jp_write": "今年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明年",
+        "jp": "らいねん",
+        "jp_write": "来年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "后年",
+        "jp": "さらいねん",
+        "jp_write": "再来年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前天",
+        "jp": "おととい",
+        "jp_write": "おととい",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
         "cn": "昨天",
         "jp": "きのう",
         "jp_write": "昨日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天",
+        "jp": "きょう",
+        "jp_write": "今日",
         "describe": "",
         "part_of_speech": "名"
     },
@@ -56,9 +140,86 @@
         "part_of_speech": "名"
     },
     {
-        "cn": "前天",
-        "jp": "おととい",
-        "jp_write": "おととい",
+        "cn": "前天早晨",
+        "jp": "おとといのあさ",
+        "jp_write": "おとといの朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "昨天早晨",
+        "jp": "きのうのあさ",
+        "jp_write": "昨日の朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天早晨",
+        "jp": "けさ",
+        "jp_write": "今朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明天早晨",
+        "jp": "あしたのあさ",
+        "jp_write": "明日の朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "后天早晨",
+        "jp": "あさってのあさ",
+        "jp_write": "あさっての朝",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "前天晚上",
+        "jp": "おとといのばん",
+        "jp_write": "おとといの晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "昨天晚上",
+        "jp": "きのうのばん",
+        "jp_write": "昨日の晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "今天晚上",
+        "jp": "こんばん",
+        "jp_write": "今晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "明天晚上",
+        "jp": "あしたのばん",
+        "jp_write": "明日の晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "后天晚上",
+        "jp": "あさってのばん",
+        "jp_write": "あさっての晩",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每年",
+        "jp": "まいとし",
+        "jp_write": "毎年",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "每月",
+        "jp": "まいつき",
+        "jp_write": "毎月",
         "describe": "",
         "part_of_speech": "名"
     },
@@ -119,13 +280,6 @@
         "part_of_speech": "名"
     },
     {
-        "cn": "星期日",
-        "jp": "にちようび",
-        "jp_write": "日曜日",
-        "describe": "",
-        "part_of_speech": "名"
-    },
-    {
         "cn": "星期一",
         "jp": "げつようび",
         "jp_write": "月曜日",
@@ -136,6 +290,20 @@
         "cn": "星期二",
         "jp": "かようび",
         "jp_write": "火曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期三",
+        "jp": "すいようび",
+        "jp_write": "水曜日",
+        "describe": "",
+        "part_of_speech": "名"
+    },
+    {
+        "cn": "星期四",
+        "jp": "もくようび",
+        "jp_write": "木曜日",
         "describe": "",
         "part_of_speech": "名"
     },
@@ -154,30 +322,9 @@
         "part_of_speech": "名"
     },
     {
-        "cn": "今天早晨",
-        "jp": "けさ",
-        "jp_write": "今朝",
-        "describe": "",
-        "part_of_speech": "名"
-    },
-    {
-        "cn": "今天晚上",
-        "jp": "こんばん",
-        "jp_write": "今晩",
-        "describe": "",
-        "part_of_speech": "名"
-    },
-    {
-        "cn": "明年",
-        "jp": "らいねん",
-        "jp_write": "来年",
-        "describe": "",
-        "part_of_speech": "名"
-    },
-    {
-        "cn": "去年",
-        "jp": "きょねん",
-        "jp_write": "去年",
+        "cn": "星期日",
+        "jp": "にちようび",
+        "jp_write": "日曜日",
         "describe": "",
         "part_of_speech": "名"
     },
