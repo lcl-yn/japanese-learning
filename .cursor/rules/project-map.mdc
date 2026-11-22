@@ -31,7 +31,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 | `/study/:bookId/:unitId/:lessonId/reading` | `src/views/LessonDocumentView.vue` | 课文。与语法共用编辑器，`section` 为 `reading` |
 | `/study/:bookId/:unitId/page/:pageId` | `src/views/UnitPageView.vue` | 和课同级的单元页面。初级上册第1单元有「单元末-实用场景对话」（课文，`unit-01-page-scenes.json`）和「单元末-词语之泉」（词表，`public/data/words/beginner-upper/unit-01-spring.json`，课号 101） |
 | `/study/:bookId/:unitId/:lessonId/grammar` | `src/views/LessonDocumentView.vue` | `GrammarEditor.vue`。`section` 为 `grammar` |
-| `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts` |
+| `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts`。页内左侧目录一次只打开一项：五十音、符号、高低音。再加知识点时往这份目录加一条。地址 `?topic=` 为 `marks` 或 `pitch`，缺省或无法识别时是五十音。窄屏目录改到内容上方，可横向滑动。高低音每条一块，宽屏并排 |
 
 页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。宽度不超过 959px 时底栏隐藏；主区往下滚动会收起顶栏，往上滚或回到顶部再展开。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。宽度不超过 959px 时默认收成右下角气泡，点开后输入框单独占一行，其余控件在下一行，音色右侧同一气泡再点收起。朗读仍是小喇叭。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 课文 / 语法。考试在单词本里。单元上的 `pages` 和课排在同一层，是直接打开的页面，不再展开单词、课文、语法。初级上册第1单元末有「单元末-实用场景对话」和「单元末-词语之泉」。没有课、也没有这种页面的单元只显示「暂无课」。从一课点到另一课时，已经展开的册、单元和课保持展开。单词本里的册、单元、课只筛词表，打开单词本或五十音图时左侧课单收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
 
