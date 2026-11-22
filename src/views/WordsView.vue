@@ -165,20 +165,23 @@ async function submitAddWord() {
     ElMessage.error('词条不存在')
     return
   }
-  const parsed = editing
-    ? parseWordUpdateBody({ ...fields, fileIndex: editing.fileIndex ?? 0 })
-    : parseWordAppendBody(fields)
-  if (!parsed.ok) {
-    ElMessage.error(parsed.message)
-    return
-  }
   adding.value = true
   try {
-    if (editing && parsed.ok && 'fileIndex' in parsed.value) {
+    if (editing && editing.fileIndex !== undefined) {
+      const parsed = parseWordUpdateBody({ ...fields, fileIndex: editing.fileIndex })
+      if (!parsed.ok) {
+        ElMessage.error(parsed.message)
+        return
+      }
       await saveUpdatedWord(parsed.value)
       wordsStore.replaceWord(editing, parsed.value)
       ElMessage.success('已修改')
-    } else if (!editing && parsed.ok) {
+    } else {
+      const parsed = parseWordAppendBody(fields)
+      if (!parsed.ok) {
+        ElMessage.error(parsed.message)
+        return
+      }
       await saveNewWord(parsed.value)
       wordsStore.appendWord({
         cn: parsed.value.cn,

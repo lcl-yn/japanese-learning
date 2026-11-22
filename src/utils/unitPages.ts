@@ -1,4 +1,4 @@
-import type { UnitMeta, UnitPageMeta } from '@/types/word'
+import type { UnitMeta, UnitPageMeta } from '../types/word.ts'
 
 /**
  * 判断这个单元页面是不是一份词表。
