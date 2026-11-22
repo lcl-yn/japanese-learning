@@ -56,7 +56,7 @@ async function loadLessonWords(fileUrl: string, file: string, location: WordLoca
   const contentType = res.headers.get('content-type') ?? ''
   if (!contentType.includes('application/json')) return []
   const raw = (await res.json()) as LessonWord[]
-  return raw.map((word) => toWord(word, location))
+  return raw.map((word, fileIndex) => ({ ...toWord(word, location), fileIndex }))
 }
 
 export async function loadAllWords(baseUrl = DEFAULT_BASE): Promise<{

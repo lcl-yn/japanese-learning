@@ -124,6 +124,28 @@ export const useWordsStore = defineStore('words', {
         this.loading = false
       }
     },
+    /**
+     * 把刚保存的词放进内存词库。不改筛选，也不重抽已经抽出的题。
+     *
+     * @param word 带册、单元、课号的新词
+     */
+    appendWord(word: Word) {
+      const fileIndex = this.allWords.filter(
+        (item) => item.bookId === word.bookId && item.unit === word.unit && item.lesson === word.lesson,
+      ).length
+      this.allWords.push({ ...word, fileIndex })
+    },
+    /**
+     * 用保存后的字段换掉内存里的这一条。已抽出的题仍指向原来的对象。
+     *
+     * @param target 表格里点中的那条词
+     * @param fields 去过空白的五个字段
+     */
+    replaceWord(target: Word, fields: Pick<Word, 'cn' | 'jp' | 'jp_write' | 'describe' | 'part_of_speech'>) {
+      const index = this.allWords.indexOf(target)
+      if (index < 0) return
+      this.allWords.splice(index, 1, { ...target, ...fields })
+    },
     getWeight(word: Word) {
       return 1 + (this.errorCounts[wordKey(word)] || 0)
     },

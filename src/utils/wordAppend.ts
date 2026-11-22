@@ -4,13 +4,18 @@ import { wordPages } from './unitPages.ts'
 /** 开发服务器追加单词的地址。打包后的页面没有这个接口。 */
 export const WORD_SAVE_PATH = '/__words'
 
+/** 开发服务器改一条已有词的地址。 */
+export const WORD_UPDATE_PATH = '/__words/edit'
+
 export const WORD_APPEND_EMPTY = '必填为空'
 export const WORD_APPEND_MISSING = '清单里没有这一课'
 export const WORD_APPEND_PATH = '路径不合法'
 export const WORD_APPEND_PARSE = '词表无法解析'
 export const WORD_APPEND_SHAPE = '词表不是数组'
+export const WORD_APPEND_INDEX = '词条不存在'
 export const WORD_APPEND_WRITE = '写入失败'
 export const WORD_APPEND_FAILED = '添加失败'
+export const WORD_UPDATE_FAILED = '修改失败'
 
 const MAX_LESSON_NUMBER = 999
 
@@ -26,6 +31,10 @@ export interface WordAppendBody extends StoredWordFields {
   bookId: string
   unit: number
   lesson: number
+}
+
+export interface WordUpdateBody extends WordAppendBody {
+  fileIndex: number
 }
 
 export type WordAppendResult<T> = { ok: true; value: T } | { ok: false; message: string }
@@ -90,6 +99,20 @@ export function isInsideWordsRoot(fromRoot: string): boolean {
 }
 
 /**
+ * 按请求里的册、单元、课找到清单中的词表文件。
+ * 不读课次内容。路径不合法时失败。
+ *
+ * @param manifest 词库清单
+ * @param raw 请求体
+ * @return 相对 public/data/words 的 file
+ */
+export function locateWordFile(manifest: WordsManifest, raw: unknown): WordAppendResult<string> {
+  const parsed = parseWordAppendBody(raw)
+  if (!parsed.ok) return parsed
+  return resolveWordFile(manifest, parsed.value.bookId, parsed.value.unit, parsed.value.lesson)
+}
+
+/**
  * 按册、单元、课号找到清单里的词表文件。
  * 先匹配课，没有再匹配带词表的单元页。课和页课号相同时用课的文件。
  *
@@ -142,6 +165,50 @@ export function appendStoredWord(existing: unknown, word: StoredWordFields): Wor
 }
 
 /**
+ * 校验修改单词的请求。
+ * 位置和五个字段与添加相同，另外要有课次数组里的下标。
+ *
+ * @param raw 请求体
+ * @return 去过空白的请求；下标不是非负整数时失败
+ */
+export function parseWordUpdateBody(raw: unknown): WordAppendResult<WordUpdateBody> {
+  const parsed = parseWordAppendBody(raw)
+  if (!parsed.ok) return parsed
+  const fileIndex = raw && typeof raw === 'object' ? (raw as Record<string, unknown>).fileIndex : undefined
+  if (!isFileIndex(fileIndex)) return fail(WORD_APPEND_INDEX)
+  return { ok: true, value: { ...parsed.value, fileIndex } }
+}
+
+/**
+ * 替换词表数组里的一条。
+ * 五个字段按新词写入，这一条上的其它键保留。下标越界或该位不是对象时不产生结果。
+ *
+ * @param existing 课次 JSON 解析结果
+ * @param index 要替换的下标
+ * @param word 去过空白的新字段
+ * @return 替换后的数组
+ */
+export function replaceStoredWord(
+  existing: unknown,
+  index: number,
+  word: StoredWordFields,
+): WordAppendResult<unknown[]> {
+  if (!Array.isArray(existing)) return fail(WORD_APPEND_SHAPE)
+  const current = existing[index]
+  if (!current || typeof current !== 'object' || Array.isArray(current)) return fail(WORD_APPEND_INDEX)
+  const next = existing.slice()
+  next[index] = {
+    ...(current as Record<string, unknown>),
+    cn: word.cn,
+    jp: word.jp,
+    jp_write: word.jp_write,
+    describe: word.describe,
+    part_of_speech: word.part_of_speech,
+  }
+  return { ok: true, value: next }
+}
+
+/**
  * 把词表格式化成和现有课次文件一样的 JSON。
  *
  * @param words 追加后的数组
@@ -182,6 +249,36 @@ export function prepareWordAppend(
   return { ok: true, value: { relativeFile: located.value, contents: formatWordFile(appended.value) } }
 }
 
+/**
+ * 从清单和课次文本算出修改后要写回的文件。
+ * 文件不存在、下标越界或内容不是数组时不产生写入内容。
+ *
+ * @param manifest 词库清单
+ * @param existingText 现有文件文本；文件不存在时为 null
+ * @param raw 请求体
+ * @return 相对路径和完整文件内容
+ */
+export function prepareWordUpdate(
+  manifest: WordsManifest,
+  existingText: string | null,
+  raw: unknown,
+): WordAppendResult<{ relativeFile: string; contents: string }> {
+  const parsed = parseWordUpdateBody(raw)
+  if (!parsed.ok) return parsed
+  const located = resolveWordFile(manifest, parsed.value.bookId, parsed.value.unit, parsed.value.lesson)
+  if (!located.ok) return located
+  if (existingText === null) return fail(WORD_APPEND_INDEX)
+  let existing: unknown
+  try {
+    existing = JSON.parse(existingText) as unknown
+  } catch {
+    return fail(WORD_APPEND_PARSE)
+  }
+  const replaced = replaceStoredWord(existing, parsed.value.fileIndex, parsed.value)
+  if (!replaced.ok) return replaced
+  return { ok: true, value: { relativeFile: located.value, contents: formatWordFile(replaced.value) } }
+}
+
 function fail(message: string): WordAppendResult<never> {
   return { ok: false, message }
 }
@@ -193,4 +290,8 @@ function trimmed(value: unknown): string | null {
 
 function isLessonNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= MAX_LESSON_NUMBER
+}
+
+function isFileIndex(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0
 }

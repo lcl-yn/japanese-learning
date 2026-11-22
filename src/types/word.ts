@@ -10,6 +10,8 @@ export interface Word {
   bookId: string
   unit: number
   lesson: number
+  /** 课次 JSON 数组里的下标。只在内存里，不写进词条文件。 */
+  fileIndex?: number
 }
 
 export interface LessonMeta {

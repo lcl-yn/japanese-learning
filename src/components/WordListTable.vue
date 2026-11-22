@@ -14,9 +14,15 @@ const props = withDefaults(
     /** 传入时用这批词，不再跟练习当前课走。 */
     words?: Word[]
     scopeKey?: string
+    /** 开发时在最右侧放出修改。 */
+    editable?: boolean
   }>(),
-  { voiceUri: '', scopeKey: '' },
+  { voiceUri: '', scopeKey: '', editable: false },
 )
+
+const emit = defineEmits<{
+  edit: [word: Word]
+}>()
 
 const pageSizeOptions = [10, 20, 30, 40, 50]
 
@@ -137,6 +143,12 @@ function speechOf(word: Word) {
             </div>
           </div>
           <span v-else class="hidden-text">***隐藏***</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column v-if="editable" label="操作" width="90" align="center" fixed="right">
+        <template #default="{ row }">
+          <el-button size="small" @click="emit('edit', row.word)">修改</el-button>
         </template>
       </el-table-column>
     </el-table>

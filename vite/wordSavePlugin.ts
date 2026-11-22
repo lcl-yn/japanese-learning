@@ -4,11 +4,15 @@ import { dirname, relative, resolve } from 'node:path'
 import type { Plugin } from 'vite'
 import type { WordsManifest } from '../src/types/word.ts'
 import {
+  WORD_APPEND_INDEX,
   WORD_APPEND_PATH,
   WORD_APPEND_WRITE,
   WORD_SAVE_PATH,
+  WORD_UPDATE_PATH,
   isInsideWordsRoot,
+  locateWordFile,
   prepareWordAppend,
+  prepareWordUpdate,
 } from '../src/utils/wordAppend.ts'
 
 const MAX_BYTES = 32 * 1024
@@ -42,13 +46,16 @@ export function wordSavePlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const pathname = req.url?.split('?')[0]
-        if (pathname !== WORD_SAVE_PATH || req.method !== 'PUT') {
+        const update = pathname === WORD_UPDATE_PATH
+        if ((pathname !== WORD_SAVE_PATH && !update) || req.method !== 'PUT') {
           next()
           return
         }
         void enqueueWordWrite(async () => {
           const rawBody = await readBody(req)
-          const result = await persistWordAppend(server.config.root, rawBody)
+          const result = update
+            ? await persistWordUpdate(server.config.root, rawBody)
+            : await persistWordAppend(server.config.root, rawBody)
           reply(res, result.status, result.body)
         }).catch(() => reply(res, 400, JSON.stringify({ message: WORD_APPEND_WRITE })))
       })
@@ -65,6 +72,27 @@ export function wordSavePlugin(): Plugin {
  * @return HTTP 状态和响应正文
  */
 export async function persistWordAppend(root: string, rawBody: string): Promise<{ status: number; body: string }> {
+  return persistWordFile(root, rawBody, prepareWordAppend, true)
+}
+
+/**
+ * 按清单替换课次 JSON 里的一条词。
+ * 文件不存在或下标越界时不新建、不改文件。
+ *
+ * @param root 项目根目录
+ * @param rawBody 请求 JSON 文本
+ * @return HTTP 状态和响应正文
+ */
+export async function persistWordUpdate(root: string, rawBody: string): Promise<{ status: number; body: string }> {
+  return persistWordFile(root, rawBody, prepareWordUpdate, false)
+}
+
+async function persistWordFile(
+  root: string,
+  rawBody: string,
+  prepare: typeof prepareWordAppend | typeof prepareWordUpdate,
+  createMissing: boolean,
+): Promise<{ status: number; body: string }> {
   let raw: unknown
   try {
     raw = JSON.parse(rawBody) as unknown
@@ -77,10 +105,10 @@ export async function persistWordAppend(root: string, rawBody: string): Promise<
   } catch {
     return fail(WORD_APPEND_WRITE)
   }
-  const located = prepareWordAppend(manifest, null, raw)
+  const located = locateWordFile(manifest, raw)
   if (!located.ok) return fail(located.message)
   const dataRoot = resolve(root, 'public', 'data', 'words')
-  const filePath = resolve(dataRoot, located.value.relativeFile)
+  const filePath = resolve(dataRoot, located.value)
   const fromRoot = relative(dataRoot, filePath)
   if (!isInsideWordsRoot(fromRoot)) return fail(WORD_APPEND_PATH)
 
@@ -90,9 +118,10 @@ export async function persistWordAppend(root: string, rawBody: string): Promise<
   } catch (error) {
     const code = error && typeof error === 'object' && 'code' in error ? error.code : ''
     if (code !== 'ENOENT') return fail(WORD_APPEND_WRITE)
+    if (!createMissing) return fail(WORD_APPEND_INDEX)
     existingText = null
   }
-  const prepared = prepareWordAppend(manifest, existingText, raw)
+  const prepared = prepare(manifest, existingText, raw)
   if (!prepared.ok) return fail(prepared.message)
   await mkdir(dirname(filePath), { recursive: true })
   await writeFile(filePath, prepared.value.contents, 'utf8')

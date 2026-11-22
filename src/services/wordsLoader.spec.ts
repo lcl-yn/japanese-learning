@@ -87,6 +87,7 @@ describe('loadAllWords', () => {
         lesson: 1,
         unit: 1,
         bookId: 'beginner-upper',
+        fileIndex: 0,
       },
       {
         cn: '车',
@@ -97,6 +98,7 @@ describe('loadAllWords', () => {
         lesson: 2,
         unit: 1,
         bookId: 'beginner-upper',
+        fileIndex: 0,
       },
     ])
     expect(result.manifest.books[0].code).toBe('beginner-upper')
@@ -147,6 +149,7 @@ describe('loadAllWords', () => {
         lesson: 1,
         unit: 1,
         bookId: 'beginner-upper',
+        fileIndex: 0,
       },
     ])
     expect(missingPage.manifest.books[0].units[0].lessons).toHaveLength(2)

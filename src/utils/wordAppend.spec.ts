@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { WordsManifest } from '@/types/word'
 import {
   WORD_APPEND_EMPTY,
+  WORD_APPEND_INDEX,
   WORD_APPEND_MISSING,
   WORD_APPEND_PARSE,
   WORD_APPEND_PATH,
@@ -12,6 +13,8 @@ import {
   isSafeManifestFile,
   parseWordAppendBody,
   prepareWordAppend,
+  prepareWordUpdate,
+  replaceStoredWord,
   resolveWordFile,
 } from './wordAppend'
 
@@ -182,5 +185,42 @@ describe('prepareWordAppend', () => {
       part_of_speech: '名',
     }).ok).toBe(true)
     expect(formatWordFile([]).endsWith('\n')).toBe(true)
+  })
+})
+
+describe('prepareWordUpdate', () => {
+  const fields = {
+    cn: '大学生',
+    jp: 'だいがくせい',
+    jp_write: '大学生',
+    describe: '',
+    part_of_speech: '名',
+  }
+
+  it('replaces one entry and keeps its other keys', () => {
+    const existing = '[{"cn":"学生","jp":"がくせい","extra":1},{"cn":"老师","jp":"せんせい"}]'
+    const prepared = prepareWordUpdate(manifest, existing, { ...word, fileIndex: 0 })
+    expect(prepared.ok).toBe(true)
+    if (!prepared.ok) return
+    expect(JSON.parse(prepared.value.contents)).toEqual([
+      { cn: '大学生', jp: 'だいがくせい', jp_write: '大学生', describe: '', part_of_speech: '名', extra: 1 },
+      { cn: '老师', jp: 'せんせい' },
+    ])
+  })
+
+  it('rejects a missing file, a bad index, and a non-array', () => {
+    expect(prepareWordUpdate(manifest, null, { ...word, fileIndex: 0 })).toEqual({
+      ok: false,
+      message: WORD_APPEND_INDEX,
+    })
+    expect(prepareWordUpdate(manifest, '[{"cn":"学生"}]', { ...word, fileIndex: 1 })).toEqual({
+      ok: false,
+      message: WORD_APPEND_INDEX,
+    })
+    expect(prepareWordUpdate(manifest, '{"cn":"学生"}', { ...word, fileIndex: 0 })).toEqual({
+      ok: false,
+      message: WORD_APPEND_SHAPE,
+    })
+    expect(replaceStoredWord([{ cn: '学生' }], 0, fields).ok).toBe(true)
   })
 })

@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { enqueueWordWrite, persistWordAppend } from './wordSavePlugin'
+import { enqueueWordWrite, persistWordAppend, persistWordUpdate } from './wordSavePlugin'
 
 const roots: string[] = []
 
@@ -105,6 +105,25 @@ describe('persistWordAppend', () => {
     expect(result.status).toBe(400)
     expect(JSON.parse(result.body)).toEqual({ message: '路径不合法' })
     await expect(readFile(join(root, 'public', 'data', 'secret.json'), 'utf8')).rejects.toThrow()
+  })
+
+  it('replaces the word at fileIndex and leaves the rest', async () => {
+    const root = await tempRoot()
+    const file = join(root, 'public', 'data', 'words', 'beginner-upper', 'lesson-01.json')
+    await writeFile(file, '[{"cn":"学生","jp":"がくせい","extra":1},{"cn":"老师"}]\n')
+    const result = await persistWordUpdate(root, JSON.stringify({ ...JSON.parse(body), fileIndex: 0 }))
+    expect(result.status).toBe(200)
+    expect(JSON.parse(await readFile(file, 'utf8'))).toEqual([
+      {
+        cn: '大学生',
+        jp: 'だいがくせい',
+        jp_write: '大学生',
+        describe: '',
+        part_of_speech: '名',
+        extra: 1,
+      },
+      { cn: '老师' },
+    ])
   })
 })
 
