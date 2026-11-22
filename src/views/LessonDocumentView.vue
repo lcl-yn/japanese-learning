@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import GrammarEditor from '@/components/GrammarEditor.vue'
@@ -53,6 +53,7 @@ const error = ref('')
 const editorKey = ref(0)
 const editorRef = ref<{ scrollToHeading: (index: number) => void } | null>(null)
 const activeHeading = ref<number | null>(null)
+const outlineOpen = ref(false)
 const baseline = ref<GrammarDocument | null>(null)
 const draft = ref<GrammarDocument | null>(null)
 let loadRequest = 0
@@ -93,6 +94,7 @@ async function load(): Promise<void> {
   error.value = ''
   editing.value = false
   activeHeading.value = null
+  outlineOpen.value = false
   const unitPage = pageId.value
   if (unitPage) {
     if (!isUnitPageLocation(bookId.value, unit.value, unitPage)) {
@@ -179,9 +181,23 @@ function copyDocument(document: GrammarDocument): GrammarDocument {
 }
 
 function selectHeading(index: number): void {
+  outlineOpen.value = false
   activeHeading.value = index
   editorRef.value?.scrollToHeading(index)
 }
+
+function onOutlineKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Escape') outlineOpen.value = false
+}
+
+watch(outlineOpen, (open) => {
+  if (open) window.addEventListener('keydown', onOutlineKeydown)
+  else window.removeEventListener('keydown', onOutlineKeydown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onOutlineKeydown)
+})
 
 /**
  * 还在编辑、没有保存时，先确认再离开。
@@ -213,6 +229,12 @@ async function confirmLeave(): Promise<boolean> {
 <template>
   <section class="lesson-view" :aria-busy="loading">
     <div class="lesson-body">
+      <aside v-if="showOutline" class="lesson-outline" aria-label="标题">
+        <p class="outline-title">标题</p>
+        <p v-if="outline.length === 0" class="outline-empty">把段落设成标题后，这里会列出。</p>
+        <GrammarOutline v-else :items="outline" :active-index="activeHeading" @select="selectHeading" />
+      </aside>
+
       <div class="lesson-column">
         <div class="lesson-bar">
           <p class="page-lead">{{ pageId ? '按课文阅读这一页，知识点用红色标出。' : page.description }}</p>
@@ -247,13 +269,35 @@ async function confirmLeave(): Promise<boolean> {
           />
         </template>
       </div>
-
-      <aside v-if="showOutline" class="lesson-outline" aria-label="标题">
-        <p class="outline-title">标题</p>
-        <p v-if="outline.length === 0" class="outline-empty">把段落设成标题后，这里会列出。</p>
-        <GrammarOutline v-else :items="outline" :active-index="activeHeading" @select="selectHeading" />
-      </aside>
     </div>
+
+    <Teleport to="#outline-anchor">
+      <button
+        v-if="outline.length > 0"
+        type="button"
+        class="outline-fab"
+        :aria-expanded="outlineOpen"
+        @click="outlineOpen = !outlineOpen"
+      >
+        笔记目录
+      </button>
+    </Teleport>
+    <Teleport to="body">
+      <div v-if="outlineOpen" class="outline-sheet" @click="outlineOpen = false">
+        <div
+          class="outline-panel"
+          role="dialog"
+          aria-label="标题"
+          @click.stop
+        >
+          <div class="outline-panel-bar">
+            <p class="outline-title">标题</p>
+            <button type="button" class="outline-close" @click="outlineOpen = false">关闭</button>
+          </div>
+          <GrammarOutline :items="outline" :active-index="activeHeading" @select="selectHeading" />
+        </div>
+      </div>
+    </Teleport>
   </section>
 </template>
 
@@ -267,6 +311,8 @@ async function confirmLeave(): Promise<boolean> {
 }
 
 .lesson-column {
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
 }
 
@@ -298,6 +344,8 @@ async function confirmLeave(): Promise<boolean> {
 }
 
 .lesson-outline {
+  grid-column: 2;
+  grid-row: 1;
   position: sticky;
   top: 0;
   box-sizing: border-box;
@@ -324,14 +372,102 @@ async function confirmLeave(): Promise<boolean> {
   line-height: 1.5;
 }
 
-@media (max-width: 720px) {
+.outline-fab,
+.outline-sheet {
+  display: none;
+}
+
+.outline-fab {
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #e4ddd2;
+  border-radius: 999px;
+  background: #fbf8f3;
+  color: #9f3d2f;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.outline-fab:focus-visible,
+.outline-close:focus-visible {
+  outline: 2px solid #9f3d2f;
+  outline-offset: 2px;
+}
+
+.outline-sheet {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  background: rgb(28 25 23 / 35%);
+}
+
+.outline-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  max-height: min(70vh, 480px);
+  overflow: auto;
+  padding: 8px 16px 20px;
+  background: #fbf8f3;
+  border-radius: 16px 16px 0 0;
+}
+
+.outline-panel-bar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding: 8px 0;
+  background: #fbf8f3;
+}
+
+.outline-panel .outline-title {
+  margin: 0;
+}
+
+.outline-close {
+  border: none;
+  background: transparent;
+  color: #57534e;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.outline-panel :deep(.outline-link) {
+  padding: 10px 8px;
+  font-size: 15px;
+  white-space: normal;
+}
+
+@media (max-width: 959px) {
   .lesson-body {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .lesson-column {
+    grid-row: 1;
+  }
+
   .lesson-outline {
-    position: static;
-    max-height: 220px;
+    display: none;
+  }
+
+  .outline-fab {
+    display: inline-flex;
+  }
+
+  .outline-sheet {
+    display: block;
   }
 }
 </style>

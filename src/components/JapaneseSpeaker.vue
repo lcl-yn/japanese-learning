@@ -4,6 +4,7 @@ import { loadVoices, restartJapanese, speakJapanese, stopSpeaking, type VoiceOpt
 
 /** 拖到视口边缘时留出的空隙 */
 const EDGE_GAP = 8
+const NARROW_LAYOUT = '(max-width: 959px)'
 
 const PLAY_ONCE = 'once'
 const PLAY_LOOP = 'loop'
@@ -24,6 +25,14 @@ const placed = ref(false)
 const x = ref(0)
 const y = ref(0)
 const dragging = ref(false)
+const narrow = ref(false)
+const speakerOpen = ref(false)
+/** 点过之后先去掉悬停色。手机上松手后悬停会粘住，所以要一直留到指针再次进来。 */
+const speakSettled = ref(false)
+/** 手指或按键按住小喇叭时为真，松手立刻收回，避免手机上按下色粘住 */
+const speakHolding = ref(false)
+const showBar = computed(() => !narrow.value || speakerOpen.value)
+const showLauncher = computed(() => narrow.value && !speakerOpen.value)
 
 const barStyle = computed(() => {
   if (!placed.value) return undefined
@@ -85,7 +94,13 @@ function onDragEnd() {
   window.removeEventListener('pointercancel', onDragEnd)
 }
 
+function syncSpeakerLayout() {
+  narrow.value = window.matchMedia(NARROW_LAYOUT).matches
+  document.documentElement.dataset.speaker = narrow.value && speakerOpen.value ? 'open' : ''
+}
+
 function onResize() {
+  syncSpeakerLayout()
   if (!placed.value || !formEl.value) return
   const rect = formEl.value.getBoundingClientRect()
   dragWidth = rect.width
@@ -93,7 +108,10 @@ function onResize() {
   applyPosition(x.value, y.value)
 }
 
+watch(speakerOpen, syncSpeakerLayout)
+
 onMounted(async () => {
+  syncSpeakerLayout()
   window.addEventListener('resize', onResize)
   const voices = await loadVoices()
   voiceOptions.value = voices
@@ -105,6 +123,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  delete document.documentElement.dataset.speaker
   window.removeEventListener('resize', onResize)
   onDragEnd()
   stopLoop()
@@ -151,6 +170,31 @@ function startLoop() {
   run(true)
 }
 
+/** 按住时立刻铺上深红色，并把后续松手事件留在这个按钮上。 */
+function onSpeakPointerDown(event: PointerEvent) {
+  if (event.button !== 0) return
+  speakHolding.value = true
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.setPointerCapture(event.pointerId)
+}
+
+/** 松手后收回按下色和悬停色，并去掉点击留下的焦点框。 */
+function onSpeakPointerUp(event: PointerEvent) {
+  speakHolding.value = false
+  speakSettled.value = true
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.blur()
+}
+
+/** 键盘按住空格或回车时，和小喇叭按下同一套深红色。 */
+function onSpeakKeyDown(event: KeyboardEvent) {
+  if (event.repeat || (event.key !== ' ' && event.key !== 'Enter')) return
+  speakHolding.value = true
+}
+
+function onSpeakKeyUp(event: KeyboardEvent) {
+  if (event.key !== ' ' && event.key !== 'Enter') return
+  speakHolding.value = false
+}
+
 function onSpeak() {
   if (playMode.value === PLAY_LOOP) {
     if (looping.value) {
@@ -177,7 +221,16 @@ function onInputEnter(event: KeyboardEvent) {
 </script>
 
 <template>
+  <button v-show="showLauncher" type="button" class="speaker-launcher" aria-label="打开朗读" @click="speakerOpen = true">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v8A2.5 2.5 0 0 1 16.5 15H11l-4.2 3.6a.7.7 0 0 1-1.1-.5V15H7.5A2.5 2.5 0 0 1 5 12.5v-8z"
+      />
+    </svg>
+  </button>
   <form
+    v-show="showBar"
     ref="formEl"
     class="jp-speaker"
     :class="{ 'is-placed': placed, 'is-dragging': dragging }"
@@ -211,9 +264,15 @@ function onInputEnter(event: KeyboardEvent) {
     <button
       type="submit"
       class="speak"
-      :class="{ 'is-pressed': looping }"
+      :class="{ 'is-pressed': looping, 'is-holding': speakHolding, 'is-settled': speakSettled }"
       :aria-pressed="looping"
       :aria-label="looping ? '停止复读' : '朗读'"
+      @pointerover="speakSettled = false"
+      @pointerdown="onSpeakPointerDown"
+      @pointerup="onSpeakPointerUp"
+      @pointercancel="onSpeakPointerUp"
+      @keydown="onSpeakKeyDown"
+      @keyup="onSpeakKeyUp"
     >
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
         <path
@@ -240,6 +299,14 @@ function onInputEnter(event: KeyboardEvent) {
         :value="voice.voiceURI"
       />
     </el-select>
+    <button v-if="narrow" type="button" class="speaker-collapse" aria-label="收起朗读" @click="speakerOpen = false">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v8A2.5 2.5 0 0 1 16.5 15H11l-4.2 3.6a.7.7 0 0 1-1.1-.5V15H7.5A2.5 2.5 0 0 1 5 12.5v-8z"
+        />
+      </svg>
+    </button>
   </form>
 </template>
 
@@ -322,25 +389,73 @@ function onInputEnter(event: KeyboardEvent) {
     transform 0.1s ease;
 }
 
-.speak:hover {
-  background: #f3e4df;
-  border-color: #9f3d2f;
-  color: #7f3126;
+@media (hover: hover) and (pointer: fine) {
+  .speak:hover {
+    background: #f3e4df;
+    border-color: #9f3d2f;
+    color: #7f3126;
+  }
 }
 
-.speak:active,
+.speak.is-settled,
+.speak.is-settled:hover {
+  background: #fbf8f3;
+  border-color: #e4ddd2;
+  color: #9f3d2f;
+  transform: none;
+  box-shadow: none;
+}
+
+.speak.is-holding,
+.speak.is-holding:hover,
+.speak.is-settled.is-holding,
 .speak.is-pressed,
-.speak.is-pressed:hover {
+.speak.is-pressed:hover,
+.speak.is-settled.is-pressed {
   background: #9f3d2f;
   border-color: #7f3126;
   color: #fbf8f3;
   transform: translateY(1px);
   box-shadow: inset 0 2px 4px rgba(28, 25, 23, 0.28);
+  transition: none;
 }
 
-.speak:focus-visible {
+.speak:focus-visible,
+.speaker-launcher:focus-visible,
+.speaker-collapse:focus-visible {
   outline: 2px solid #9f3d2f;
   outline-offset: 2px;
+}
+
+.speaker-launcher,
+.speaker-collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e4ddd2;
+  background: #fbf8f3;
+  color: #9f3d2f;
+  cursor: pointer;
+}
+
+.speaker-launcher {
+  position: fixed;
+  z-index: 31;
+  right: 16px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(28, 25, 23, 0.12);
+}
+
+.speaker-collapse {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
 }
 
 .mode-select {
@@ -355,11 +470,20 @@ function onInputEnter(event: KeyboardEvent) {
 
 @media (max-width: 959px) {
   .jp-speaker {
+    bottom: 12px;
+    flex-wrap: wrap;
     width: min(760px, calc(100% - 24px));
   }
 
+  .jp-input {
+    flex: 1 0 100%;
+    order: -1;
+  }
+
   .voice-select {
-    width: 148px;
+    flex: 1;
+    width: auto;
+    min-width: 0;
   }
 }
 </style>

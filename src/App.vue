@@ -7,9 +7,38 @@ import JapaneseSpeaker from '@/components/JapaneseSpeaker.vue'
 import { useWordsStore } from '@/stores/words'
 import { applyDocumentSeo, resolveDescription, resolvePageTitle, resolveRobots, SITE_NAME, SITE_TAGLINE } from '@/utils/seo'
 
+const NARROW_LAYOUT = '(max-width: 959px)'
+const HEADER_SCROLL_GAP = 8
+
 const wordsStore = useWordsStore()
 const route = useRoute()
 const menuOpen = ref(false)
+const headerCollapsed = ref(false)
+let lastMainScroll = 0
+let headerScrollLock = false
+
+/**
+ * 窄屏往下读时收起顶栏，往上滚或回到顶部再展开。
+ * 顶栏高度一变，主区会跟着冒出滚动事件，这段时间先不改状态。
+ */
+function onMainScroll(event: Event) {
+  const el = event.target
+  if (!(el instanceof HTMLElement) || headerScrollLock) return
+  const top = el.scrollTop
+  const narrow = window.matchMedia(NARROW_LAYOUT).matches
+  let collapsed = headerCollapsed.value
+  if (!narrow || top <= HEADER_SCROLL_GAP) collapsed = false
+  else if (top > lastMainScroll + HEADER_SCROLL_GAP) collapsed = true
+  else if (top < lastMainScroll - HEADER_SCROLL_GAP) collapsed = false
+  lastMainScroll = top
+  if (collapsed === headerCollapsed.value) return
+  headerCollapsed.value = collapsed
+  headerScrollLock = true
+  window.setTimeout(() => {
+    lastMainScroll = el.scrollTop
+    headerScrollLock = false
+  }, 250)
+}
 
 onMounted(() => {
   void wordsStore.loadWords()
@@ -68,6 +97,15 @@ const crumbs = computed(() => {
 })
 
 watch(
+  () => route.fullPath,
+  () => {
+    headerCollapsed.value = false
+    lastMainScroll = 0
+    headerScrollLock = false
+  },
+)
+
+watch(
   () => [route.fullPath, crumbs.value.join('\0')] as const,
   () => {
     applyDocumentSeo({
@@ -83,7 +121,7 @@ watch(
 <template>
   <div class="app-frame">
     <a class="skip" href="#main">跳到主内容</a>
-    <header class="app-header">
+    <header class="app-header" :class="{ 'is-collapsed': headerCollapsed }">
       <button
         type="button"
         class="nav-toggle"
@@ -94,6 +132,7 @@ watch(
         <el-icon :size="20"><MenuIcon /></el-icon>
       </button>
       <h1>日语学习</h1>
+      <div id="outline-anchor" class="outline-anchor"></div>
     </header>
 
     <div class="app-body">
@@ -101,7 +140,7 @@ watch(
         <p v-if="wordsStore.loading" class="aside-status">目录加载中…</p>
         <AppSidebar v-else-if="wordsStore.loaded" />
       </aside>
-      <main id="main" tabindex="-1">
+      <main id="main" tabindex="-1" @scroll="onMainScroll">
         <p v-if="wordsStore.loading" class="status">词库加载中…</p>
         <p v-else-if="wordsStore.error" class="error">{{ wordsStore.error }}</p>
         <template v-else>
@@ -172,6 +211,11 @@ watch(
   border-bottom: 1px solid #e4ddd2;
 }
 
+.app-header {
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
 .app-footer {
   height: auto;
   min-height: 44px;
@@ -183,11 +227,23 @@ watch(
 }
 
 .app-header h1 {
+  flex: 1;
+  min-width: 0;
   margin: 0;
+  overflow: hidden;
   font-family: 'Songti SC', 'Source Han Serif SC', 'Noto Serif SC', PMingLiU, serif;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.outline-anchor {
+  flex: none;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
 }
 
 .nav-toggle {
@@ -276,8 +332,23 @@ main {
     display: none;
   }
 
+  .app-header.is-collapsed {
+    height: 0;
+    border-bottom-width: 0;
+  }
+
+  .app-footer {
+    display: none;
+  }
+
   main {
-    padding: 16px 16px 120px;
+    padding: 16px 16px 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header {
+    transition: none;
   }
 }
 
@@ -289,6 +360,12 @@ body,
 #app {
   height: 100%;
   margin: 0;
+}
+
+@media (max-width: 959px) {
+  html[data-speaker='open'] main {
+    padding-bottom: 124px;
+  }
 }
 
 .nav-drawer.el-drawer {
