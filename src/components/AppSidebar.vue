@@ -12,7 +12,7 @@ const route = useRoute()
 const router = useRouter()
 const wordsStore = useWordsStore()
 
-/** 单词本是独立菜单。课里的单词、课文、语法只在进入该课时高亮。 */
+/** 单词本是独立菜单。课里的课文、语法只在进入该课时高亮。 */
 const active = computed(() => {
   if (route.meta.section === 'words') return '/words'
   if (route.path.startsWith('/kana')) return '/kana'
@@ -32,7 +32,6 @@ const active = computed(() => {
   if (lessonId === '0') return ''
   if (route.path.endsWith('/reading')) return `/study/${bookId}/${unitId}/${lessonId}/reading`
   if (route.path.endsWith('/grammar')) return `/study/${bookId}/${unitId}/${lessonId}/grammar`
-  if (route.path.endsWith('/practice')) return `/study/${bookId}/${unitId}/${lessonId}/practice`
   return ''
 })
 
@@ -134,7 +133,6 @@ function onSelect(index: string) {
           :index="`lesson:${book.code}:${unit.unit}:${lesson.lesson}`"
         >
           <template #title>{{ lesson.name }}</template>
-          <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/practice`">单词</el-menu-item>
           <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/reading`">课文</el-menu-item>
           <el-menu-item :index="`/study/${book.code}/${unit.unit}/${lesson.lesson}/grammar`">语法</el-menu-item>
         </el-sub-menu>

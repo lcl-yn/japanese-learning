@@ -26,20 +26,20 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 | 路由 | 入口 | 相关文件 |
 | --- | --- | --- |
 | `/` | 重定向到 `/kana` | 打开五十音图 |
-| `/study/:bookId/:unitId/:lessonId/practice` | `src/views/PracticeView.vue` | `PracticeTable.vue`、`AnswerField.vue`、`LessonFilter.vue` |
-| `/words` | `src/views/WordsView.vue` | 单词本。册、单元、课只筛列表，不带动左侧目录 |
+| `/study/:bookId/:unitId/:lessonId/practice` | `src/views/PracticeView.vue` | `PracticeSession.vue`、`PracticeTable.vue`、`AnswerField.vue`、`LessonFilter.vue`。目录里没有入口，地址仍可打开 |
+| `/words` | `src/views/WordsView.vue` | 单词本。册、单元、课只筛列表，不带动左侧目录。工具栏「考试模式」就在本页换成练习 |
 | `/study/:bookId/:unitId/:lessonId/reading` | `src/views/LessonDocumentView.vue` | 课文。与语法共用编辑器，`section` 为 `reading` |
 | `/study/:bookId/:unitId/page/:pageId` | `src/views/UnitPageView.vue` | 和课同级的单元页面。初级上册第1单元有「单元末-实用场景对话」（课文，`unit-01-page-scenes.json`）和「单元末-词语之泉」（词表，`public/data/words/beginner-upper/unit-01-spring.json`，课号 101） |
 | `/study/:bookId/:unitId/:lessonId/grammar` | `src/views/LessonDocumentView.vue` | `GrammarEditor.vue`。`section` 为 `grammar` |
 | `/kana` | `src/views/KanaView.vue` | `KanaChart.vue`、`src/data/kana.ts` |
 
-页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 单词 / 课文 / 语法。单元上的 `pages` 和课排在同一层，是直接打开的页面，不再展开单词、课文、语法。初级上册第1单元末有「单元末-实用场景对话」和「单元末-词语之泉」。没有课、也没有这种页面的单元只显示「暂无课」。从一课点到另一课时，已经展开的册、单元和课保持展开。单词本里的册、单元、课只筛词表，打开单词本或五十音图时左侧课单收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
+页面壳在 `src/App.vue`：顶栏、左侧目录 `src/components/AppSidebar.vue`、主区、底栏。主区底部固定一条日语朗读条 `src/components/JapaneseSpeaker.vue`（拖动手柄、输入框、小喇叭、播放模式、音色）。播放模式默认「一次」；「循环」时读完隔 1 秒再读，再点小喇叭停止。输入框聚焦时按回车，等同点一次小喇叭；输入法组字中的回车只确认候选。按住手柄可拖动，松手后停在视口内。它挂在路由外面，切换页面时位置、输入、播放模式和音色保持不变，朗读走 `src/utils/speech.ts`。50音图下面是独立的「单词本」，再往下按清单展开为书籍 → 单元 → 课 → 课文 / 语法。考试在单词本里。单元上的 `pages` 和课排在同一层，是直接打开的页面，不再展开单词、课文、语法。初级上册第1单元末有「单元末-实用场景对话」和「单元末-词语之泉」。没有课、也没有这种页面的单元只显示「暂无课」。从一课点到另一课时，已经展开的册、单元和课保持展开。单词本里的册、单元、课只筛词表，打开单词本或五十音图时左侧课单收起。册代号在清单的 `code`（如 beginner-upper），写入词条 `bookId`，并出现在路由和课文、语法文件路径里。单元号用 `unit`，课号用 `lesson`。单元不写 `id`。课上的 `id` 只给列表作 key。词条 JSON 不写册、单元和课号。
 
 文档标题和简介由 `src/utils/seo.ts` 写入。五十音图、单词本用固定简介；练习、课文、语法会带上当前册、单元和课。课文、语法和单元页面标记为 noindex。打开单元页面不改练习正在抽的课。
 
 词条类型在 `src/types/word.ts`。加载在 `src/services/wordsLoader.ts`：读 `public/data/words/manifest.json` 的 `books`（初级 / 中级 / 高级，各分上册、下册）→ `units` → `lessons`，再并行加载各课 JSON。带 `file` 和 `lesson` 的单元页面一并加载，课号由清单写入。课次文件不存在，或开发服务器把缺失文件回退成页面 HTML 时，这一课按没有词处理，不中断整份词库。书籍、单元、课号由清单写入，词条 JSON 不写这些位置。字段：`cn`、`jp`（假名）、`jp_write`（手写）、`describe`、`part_of_speech`；内存里另有 `bookId`、`unit`、`lesson`。
 
-练习页的课次下拉列出当前单元的课和带词表的单元页面，含「本单元全部」。选「本单元全部」时，词语之泉和各课的词一起抽。单词本的册、单元下拉也有「全部」，课次下拉同样多出这些词表，选「全部」时一起列出。册为「全部」时不按册筛，单元下拉只剩「全部」；单元为「全部」时不按单元筛，课次下拉只剩「全部」。单词本的册、单元、课互不影响正在做的练习。单词本有「显示中文」「显示日文」「显示假名」三个开关；日文书写列和假名列各有行内隐藏。搜索框在「显示中文」左侧：点放大镜或回车后，当前册、单元、课里只留释义（逗号、顿号、分号分开的每一义）以关键字开头的词。三项都选「全部」时，搜索范围是整本词库。组字中的回车不触发搜索。
+练习页的课次下拉列出当前单元的课和带词表的单元页面，含「本单元全部」。选「本单元全部」时，词语之泉和各课的词一起抽。单词本的册、单元下拉也有「全部」，课次下拉同样多出这些词表，选「全部」时一起列出。册为「全部」时不按册筛，单元下拉只剩「全部」；单元为「全部」时不按单元筛，课次下拉只剩「全部」。单词本的册、单元、课互不影响正在做的练习。单词本有「显示中文」「显示日文」「显示假名」三个开关；日文书写列和假名列各有行内隐藏。搜索框在「显示中文」左侧：点放大镜或回车后，当前册、单元、课里只留释义（逗号、顿号、分号分开的每一义）以关键字开头的词。三项都选「全部」时，搜索范围是整本词库。组字中的回车不触发搜索。「考试模式」用当前列出的词在本页出题，含已提交的中文搜索；没有词时不能进入。改册、单元、课或重新搜索会重新抽题。显示开关和语音在考试时收起。这次出题不改练习记下的册、单元和课。
 
 ## 课文与语法
 
@@ -49,7 +49,7 @@ Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Vitest。`/` 进
 
 - `cn2jp` 看中文写日语：题干是中文。`describe` 去空白后有内容时，下一行显示「单词说明：」。作答格是假名和手写，分别对 `jp`、`jp_write`。两者相同且假名答对、手写留空时，手写也算对。
 - `jp2cn` 看日语写中文：题干用 `japanesePrompt`（`src/utils/wordDisplay.ts`）。手写与假名不同时显示 `手写(假名)`；手写为空或与假名相同则只显示假名。作答格只有中文，对 `cn`。
-- 判分在 `src/utils/answerCheck.ts`。错题计数在 `localStorage` 的 `wordErrorCounts`，抽词用 `src/utils/weightedRandom.ts`，错得越多越容易被抽到。课文和语法只记下当前课，不重新抽题。再打开单词时，抽出的题若不是这一课，按这一课重新抽；同一课来回切换则保留作答。
+- 判分在 `src/utils/answerCheck.ts`。错题计数在 `localStorage` 的 `wordErrorCounts`，抽词用 `src/utils/weightedRandom.ts`，错得越多越容易被抽到。练习页和单词本考试里的「清除错题统计」确认后把次数清成 0，当前这套题不变，下次抽词按相同机会抽取。课文和语法只记下当前课，不重新抽题。直接打开练习地址时，抽出的题若不是这一课，按这一课重新抽；同一课来回切换则保留作答。
 
 ## 命令
 

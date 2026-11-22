@@ -27,6 +27,8 @@ export const useWordsStore = defineStore('words', {
     drawnBookId: '',
     drawnUnitId: 0,
     drawnLessonId: 0,
+    /** 单词本考试用的词。为空时练习仍按记下的册、单元和课抽。 */
+    examPool: null as Word[] | null,
     errorCounts: {} as Record<string, number>,
     mode: 'cn2jp' as 'cn2jp' | 'jp2cn',
     currentWords: [] as Word[],
@@ -131,6 +133,13 @@ export const useWordsStore = defineStore('words', {
       localStorage.setItem(ERROR_STORAGE_KEY, JSON.stringify(this.errorCounts))
     },
     /**
+     * 清掉全部错题次数。当前这套题不变，下次抽词按相同机会抽取。
+     */
+    clearErrorCounts() {
+      this.errorCounts = {}
+      localStorage.setItem(ERROR_STORAGE_KEY, JSON.stringify(this.errorCounts))
+    },
+    /**
      * 记下当前册、单元和课。
      *
      * @param bookId 书籍编号，全部时为 all
@@ -142,7 +151,25 @@ export const useWordsStore = defineStore('words', {
       this.currentBookId = bookId
       this.currentUnitId = unitId
       this.currentLessonId = lessonId
-      if (restart) this.startTest(16)
+      if (restart) {
+        this.examPool = null
+        this.startTest(16)
+      }
+    },
+    /**
+     * 用单词本当前列出的词开考，不改练习记下的册、单元和课。
+     *
+     * @param words 这次要抽的词
+     */
+    startExam(words: Word[]) {
+      this.examPool = words
+      this.startTest(16)
+    },
+    /**
+     * 结束单词本考试。记下的册、单元和课保持不变。
+     */
+    endExam() {
+      this.examPool = null
     },
     /**
      * 按路由同步当前册、单元和课。
@@ -168,13 +195,18 @@ export const useWordsStore = defineStore('words', {
       this.startTest(16)
     },
     startTest(count = 16) {
-      this.currentWords = selectRandomWordsWithWeights(count, this.filteredWords, (w) =>
-        this.getWeight(w),
-      )
+      const source = this.examPool ?? this.filteredWords
+      this.currentWords = selectRandomWordsWithWeights(count, source, (w) => this.getWeight(w))
       this.userAnswers = this.currentWords.map(() => emptyAnswer())
       this.answerResults = this.currentWords.map(() => emptyResult())
       this.answersChecked = false
       this.correctCount = 0
+      if (this.examPool) {
+        this.drawnBookId = ''
+        this.drawnUnitId = -1
+        this.drawnLessonId = -1
+        return
+      }
       this.drawnBookId = this.currentBookId
       this.drawnUnitId = this.currentUnitId
       this.drawnLessonId = this.currentLessonId

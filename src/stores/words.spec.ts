@@ -208,6 +208,41 @@ describe('useWordsStore', () => {
     expect(store.answerTotal).toBe(4)
   })
 
+  it('clears error counts in memory and localStorage', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+    store.startTest(2)
+    store.userAnswers = store.currentWords.map(() => ({ ...emptyAnswer(), kana: 'wrong', write: 'wrong' }))
+    store.checkAnswers()
+
+    store.clearErrorCounts()
+
+    expect(store.errorCounts).toEqual({})
+    expect(JSON.parse(localStorage.getItem('wordErrorCounts') ?? '{}')).toEqual({})
+    expect(store.getWeight(store.currentWords[0])).toBe(1)
+  })
+
+  it('draws the word-book list without changing the remembered lesson', async () => {
+    const store = useWordsStore()
+    await store.loadWords()
+    store.setScope('beginner-upper', 1, 1)
+    const pool = store.allWords.filter((word) => word.lesson === 2)
+
+    store.startExam(pool)
+    store.setMode('jp2cn')
+
+    expect(store.currentBookId).toBe('beginner-upper')
+    expect(store.currentUnitId).toBe(1)
+    expect(store.currentLessonId).toBe(1)
+    expect(store.currentWords.length).toBeGreaterThan(0)
+    expect(store.currentWords.every((word) => word.lesson === 2)).toBe(true)
+
+    store.applyRouteScope('beginner-upper', 1, 1, 'practice')
+
+    expect(store.examPool).toBeNull()
+    expect(store.currentWords.every((word) => word.lesson === 1)).toBe(true)
+  })
+
   it('counts a blank handwriting cell as correct when jp equals jp_write and kana matches', async () => {
     const store = useWordsStore()
     await store.loadWords()

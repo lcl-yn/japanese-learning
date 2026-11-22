@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { Search } from '@element-plus/icons-vue'
+import PracticeSession from '@/components/PracticeSession.vue'
 import WordListTable from '@/components/WordListTable.vue'
 import { useWordsStore } from '@/stores/words'
 import { matchesCnPrefix } from '@/utils/cnSearch'
@@ -99,6 +100,28 @@ function onLessonChange(nextLessonId: number) {
   lessonId.value = nextLessonId
 }
 
+const examMode = ref(false)
+
+function toggleExam() {
+  if (examMode.value) {
+    examMode.value = false
+    wordsStore.endExam()
+    return
+  }
+  if (listedWords.value.length === 0) return
+  examMode.value = true
+  wordsStore.startExam(listedWords.value)
+}
+
+watch(scopeKey, () => {
+  if (!examMode.value) return
+  wordsStore.startExam(listedWords.value)
+})
+
+onUnmounted(() => {
+  if (examMode.value) wordsStore.endExam()
+})
+
 const showChinese = ref(true)
 const showJpWrite = ref(true)
 const showJapanese = ref(true)
@@ -168,20 +191,25 @@ onMounted(async () => {
             </button>
           </template>
         </el-input>
-        <span class="visibility">
-          <el-switch v-model="showChinese" aria-label="显示或隐藏中文" />
-          <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
-        </span>
-        <span class="visibility">
-          <el-switch v-model="showJpWrite" aria-label="显示或隐藏日文" />
-          <span>{{ showJpWrite ? '显示日文' : '隐藏日文' }}</span>
-        </span>
-        <span class="visibility">
-          <el-switch v-model="showJapanese" aria-label="显示或隐藏假名" />
-          <span>{{ showJapanese ? '显示假名' : '隐藏假名' }}</span>
-        </span>
+        <el-button type="primary" :disabled="!examMode && listedWords.length === 0" @click="toggleExam">
+          {{ examMode ? '返回词表' : '考试模式' }}
+        </el-button>
+        <template v-if="!examMode">
+          <span class="visibility">
+            <el-switch v-model="showChinese" aria-label="显示或隐藏中文" />
+            <span>{{ showChinese ? '显示中文' : '隐藏中文' }}</span>
+          </span>
+          <span class="visibility">
+            <el-switch v-model="showJpWrite" aria-label="显示或隐藏日文" />
+            <span>{{ showJpWrite ? '显示日文' : '隐藏日文' }}</span>
+          </span>
+          <span class="visibility">
+            <el-switch v-model="showJapanese" aria-label="显示或隐藏假名" />
+            <span>{{ showJapanese ? '显示假名' : '隐藏假名' }}</span>
+          </span>
+        </template>
       </div>
-      <div class="voice">
+      <div v-if="!examMode" class="voice">
         <span>语音选择:</span>
         <el-select
           v-model="selectedVoiceUri"
@@ -198,11 +226,14 @@ onMounted(async () => {
         </el-select>
       </div>
     </div>
-    <p v-if="!hasJapaneseVoice" class="voice-hint">
+    <p v-if="!examMode && !hasJapaneseVoice" class="voice-hint">
       未检测到本机日语语音包，将使用浏览器日语朗读；也可手动选中文语音（发音可能不准确）。
     </p>
 
+    <PracticeSession v-if="examMode && listedWords.length > 0" />
+    <p v-else-if="examMode" class="voice-hint">这一范围没有单词。</p>
     <WordListTable
+      v-else
       :words="listedWords"
       :scope-key="scopeKey"
       :show-chinese="showChinese"
