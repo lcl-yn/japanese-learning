@@ -20,14 +20,10 @@ concurrency:
   group: pages # 用这个名字把相关运行归成一组
   cancel-in-progress: false # 已经在发布的那次不取消，新的排队等它结束。取消到一半的部署可能留下不完整的网站
 
-# 具体要执行的任务。一个工作流可以有多个 job，这里只有发布这一个
+# 构建和部署分成两个任务。
+# 同一个任务里刚上传完就部署时，制品服务有时还查不到名为 github-pages 的包，部署会报找不到制品。
 jobs:
-  deploy:
-    # 发布必须挂在名为 github-pages 的环境上，这是 GitHub Pages 官方动作的要求
-    environment:
-      name: github-pages
-      # 部署成功后，把最终网址写回这个环境，Actions 页面上可以直接点开
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest # 在 GitHub 提供的一台最新 Ubuntu 虚拟机上执行
     steps:
       # 把仓库代码下载到这台虚拟机
@@ -68,7 +64,16 @@ jobs:
         with:
           path: dist
 
-      # 把上一步的制品发布出去。id 让后面的 steps.deployment.outputs.page_url 能取到网址
+  deploy:
+    needs: build # 等构建任务结束、制品可以查到之后再部署
+    # 发布必须挂在名为 github-pages 的环境上，这是 GitHub Pages 官方动作的要求
+    environment:
+      name: github-pages
+      # 部署成功后，把最终网址写回这个环境，Actions 页面上可以直接点开
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # 把构建任务上传的制品发布出去。id 让后面的 steps.deployment.outputs.page_url 能取到网址
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
