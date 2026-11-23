@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { Close, Filter, Grid, Hide, List, Microphone, MoreFilled, Notebook, Search } from '@element-plus/icons-vue'
+import { Close, Memo, Microphone, MoreFilled } from '@element-plus/icons-vue'
 import type { BookMeta, Word } from '@/types/word'
 import type { VoiceOption } from '@/utils/speech'
 import { speakJapanese } from '@/utils/speech'
 import { wordPages } from '@/utils/unitPages'
 import { visibleDescribe } from '@/utils/wordDisplay'
+import KanaExam from '@/components/KanaExam.vue'
 
 /** 与单词本一致：不对应清单里的某一册。 */
 const ALL_BOOKS = 'all'
@@ -58,6 +59,10 @@ const emit = defineEmits<{
 const visibleCount = ref(PAGE_SIZE)
 const maskOn = ref(false)
 const menuOpen = ref(false)
+const examOn = ref(false)
+const missedOpen = ref(false)
+const missedWords = ref<Word[]>([])
+const examDone = ref(0)
 const layout = ref<BoardLayout>(readBoardLayout())
 const revealed = ref<string[]>([])
 const searchOpen = ref(false)
@@ -151,6 +156,20 @@ watch(
     revealed.value = []
   },
 )
+
+watch(examOn, (on) => {
+  if (on) return
+  missedOpen.value = false
+  missedWords.value = []
+  examDone.value = 0
+})
+
+/** 记下这一次答错的词。同一词再错一次不再重复列入。 */
+function rememberMiss(word: Word) {
+  const key = wordKey(word)
+  if (missedWords.value.some((item) => wordKey(item) === key)) return
+  missedWords.value = [...missedWords.value, word]
+}
 
 function wordKey(word: Word) {
   return `${word.bookId}:${word.unit}:${word.lesson}:${word.fileIndex ?? ''}:${word.jp}:${word.cn}`
@@ -316,6 +335,66 @@ function speechOf(word: Word) {
   <div class="board">
     <Teleport to="#words-mobile-tools">
       <button
+        v-if="examOn"
+        type="button"
+        class="icon-button"
+        :class="{ 'is-on': missedOpen }"
+        aria-label="错题本"
+        :aria-pressed="missedOpen"
+        @click="missedOpen = !missedOpen"
+      >
+        <el-icon :size="20"><Memo /></el-icon>
+        <span v-if="missedWords.length" class="miss-count">{{ missedWords.length }}</span>
+      </button>
+      <button
+        type="button"
+        class="icon-button is-recite"
+        :class="{ 'is-on': examOn }"
+        aria-label="考试"
+        :aria-pressed="examOn"
+        @click="examOn = !examOn"
+      >
+        <svg class="recite-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path
+            fill="#c8f3ee"
+            d="M6.2 22.4c1.4 2.6 5 4 9.8 3.2 4.8.8 8.4-.6 9.8-3.2-.8 1.6-4.2 3.2-9.8 2.6-5.6.6-9-.8-9.8-2.6z"
+          />
+          <path
+            fill="#fffdf8"
+            stroke="#14b8a6"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+            d="M5.6 12.2c.3-2.4 2.5-3.6 5.4-3L15.2 10.4v12.8c-2.8.7-6.8.1-8.4-1.5-.8-.8-1.2-7.2-1.2-9.5z"
+          />
+          <path
+            fill="#fffdf8"
+            stroke="#14b8a6"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+            d="M16.8 10.4l4.4-1.2c2.8-.6 5.2.6 5.4 3 .2 2.4-.2 8.6-1.2 9.5-1.6 1.6-5.6 2.2-8.6 1.5V10.4z"
+          />
+          <path fill="none" stroke="#14b8a6" stroke-width="1.7" stroke-linecap="round" d="M16 10.6v12.6" />
+          <path
+            fill="none"
+            stroke="#e6d9c8"
+            stroke-width="1.35"
+            stroke-linecap="round"
+            d="M8.2 14h5M8.2 16.7h3.6M8.2 19.3h4.4"
+          />
+          <path
+            fill="#f6b429"
+            stroke="#f8882c"
+            stroke-width="0.6"
+            stroke-linejoin="round"
+            d="M22.4 13.2l1 2.3 2.5.2-1.9 1.6.6 2.4-2.2-1.3-2.2 1.3.6-2.4-1.9-1.6 2.5-.2z"
+          />
+          <path
+            fill="#f6b429"
+            d="M25.8 7.4l.45 1.05 1.1.1-.85.75.28 1.1-.98-.58-.98.58.28-1.1-.85-.75 1.1-.1z"
+          />
+        </svg>
+      </button>
+      <button
         type="button"
         class="icon-button"
         :class="{ 'is-on': menuOpen }"
@@ -337,7 +416,12 @@ function speechOf(word: Word) {
             :aria-pressed="layout === 'list'"
             @click="chooseLayout('list')"
           >
-            <el-icon :size="18"><List /></el-icon>
+            <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.4" y="4" width="17.2" height="4" rx="2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+              <rect x="3.4" y="10" width="17.2" height="4" rx="2" fill="#fff7e6" stroke="#14b8a6" stroke-width="1.5" />
+              <rect x="3.4" y="16" width="17.2" height="4" rx="2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+              <circle cx="6.4" cy="12" r="1.15" fill="#f8882c" />
+            </svg>
             列表
           </button>
           <button
@@ -346,12 +430,21 @@ function speechOf(word: Word) {
             :aria-pressed="layout === 'grid'"
             @click="chooseLayout('grid')"
           >
-            <el-icon :size="18"><Grid /></el-icon>
+            <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.2" y="3.2" width="7.2" height="7.2" rx="2.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+              <rect x="13.6" y="3.2" width="7.2" height="7.2" rx="2.2" fill="#f6b429" stroke="#f8882c" stroke-width="1.4" />
+              <rect x="3.2" y="13.6" width="7.2" height="7.2" rx="2.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+              <rect x="13.6" y="13.6" width="7.2" height="7.2" rx="2.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+            </svg>
             卡片
           </button>
         </div>
         <button type="button" class="more-item" @click="openFromMenu('course')">
-          <el-icon :size="18"><Notebook /></el-icon>
+          <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="3.2" width="14" height="17.4" rx="3" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.5" />
+            <path fill="none" stroke="#e6d9c8" stroke-width="1.3" stroke-linecap="round" d="M8.2 8.2h7.4M8.2 11.4h5.2" />
+            <path fill="#f6b429" stroke="#f8882c" stroke-width="0.6" stroke-linejoin="round" d="M13.6 3.2h3.4v6.4l-1.7-1.3-1.7 1.3z" />
+          </svg>
           <span>选课</span>
         </button>
         <button
@@ -361,15 +454,38 @@ function speechOf(word: Word) {
           :aria-pressed="maskOn"
           @click="openFromMenu('mask')"
         >
-          <el-icon :size="18"><Hide /></el-icon>
+          <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="#fffdf8"
+              stroke="#14b8a6"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              d="M3 12.2c2.4-3.5 5.2-5.2 9-5.2s6.6 1.7 9 5.2c-2.4 3.5-5.2 5.2-9 5.2s-6.6-1.7-9-5.2z"
+            />
+            <circle cx="12" cy="12.2" r="2.15" fill="#f6b429" stroke="#f8882c" stroke-width="0.7" />
+            <path fill="#c8f3ee" stroke="#14b8a6" stroke-width="1.2" stroke-linejoin="round" d="M4.4 9.4c2-1.8 4.6-2.6 7.6-2.6s5.6.8 7.6 2.6c-.6 1.1-3.2.2-7.6.2s-7 .9-7.6-.2z" />
+          </svg>
           <span>{{ maskOn ? '答案已遮住' : '遮住答案' }}</span>
         </button>
         <button type="button" class="more-item" @click="openFromMenu('search')">
-          <el-icon :size="18"><Search /></el-icon>
+          <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.4" cy="10.4" r="5.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.6" />
+            <circle cx="8.9" cy="9.1" r="1.25" fill="#f6b429" />
+            <path fill="none" stroke="#14b8a6" stroke-width="1.8" stroke-linecap="round" d="M14.3 14.3 19 19" />
+          </svg>
           <span>搜索</span>
         </button>
         <button type="button" class="more-item" @click="openFromMenu('filter')">
-          <el-icon :size="18"><Filter /></el-icon>
+          <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="#fffdf8"
+              stroke="#14b8a6"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              d="M4 5.2h16l-5.6 6.4v4.6l-4.8 2.1V11.6z"
+            />
+            <circle cx="17.4" cy="17.6" r="1.7" fill="#f8882c" />
+          </svg>
           <span>筛选</span>
         </button>
       </div>
@@ -381,10 +497,43 @@ function speechOf(word: Word) {
     </p>
     <p v-if="!hasJapaneseVoice" class="hint">未检测到本机日语语音包，朗读会使用浏览器的日语语音。</p>
     <div class="count place">
-      <button type="button" class="scope-mark" @click="openDrawer('course')">{{ scopeLabel }}</button>
-      <span class="place-count">{{ words.length }} 个词</span>
+      <button v-if="!missedOpen" type="button" class="scope-mark" @click="openDrawer('course')">{{ scopeLabel }}</button>
+      <span v-else class="scope-mark">{{ scopeLabel }}</span>
+      <span v-if="examOn && missedOpen" class="place-count">{{ missedWords.length }} 个错词</span>
+      <span
+        v-else-if="examOn"
+        class="place-count"
+        :aria-label="`已考 ${examDone}，共 ${words.length}`"
+      >{{ examDone }} / {{ words.length }}</span>
+      <span v-else class="place-count">{{ words.length }} 个词</span>
     </div>
 
+    <KanaExam
+      v-if="examOn"
+      v-show="!missedOpen"
+      :words="words"
+      @miss="rememberMiss"
+      @progress="examDone = $event"
+    />
+    <section v-if="examOn && missedOpen" class="missed" aria-label="错题本">
+      <p v-if="missedWords.length === 0" class="empty">还没有答错的单词。</p>
+      <article v-for="word in missedWords" :key="wordKey(word)" class="card">
+        <p class="write as-text">{{ word.jp_write.trim() || word.jp }}</p>
+        <div class="answer">
+          <p class="kana">
+            <span>{{ word.jp }}</span>
+            <span v-if="word.scale" class="scale">{{ word.scale }}</span>
+          </p>
+          <p class="cn">
+            {{ word.cn }}
+            <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+          </p>
+          <p v-if="visibleDescribe(word.describe)" class="describe">{{ visibleDescribe(word.describe) }}</p>
+        </div>
+      </article>
+    </section>
+
+    <template v-if="!examOn">
     <p v-if="words.length === 0" class="empty">这一范围没有单词。</p>
 
     <div class="cards" :class="{ 'is-grid': layout === 'grid' }">
@@ -437,6 +586,7 @@ function speechOf(word: Word) {
     </div>
 
     <div v-if="visibleCount < words.length" ref="moreSentinel" class="more-sentinel" aria-hidden="true" />
+    </template>
 
     <div v-if="searchOpen" class="search-layer" role="dialog" aria-label="搜索中文释义">
       <div class="search-bar">
@@ -573,6 +723,7 @@ function speechOf(word: Word) {
 
 .icon-button,
 .speak {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -585,6 +736,19 @@ function speechOf(word: Word) {
   box-shadow: 0 1px 2px rgb(44 40 36 / 8%);
 }
 
+.miss-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #e14b4b;
+  color: #fff;
+  font-size: 11px;
+  line-height: 16px;
+}
+
 .speak {
   background: var(--m-green);
   color: #fff;
@@ -595,6 +759,24 @@ function speechOf(word: Word) {
   background: #f8882c;
   color: #fff;
   box-shadow: none;
+}
+
+.icon-button.is-recite.is-on {
+  background: #fff;
+  box-shadow: 0 0 0 2px #f8882c;
+}
+
+.recite-mark {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.toon {
+  display: block;
+  flex: none;
+  width: 22px;
+  height: 22px;
 }
 
 .more-layer {
@@ -662,10 +844,15 @@ function speechOf(word: Word) {
   color: var(--m-orange);
 }
 
+.missed,
 .cards {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.missed .answer {
+  margin-top: 12px;
 }
 
 .cards.is-grid {
