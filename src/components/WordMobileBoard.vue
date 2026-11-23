@@ -749,6 +749,12 @@ function speechOf(word: Word) {
   width: 100%;
 }
 
+/* 手机浏览器聚焦字号小于 16px 的输入框会放大整页。下拉内部的输入框也要到 16px。 */
+.field :deep(.el-select__wrapper),
+.field :deep(.el-select__input) {
+  font-size: 16px;
+}
+
 .drawer-actions {
   display: flex;
   gap: 12px;
