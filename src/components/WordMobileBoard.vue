@@ -3,6 +3,7 @@ import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { Close, Memo, Microphone, MoreFilled } from '@element-plus/icons-vue'
 import type { BookMeta, Word } from '@/types/word'
 import type { VoiceOption } from '@/utils/speech'
+import { unlockExamSounds } from '@/utils/examSound'
 import { speakJapanese } from '@/utils/speech'
 import { wordPages } from '@/utils/unitPages'
 import { visibleDescribe } from '@/utils/wordDisplay'
@@ -323,6 +324,12 @@ function confirmFilter() {
   filterOpen.value = false
 }
 
+/** 打开考试时先唤醒音频通道，点选项才能直接播已经解码的提示音。 */
+function toggleExam() {
+  examOn.value = !examOn.value
+  if (examOn.value) unlockExamSounds()
+}
+
 function speak(word: Word) {
   speakJapanese(word.jp, props.voiceUri)
 }
@@ -353,7 +360,7 @@ function speechOf(word: Word) {
         :class="{ 'is-on': examOn }"
         aria-label="考试"
         :aria-pressed="examOn"
-        @click="examOn = !examOn"
+        @click="toggleExam"
       >
         <svg class="recite-mark" viewBox="0 0 32 32" aria-hidden="true">
           <path

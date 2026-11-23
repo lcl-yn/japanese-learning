@@ -3,9 +3,12 @@ import { ref, watch } from 'vue'
 import type { Word } from '@/types/word'
 import { buildChineseChoices, writingMatchesKana, type ExamChoice } from '@/utils/examChoices'
 import { drawExamItem, type ExamRound } from '@/utils/examQueue'
+import { playExamSound, warmExamSounds } from '@/utils/examSound'
 import { buildKanaChoices } from '@/utils/kanaConfusion'
 import correctSound from '../../docs/Music/button-correct.mp3'
 import wrongSound from '../../docs/Music/button-wrong.mp3'
+
+warmExamSounds([correctSound, wrongSound])
 
 const props = defineProps<{
   words: Word[]
@@ -65,8 +68,7 @@ function prepareChoices(word: Word): ExamChoice[] | null {
 }
 
 function play(src: string) {
-  const audio = new Audio(src)
-  void audio.play().catch(() => {})
+  playExamSound(src)
 }
 
 function choose(index: number) {
