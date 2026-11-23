@@ -193,6 +193,7 @@ async function submitAddWord() {
         jp_write: parsed.value.jp_write,
         describe: parsed.value.describe,
         part_of_speech: parsed.value.part_of_speech,
+        scale: '',
         bookId: parsed.value.bookId,
         unit: parsed.value.unit,
         lesson: parsed.value.lesson,
