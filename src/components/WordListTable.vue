@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { ZoomIn } from '@element-plus/icons-vue'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
 import { speakJapanese } from '@/utils/speech'
@@ -90,6 +91,24 @@ function onSpeak(word: Word) {
   speakJapanese(word.jp, props.voiceUri)
 }
 
+function canZoomWrite(word: Word, order: number) {
+  return word.jp_write.trim() !== '' && !isWriteHidden(order)
+}
+
+const zoomedWrite = ref('')
+
+const zoomOpen = computed({
+  get: () => zoomedWrite.value !== '',
+  set: (open: boolean) => {
+    if (!open) zoomedWrite.value = ''
+  },
+})
+
+/** 放大这一条日文书写，方便看清写法。 */
+function openWriteZoom(text: string) {
+  zoomedWrite.value = text
+}
+
 function describeOf(word: Word) {
   return visibleDescribe(word.describe)
 }
@@ -121,9 +140,19 @@ function speechOf(word: Word) {
             <span class="jp-write" :class="{ 'hidden-text': isWriteHidden(row.order) }">
               {{ isWriteHidden(row.order) ? '***隐藏***' : row.word.jp_write }}
             </span>
-            <el-button size="small" @click="toggleWriteHide(row.order)">
-              {{ isWriteHidden(row.order) ? '显示' : '隐藏' }}
-            </el-button>
+            <div class="jp-actions">
+              <el-button
+                v-if="canZoomWrite(row.word, row.order)"
+                size="small"
+                aria-label="放大日文书写"
+                @click="openWriteZoom(row.word.jp_write)"
+              >
+                <el-icon :size="14"><ZoomIn /></el-icon>
+              </el-button>
+              <el-button size="small" @click="toggleWriteHide(row.order)">
+                {{ isWriteHidden(row.order) ? '显示' : '隐藏' }}
+              </el-button>
+            </div>
           </div>
           <span v-else class="hidden-text">***隐藏***</span>
         </template>
@@ -164,6 +193,19 @@ function speechOf(word: Word) {
         next-text="下一页"
       />
     </div>
+
+    <el-dialog
+      v-model="zoomOpen"
+      title="日文书写"
+      width="min(640px, 92vw)"
+      append-to-body
+      class="jp-write-zoom-dialog"
+    >
+      <p class="jp-write-zoom">{{ zoomedWrite }}</p>
+      <template #footer>
+        <el-button @click="zoomOpen = false">关闭</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -209,6 +251,16 @@ function speechOf(word: Word) {
   flex: 1;
   text-align: left;
   font-weight: bold;
+}
+
+.jp-write-zoom {
+  margin: 8px 0 0;
+  color: #222;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.35;
+  font-size: clamp(72px, 24vw, 128px);
+  overflow-wrap: anywhere;
 }
 
 .jp-text {
