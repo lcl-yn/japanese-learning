@@ -141,7 +141,7 @@ export function resolveWordFile(
 
 /**
  * 把一条词加到词表数组末尾。
- * 已有条目原样保留。新对象只有五个字段。
+ * 已有条目原样保留。新对象写入五个文本字段，高低音先空着。
  *
  * @param existing 课次 JSON 解析结果
  * @param word 去过空白的新词
@@ -159,6 +159,7 @@ export function appendStoredWord(existing: unknown, word: StoredWordFields): Wor
         jp_write: word.jp_write,
         describe: word.describe,
         part_of_speech: word.part_of_speech,
+        scale: '',
       },
     ],
   }
@@ -181,7 +182,7 @@ export function parseWordUpdateBody(raw: unknown): WordAppendResult<WordUpdateBo
 
 /**
  * 替换词表数组里的一条。
- * 五个字段按新词写入，这一条上的其它键保留。下标越界或该位不是对象时不产生结果。
+ * 五个字段按新词写入。假名没变时保留原来的高低音，假名变了则清空。这一条上的其它键保留。下标越界或该位不是对象时不产生结果。
  *
  * @param existing 课次 JSON 解析结果
  * @param index 要替换的下标
@@ -197,13 +198,15 @@ export function replaceStoredWord(
   const current = existing[index]
   if (!current || typeof current !== 'object' || Array.isArray(current)) return fail(WORD_APPEND_INDEX)
   const next = existing.slice()
+  const previous = current as Record<string, unknown>
   next[index] = {
-    ...(current as Record<string, unknown>),
+    ...previous,
     cn: word.cn,
     jp: word.jp,
     jp_write: word.jp_write,
     describe: word.describe,
     part_of_speech: word.part_of_speech,
+    scale: previous.jp === word.jp && typeof previous.scale === 'string' ? previous.scale : '',
   }
   return { ok: true, value: next }
 }

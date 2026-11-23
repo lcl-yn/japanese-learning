@@ -4,195 +4,223 @@
         "jp": "スキーじょう",
         "jp_write": "スキー場",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "欢送会",
         "jp": "そうべつかい",
         "jp_write": "送別会",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "④"
     },
     {
         "cn": "方便,情况",
         "jp": "つごう",
         "jp_write": "都合",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "预约",
         "jp": "よてい",
         "jp_write": "予定",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "玩具",
         "jp": "おもちゃ",
         "jp_write": "おもちゃ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "火灾",
         "jp": "かじ",
         "jp_write": "火事",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "时间,期间",
         "jp": "きかん",
         "jp_write": "期間",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "调动工作",
         "jp": "てんきん",
         "jp_write": "転勤",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "手机",
         "jp": "けいたい",
         "jp_write": "携帯",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "羽毛球",
         "jp": "バドミントン",
         "jp_write": "バドミントン",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "球拍",
         "jp": "ラケット",
         "jp_write": "ラケット",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "夫人,(别人的)爱人",
         "jp": "おくさん",
         "jp_write": "奥さん",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "歌手",
         "jp": "かしゅ",
         "jp_write": "歌手",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "总统",
         "jp": "だいとうりょう",
         "jp_write": "大統領",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "做",
         "jp": "やります",
         "jp_write": "やります",
         "describe": "一类动词",
-        "part_of_speech": "动词"
+        "part_of_speech": "动词",
+        "scale": ""
     },
     {
         "cn": "高兴",
         "jp": "うれしい",
         "jp_write": "うれしい",
         "describe": "一类形容词",
-        "part_of_speech": "形容词"
+        "part_of_speech": "形容词",
+        "scale": "③"
     },
     {
         "cn": "困倦",
         "jp": "ねむい",
         "jp_write": "眠い",
         "describe": "一类形容词",
-        "part_of_speech": "形容词"
+        "part_of_speech": "形容词",
+        "scale": "⓪"
     },
     {
         "cn": "重,沉重",
         "jp": "おもい",
         "jp_write": "重い",
         "describe": "一类形容词",
-        "part_of_speech": "形容词"
+        "part_of_speech": "形容词",
+        "scale": "⓪"
     },
     {
         "cn": "突然,紧急",
         "jp": "きゅう",
         "jp_write": "急",
         "describe": "二类形容词",
-        "part_of_speech": "形容动词"
+        "part_of_speech": "形容动词",
+        "scale": "⓪"
     },
     {
         "cn": "大致,还算",
         "jp": "まあまあ",
         "jp_write": "まあまあ",
         "describe": "",
-        "part_of_speech": "副词"
+        "part_of_speech": "副词",
+        "scale": "①"
     },
     {
         "cn": "太,非常,过于",
         "jp": "あんまり",
         "jp_write": "あんまり",
         "describe": "",
-        "part_of_speech": "副词"
+        "part_of_speech": "副词",
+        "scale": "⓪"
     },
     {
         "cn": "抱歉,请原谅",
         "jp": "ごめん",
         "jp_write": "ごめん",
         "describe": "",
-        "part_of_speech": "感叹词"
+        "part_of_speech": "感叹词",
+        "scale": "⓪"
     },
     {
         "cn": "不",
         "jp": "ううん ∕ いや",
         "jp_write": "ううん∕いや",
         "describe": "",
-        "part_of_speech": "感叹词"
+        "part_of_speech": "感叹词",
+        "scale": ""
     },
     {
         "cn": "嗯",
         "jp": "うん",
         "jp_write": "うん",
         "describe": "",
-        "part_of_speech": "感叹词"
+        "part_of_speech": "感叹词",
+        "scale": "①"
     },
     {
         "cn": "清水",
         "jp": "しみず",
         "jp_write": "清水",
         "describe": "专有名词",
-        "part_of_speech": "专"
+        "part_of_speech": "专",
+        "scale": "⓪"
     },
     {
         "cn": "太田",
         "jp": "おおた",
         "jp_write": "太田",
         "describe": "专有名词",
-        "part_of_speech": "专"
+        "part_of_speech": "专",
+        "scale": ""
     },
     {
         "cn": "莫扎特",
         "jp": "モーツァルト",
         "jp_write": "モーツァルト",
         "describe": "专有名词",
-        "part_of_speech": "专"
+        "part_of_speech": "专",
+        "scale": ""
     },
     {
         "cn": "迪斯尼乐园",
         "jp": "ディズニーランド",
         "jp_write": "ディズニーランド",
         "describe": "专有名词",
-        "part_of_speech": "专"
+        "part_of_speech": "专",
+        "scale": ""
     }
 ]

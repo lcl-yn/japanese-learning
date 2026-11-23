@@ -4,6 +4,7 @@ import { ElMessage } from 'element-plus'
 import { CircleClose, Search } from '@element-plus/icons-vue'
 import PracticeSession from '@/components/PracticeSession.vue'
 import WordListTable from '@/components/WordListTable.vue'
+import WordMobileBoard from '@/components/WordMobileBoard.vue'
 import { saveNewWord, saveUpdatedWord } from '@/services/wordSave'
 import { useWordsStore } from '@/stores/words'
 import type { Word } from '@/types/word'
@@ -275,12 +276,31 @@ const examMode = ref(false)
 const narrowQuery = window.matchMedia(NARROW_LAYOUT)
 const narrowLayout = ref(narrowQuery.matches)
 
-/** 手机上不进入考试；已经在考的话退回词表。 */
 function onNarrowChange(event: MediaQueryListEvent) {
   narrowLayout.value = event.matches
-  if (!event.matches || !examMode.value) return
-  examMode.value = false
-  wordsStore.endExam()
+}
+
+function onMobileSearch(query: string) {
+  cnDraft.value = query
+  cnQuery.value = query
+}
+
+function applyMobileFilter(value: {
+  bookId: string
+  unitId: number
+  lessonId: number
+  showChinese: boolean
+  showJpWrite: boolean
+  showJapanese: boolean
+  voiceUri: string
+}) {
+  bookId.value = value.bookId
+  unitId.value = value.unitId
+  lessonId.value = value.lessonId
+  showChinese.value = value.showChinese
+  showJpWrite.value = value.showJpWrite
+  showJapanese.value = value.showJapanese
+  selectedVoiceUri.value = value.voiceUri
 }
 
 function toggleExam() {
@@ -324,7 +344,33 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="words-view">
+  <div class="words-view" :class="{ 'is-narrow': narrowLayout }">
+    <template v-if="narrowLayout">
+      <div v-if="examMode" class="mobile-exam">
+        <button type="button" class="mobile-back" @click="toggleExam">返回词表</button>
+        <PracticeSession v-if="listedWords.length > 0" />
+        <p v-else class="voice-hint">这一范围没有单词。</p>
+      </div>
+      <WordMobileBoard
+        v-else
+        :words="listedWords"
+        :scope-key="scopeKey"
+        :books="wordsStore.manifest.books"
+        :book-id="bookId"
+        :unit-id="unitId"
+        :lesson-id="lessonId"
+        :show-chinese="showChinese"
+        :show-jp-write="showJpWrite"
+        :show-japanese="showJapanese"
+        :voice-uri="selectedVoiceUri"
+        :voice-options="voiceOptions"
+        :has-japanese-voice="hasJapaneseVoice"
+        :query="cnQuery"
+        @apply-filter="applyMobileFilter"
+        @search="onMobileSearch"
+      />
+    </template>
+    <template v-else>
     <h2>单词本</h2>
     <p class="page-lead">{{ WORDS_DESCRIPTION }}</p>
     <div class="toolbar">
@@ -388,7 +434,6 @@ onMounted(async () => {
       <div class="switches">
         <el-button v-if="canAddWord" type="primary" @click="openAddDialog">添加单词</el-button>
         <el-button
-          v-if="!narrowLayout"
           type="primary"
           :disabled="!examMode && listedWords.length === 0"
           @click="toggleExam"
@@ -442,9 +487,9 @@ onMounted(async () => {
       :show-japanese="showJapanese"
       :voice-uri="selectedVoiceUri"
       :editable="canAddWord"
-      :row-hide="!narrowLayout"
       @edit="openEditDialog"
     />
+    </template>
     <el-dialog
       v-model="addOpen"
       :title="editingWord ? '修改单词' : '添加单词'"
@@ -594,5 +639,22 @@ onMounted(async () => {
   margin: 0 0 16px;
   color: #909399;
   font-size: 13px;
+}
+
+.mobile-exam {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-back {
+  align-self: flex-start;
+  padding: 8px 14px;
+  border: 1px solid #f8882c;
+  border-radius: 999px;
+  background: #fff;
+  color: #f8882c;
+  font: inherit;
+  font-size: 14px;
 }
 </style>

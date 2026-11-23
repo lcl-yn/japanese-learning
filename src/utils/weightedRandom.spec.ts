@@ -8,6 +8,7 @@ const w = (cn: string, jp: string, lesson = 1): Word => ({
   jp_write: cn,
   describe: '',
   part_of_speech: '名词',
+  scale: '',
   lesson,
   unit: 1,
   bookId: 'beginner-upper',

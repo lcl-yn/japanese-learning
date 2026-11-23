@@ -4,447 +4,511 @@
         "jp": "げんかん",
         "jp_write": "玄関",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "走廊",
         "jp": "ろうか",
         "jp_write": "廊下",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "卫生间,厕所",
         "jp": "トイレ",
         "jp_write": "トイレ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "浴室,洗澡间",
         "jp": "よくしつ",
         "jp_write": "浴室",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "盥洗室",
         "jp": "せんめんじょ",
         "jp_write": "洗面所",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "厨房",
         "jp": "だいどころ",
         "jp_write": "台所",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "起居室",
         "jp": "いま",
         "jp_write": "居間",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "卧室",
         "jp": "しんしつ",
         "jp_write": "寝室",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "日式房间",
         "jp": "わしつ",
         "jp_write": "和室",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "阳台",
         "jp": "ベランダ",
         "jp_write": "ベランダ",
         "describe": "英语 - Balcony",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "院子",
         "jp": "にわ",
         "jp_write": "庭",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "屋顶,房顶",
         "jp": "やね",
         "jp_write": "屋根",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "信箱",
         "jp": "ポスト",
         "jp_write": "ポスト",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "汽车房,车库",
         "jp": "ガレージ",
         "jp_write": "ガレージ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "门",
         "jp": "ドア",
         "jp_write": "ドア",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "窗户",
         "jp": "まど",
         "jp_write": "窓",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "窗帘",
         "jp": "カーテン",
         "jp_write": "カーテン",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "空调",
         "jp": "エアコン",
         "jp_write": "エアコン",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "沙发",
         "jp": "ソファー",
         "jp_write": "ソファー",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "桌子",
         "jp": "テーブル",
         "jp_write": "テーブル",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "地毯",
         "jp": "じゅうたん",
         "jp_write": "じゅうたん",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": ""
     },
     {
         "cn": "木质地板",
         "jp": "フローリング",
         "jp_write": "フローリング",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "电话",
         "jp": "でんわ",
         "jp_write": "電話",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "遥控器",
         "jp": "リモコン",
         "jp_write": "リモコン",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "垃圾箱",
         "jp": "ごみばこ",
         "jp_write": "ごみ箱",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "书架",
         "jp": "ほんだな",
         "jp_write": "本棚",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "录像机",
         "jp": "ビデオ",
         "jp_write": "ビデオ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "切菜板",
         "jp": "まないた",
         "jp_write": "まな板",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "菜刀",
         "jp": "ほうちょう",
         "jp_write": "包丁",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "厨房用洗涤剂",
         "jp": "だいどころようせんざい",
         "jp_write": "台所用洗剤",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": ""
     },
     {
         "cn": "抹布",
         "jp": "ふきん",
         "jp_write": "布巾",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "洗碗池,水池",
         "jp": "ながし",
         "jp_write": "流し",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "水龙头",
         "jp": "じゃぐち",
         "jp_write": "蛇口",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "锅",
         "jp": "なべ",
         "jp_write": "鍋",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "烤炉,烤箱",
         "jp": "オーブン",
         "jp_write": "オーブン",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "微波炉",
         "jp": "でんしレンジ",
         "jp_write": "電子レンジ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "④"
     },
     {
         "cn": "餐具柜,碗橱",
         "jp": "しょっきだな",
         "jp_write": "食器棚",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "冰箱",
         "jp": "れいぞうこ",
         "jp_write": "冷蔵庫",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "洗脸台",
         "jp": "せんめんだい",
         "jp_write": "洗面台",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "镜子",
         "jp": "かがみ",
         "jp_write": "鏡",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "牙刷",
         "jp": "はブラシ",
         "jp_write": "歯ブラシ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "吹风机",
         "jp": "ドライヤー",
         "jp_write": "ドライヤー",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "毛巾",
         "jp": "タオル",
         "jp_write": "タオル",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "淋浴",
         "jp": "シャワー",
         "jp_write": "シャワー",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "浴槽,浴缸",
         "jp": "バスタブ",
         "jp_write": "バスタブ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "肥皂,香皂",
         "jp": "せっけん",
         "jp_write": "せっけん",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "洗发水",
         "jp": "シャンプー",
         "jp_write": "シャンプー",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "洗衣机",
         "jp": "せんたくき",
         "jp_write": "洗濯機",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "④"
     },
     {
         "cn": "烘干机",
         "jp": "かんそうき",
         "jp_write": "乾燥機",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "体重秤",
         "jp": "たいじゅうけい",
         "jp_write": "体重計",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "马桶",
         "jp": "べんき",
         "jp_write": "便器",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "卫生纸",
         "jp": "トイレットペーパー",
         "jp_write": "トイレットペーパー",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⑥"
     },
     {
         "cn": "床",
         "jp": "ベッド",
         "jp_write": "ベッド",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "枕头",
         "jp": "まくら",
         "jp_write": "枕",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "床单",
         "jp": "シーツ",
         "jp_write": "シーツ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "①"
     },
     {
         "cn": "被子",
         "jp": "かけぶとん",
         "jp_write": "掛け布団",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "③"
     },
     {
         "cn": "台灯",
         "jp": "でんきスタンド",
         "jp_write": "電気スタンド",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⑤"
     },
     {
         "cn": "闹钟",
         "jp": "めざましどけい",
         "jp_write": "目覚まし時計",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⑤"
     },
     {
         "cn": "衣柜",
         "jp": "クローゼット",
         "jp_write": "クローゼット",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "拉窗",
         "jp": "しょうじ",
         "jp_write": "障子",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "壁橱",
         "jp": "おしいれ",
         "jp_write": "押入れ",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "隔扇",
         "jp": "ふすま",
         "jp_write": "襖",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     },
     {
         "cn": "座垫",
         "jp": "ざぶとん",
         "jp_write": "座布団",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "②"
     },
     {
         "cn": "草垫,草席",
         "jp": "たたみ",
         "jp_write": "畳",
         "describe": "",
-        "part_of_speech": "名"
+        "part_of_speech": "名",
+        "scale": "⓪"
     }
 ]

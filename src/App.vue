@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import AppSidebar from '@/components/AppSidebar.vue'
@@ -14,8 +14,12 @@ const wordsStore = useWordsStore()
 const route = useRoute()
 const menuOpen = ref(false)
 const headerCollapsed = ref(false)
+const narrowQuery = window.matchMedia(NARROW_LAYOUT)
+const narrowLayout = ref(narrowQuery.matches)
 let lastMainScroll = 0
 let headerScrollLock = false
+
+const wordsMobile = computed(() => narrowLayout.value && route.meta.section === 'words')
 
 /**
  * 窄屏往下读时收起顶栏，往上滚或回到顶部再展开。
@@ -25,7 +29,12 @@ function onMainScroll(event: Event) {
   const el = event.target
   if (!(el instanceof HTMLElement) || headerScrollLock) return
   const top = el.scrollTop
-  const narrow = window.matchMedia(NARROW_LAYOUT).matches
+  const narrow = narrowLayout.value
+  if (narrow && route.meta.section === 'words') {
+    lastMainScroll = top
+    if (headerCollapsed.value) headerCollapsed.value = false
+    return
+  }
   let collapsed = headerCollapsed.value
   if (!narrow || top <= HEADER_SCROLL_GAP) collapsed = false
   else if (top > lastMainScroll + HEADER_SCROLL_GAP) collapsed = true
@@ -40,8 +49,18 @@ function onMainScroll(event: Event) {
   }, 250)
 }
 
+function onNarrowChange(event: MediaQueryListEvent) {
+  narrowLayout.value = event.matches
+  if (!event.matches) headerCollapsed.value = false
+}
+
 onMounted(() => {
+  narrowQuery.addEventListener('change', onNarrowChange)
   void wordsStore.loadWords()
+})
+
+onUnmounted(() => {
+  narrowQuery.removeEventListener('change', onNarrowChange)
 })
 
 watch(
@@ -131,7 +150,8 @@ watch(
       >
         <el-icon :size="20"><MenuIcon /></el-icon>
       </button>
-      <h1>日语学习</h1>
+      <h1 v-show="!wordsMobile">日语学习</h1>
+      <div id="words-mobile-tools" class="words-mobile-tools" :hidden="!wordsMobile"></div>
       <div id="outline-anchor" class="outline-anchor"></div>
     </header>
 
@@ -239,6 +259,19 @@ watch(
   text-overflow: ellipsis;
 }
 
+.words-mobile-tools {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.words-mobile-tools[hidden] {
+  display: none;
+}
+
 .outline-anchor {
   flex: none;
   display: flex;
@@ -343,6 +376,14 @@ main {
 
   main {
     padding: 16px 16px 72px;
+  }
+
+  main:has(.words-view.is-narrow) .crumbs {
+    display: none;
+  }
+
+  .app-frame:has(.words-view.is-narrow) {
+    background: #f6f1e8;
   }
 }
 

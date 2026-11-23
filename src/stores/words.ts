@@ -133,7 +133,7 @@ export const useWordsStore = defineStore('words', {
       const fileIndex = this.allWords.filter(
         (item) => item.bookId === word.bookId && item.unit === word.unit && item.lesson === word.lesson,
       ).length
-      this.allWords.push({ ...word, fileIndex })
+      this.allWords.push({ ...word, scale: word.scale ?? '', fileIndex })
     },
     /**
      * 用保存后的字段换掉内存里的这一条。已抽出的题仍指向原来的对象。
@@ -144,7 +144,11 @@ export const useWordsStore = defineStore('words', {
     replaceWord(target: Word, fields: Pick<Word, 'cn' | 'jp' | 'jp_write' | 'describe' | 'part_of_speech'>) {
       const index = this.allWords.indexOf(target)
       if (index < 0) return
-      this.allWords.splice(index, 1, { ...target, ...fields })
+      this.allWords.splice(index, 1, {
+        ...target,
+        ...fields,
+        scale: target.jp === fields.jp ? target.scale : '',
+      })
     },
     getWeight(word: Word) {
       return 1 + (this.errorCounts[wordKey(word)] || 0)

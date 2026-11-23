@@ -9,6 +9,7 @@ interface LessonWord {
   jp_write?: string
   describe?: string | null
   part_of_speech?: string
+  scale?: string
 }
 
 interface WordLocation {
@@ -19,7 +20,7 @@ interface WordLocation {
 
 /**
  * 把课次 JSON 收成 words 对象。
- * 书籍以清单的 code 写入 bookId。单元号用单元对象的 unit，课号用课对象的 lesson。describe 缺省或 null 时记为空字符串，并丢掉已废弃的 index。
+ * 书籍以清单的 code 写入 bookId。单元号用单元对象的 unit，课号用课对象的 lesson。describe 缺省或 null 时记为空字符串，并丢掉已废弃的 index。scale 缺省时记为空，不自己编高低音。
  *
  * @param raw 课次文件里的一条词
  * @param location 该课在清单中的书籍、单元和课号
@@ -32,6 +33,7 @@ function toWord(raw: LessonWord, location: WordLocation): Word {
     jp_write: raw.jp_write ?? '',
     describe: typeof raw.describe === 'string' ? raw.describe : '',
     part_of_speech: raw.part_of_speech ?? '',
+    scale: typeof raw.scale === 'string' ? raw.scale : '',
     bookId: location.bookId,
     unit: location.unit,
     lesson: location.lesson,

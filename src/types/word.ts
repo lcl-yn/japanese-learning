@@ -7,6 +7,8 @@ export interface Word {
   jp_write: string
   describe: string
   part_of_speech: string
+  /** 东京音高低。⓪ 不降，① 表示第 1 拍之后下降。查不到则为空。 */
+  scale: string
   bookId: string
   unit: number
   lesson: number

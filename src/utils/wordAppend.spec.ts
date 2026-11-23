@@ -133,6 +133,7 @@ describe('prepareWordAppend', () => {
         jp_write: '大学生',
         describe: '',
         part_of_speech: '名',
+        scale: '',
       },
     ])
     expect(prepared.value.contents.endsWith('\n')).toBe(true)
@@ -203,9 +204,17 @@ describe('prepareWordUpdate', () => {
     expect(prepared.ok).toBe(true)
     if (!prepared.ok) return
     expect(JSON.parse(prepared.value.contents)).toEqual([
-      { cn: '大学生', jp: 'だいがくせい', jp_write: '大学生', describe: '', part_of_speech: '名', extra: 1 },
+      { cn: '大学生', jp: 'だいがくせい', jp_write: '大学生', describe: '', part_of_speech: '名', scale: '', extra: 1 },
       { cn: '老师', jp: 'せんせい' },
     ])
+  })
+
+  it('keeps the pitch mark when the kana stays the same', () => {
+    const existing = '[{"cn":"学生","jp":"がくせい","scale":"⓪"}]'
+    const prepared = prepareWordUpdate(manifest, existing, { ...word, cn: '学生', jp: 'がくせい', fileIndex: 0 })
+    expect(prepared.ok).toBe(true)
+    if (!prepared.ok) return
+    expect(JSON.parse(prepared.value.contents)[0].scale).toBe('⓪')
   })
 
   it('rejects a missing file, a bad index, and a non-array', () => {
