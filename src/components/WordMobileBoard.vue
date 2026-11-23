@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { Close, Filter, Hide, Microphone, Notebook, Search } from '@element-plus/icons-vue'
+import { Close, Filter, Grid, Hide, List, Microphone, MoreFilled, Notebook, Search } from '@element-plus/icons-vue'
 import type { BookMeta, Word } from '@/types/word'
 import type { VoiceOption } from '@/utils/speech'
 import { speakJapanese } from '@/utils/speech'
@@ -18,6 +18,11 @@ const IME_PROCESS_KEY = 229
 
 /** 卡片每次多露出的条数。 */
 const PAGE_SIZE = 12
+
+/** 手机词表的列表或两列卡片，下次打开仍用上次的选择。 */
+const LAYOUT_STORAGE_KEY = 'wordBoardLayout'
+
+type BoardLayout = 'list' | 'grid'
 
 const props = defineProps<{
   words: Word[]
@@ -52,6 +57,8 @@ const emit = defineEmits<{
 
 const visibleCount = ref(PAGE_SIZE)
 const maskOn = ref(false)
+const menuOpen = ref(false)
+const layout = ref<BoardLayout>(readBoardLayout())
 const revealed = ref<string[]>([])
 const searchOpen = ref(false)
 const searchDraft = ref('')
@@ -100,6 +107,15 @@ const draftLessons = computed(() => {
   return choices
 })
 
+/** 读上次的展示方式。缺省或无法识别时用一行一词的列表。 */
+function readBoardLayout(): BoardLayout {
+  try {
+    return localStorage.getItem(LAYOUT_STORAGE_KEY) === 'grid' ? 'grid' : 'list'
+  } catch {
+    return 'list'
+  }
+}
+
 function closeZoom() {
   zoomedWrite.value = ''
 }
@@ -113,8 +129,18 @@ watch(zoomedWrite, (value) => {
   else window.removeEventListener('keydown', onZoomKey)
 })
 
+function onMenuKey(event: KeyboardEvent) {
+  if (event.key === 'Escape') menuOpen.value = false
+}
+
+watch(menuOpen, (open) => {
+  if (open) window.addEventListener('keydown', onMenuKey)
+  else window.removeEventListener('keydown', onMenuKey)
+})
+
 onUnmounted(() => {
   window.removeEventListener('keydown', onZoomKey)
+  window.removeEventListener('keydown', onMenuKey)
   moreObserver?.disconnect()
 })
 
@@ -177,6 +203,25 @@ function bindMoreObserver() {
 }
 
 watch(moreSentinel, () => bindMoreObserver())
+
+/** 记下展示方式并收起菜单。写不进本机时，这一次打开仍按刚选的来。 */
+function chooseLayout(next: BoardLayout) {
+  layout.value = next
+  try {
+    localStorage.setItem(LAYOUT_STORAGE_KEY, next)
+  } catch {
+    /* 这一次打开仍然按刚选的来。 */
+  }
+  menuOpen.value = false
+}
+
+function openFromMenu(action: 'course' | 'filter' | 'search' | 'mask') {
+  menuOpen.value = false
+  if (action === 'course') openDrawer('course')
+  else if (action === 'filter') openDrawer('filter')
+  else if (action === 'search') openSearch()
+  else maskOn.value = !maskOn.value
+}
 
 function openSearch() {
   searchDraft.value = props.query
@@ -270,26 +315,65 @@ function speechOf(word: Word) {
 <template>
   <div class="board">
     <Teleport to="#words-mobile-tools">
-      <button type="button" class="icon-button" :aria-label="`选课，${scopeLabel}`" @click="openDrawer('course')">
-        <el-icon :size="20"><Notebook /></el-icon>
-      </button>
       <button
         type="button"
         class="icon-button"
-        :class="{ 'is-on': maskOn }"
-        :aria-pressed="maskOn"
-        :aria-label="maskOn ? '答案已遮住' : '遮住答案'"
-        @click="maskOn = !maskOn"
+        :class="{ 'is-on': menuOpen }"
+        aria-label="更多"
+        aria-haspopup="dialog"
+        :aria-expanded="menuOpen"
+        @click="menuOpen = !menuOpen"
       >
-        <el-icon :size="20"><Hide /></el-icon>
-      </button>
-      <button type="button" class="icon-button" aria-label="搜索" @click="openSearch">
-        <el-icon :size="20"><Search /></el-icon>
-      </button>
-      <button type="button" class="icon-button" aria-label="筛选" @click="openDrawer('filter')">
-        <el-icon :size="20"><Filter /></el-icon>
+        <el-icon :size="20"><MoreFilled /></el-icon>
       </button>
     </Teleport>
+
+    <div v-if="menuOpen" class="more-layer" @click="menuOpen = false">
+      <div class="more-menu" role="dialog" aria-label="更多" @click.stop>
+        <div class="layout-switch" role="group" aria-label="展示方式">
+          <button
+            type="button"
+            :class="{ 'is-on': layout === 'list' }"
+            :aria-pressed="layout === 'list'"
+            @click="chooseLayout('list')"
+          >
+            <el-icon :size="18"><List /></el-icon>
+            列表
+          </button>
+          <button
+            type="button"
+            :class="{ 'is-on': layout === 'grid' }"
+            :aria-pressed="layout === 'grid'"
+            @click="chooseLayout('grid')"
+          >
+            <el-icon :size="18"><Grid /></el-icon>
+            卡片
+          </button>
+        </div>
+        <button type="button" class="more-item" @click="openFromMenu('course')">
+          <el-icon :size="18"><Notebook /></el-icon>
+          <span>选课</span>
+        </button>
+        <button
+          type="button"
+          class="more-item"
+          :class="{ 'is-on': maskOn }"
+          :aria-pressed="maskOn"
+          @click="openFromMenu('mask')"
+        >
+          <el-icon :size="18"><Hide /></el-icon>
+          <span>{{ maskOn ? '答案已遮住' : '遮住答案' }}</span>
+        </button>
+        <button type="button" class="more-item" @click="openFromMenu('search')">
+          <el-icon :size="18"><Search /></el-icon>
+          <span>搜索</span>
+        </button>
+        <button type="button" class="more-item" @click="openFromMenu('filter')">
+          <el-icon :size="18"><Filter /></el-icon>
+          <span>筛选</span>
+        </button>
+      </div>
+    </div>
 
     <p v-if="query" class="query-row">
       <span>搜索「{{ query }}」</span>
@@ -303,6 +387,7 @@ function speechOf(word: Word) {
 
     <p v-if="words.length === 0" class="empty">这一范围没有单词。</p>
 
+    <div class="cards" :class="{ 'is-grid': layout === 'grid' }">
     <article v-for="word in shownWords" :key="wordKey(word)" class="card">
       <div class="card-top">
         <button
@@ -333,7 +418,7 @@ function speechOf(word: Word) {
             <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
           </p>
           <p v-else class="cn is-hidden">中文已隐藏</p>
-          <p v-if="showChinese && visibleDescribe(word.describe)" class="describe">
+          <p v-if="layout === 'list' && showChinese && visibleDescribe(word.describe)" class="describe">
             {{ visibleDescribe(word.describe) }}
           </p>
         </div>
@@ -349,6 +434,7 @@ function speechOf(word: Word) {
         </button>
       </div>
     </article>
+    </div>
 
     <div v-if="visibleCount < words.length" ref="moreSentinel" class="more-sentinel" aria-hidden="true" />
 
@@ -509,6 +595,122 @@ function speechOf(word: Word) {
   background: #f8882c;
   color: #fff;
   box-shadow: none;
+}
+
+.more-layer {
+  position: fixed;
+  z-index: 54;
+  inset: 0;
+}
+
+.more-menu {
+  position: fixed;
+  z-index: 55;
+  top: 60px;
+  right: 16px;
+  width: 220px;
+  padding: 10px;
+  border-radius: 16px;
+  background: #fffdf9;
+  box-shadow: 0 12px 32px rgb(44 40 36 / 16%);
+}
+
+.layout-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.layout-switch button,
+.more-item {
+  border: 0;
+  background: transparent;
+  color: var(--m-ink);
+  font: inherit;
+}
+
+.layout-switch button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border: 1px solid var(--m-line);
+  border-radius: 12px;
+  color: var(--m-muted);
+  font-size: 13px;
+}
+
+.layout-switch button.is-on {
+  border-color: var(--m-orange);
+  background: #fff7f0;
+  color: var(--m-orange);
+}
+
+.more-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 8px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.more-item.is-on {
+  color: var(--m-orange);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cards.is-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cards.is-grid .card {
+  min-width: 0;
+  padding: 12px;
+}
+
+.cards.is-grid .card-top {
+  gap: 6px;
+}
+
+.cards.is-grid .write {
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
+.cards.is-grid .speak {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+
+.cards.is-grid .answer-slot {
+  margin-top: 8px;
+}
+
+.cards.is-grid .kana,
+.cards.is-grid .cn {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.cards.is-grid .kana {
+  column-gap: 6px;
+}
+
+.cards.is-grid .cover span {
+  padding: 6px 10px;
+  font-size: 13px;
 }
 
 .text-button {
