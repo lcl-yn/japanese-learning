@@ -27,6 +27,7 @@ type BoardLayout = 'list' | 'grid'
 
 const props = defineProps<{
   words: Word[]
+  lexicon: Word[]
   scopeKey: string
   books: BookMeta[]
   bookId: string
@@ -512,6 +513,7 @@ function speechOf(word: Word) {
       v-if="examOn"
       v-show="!missedOpen"
       :words="words"
+      :lexicon="lexicon"
       @miss="rememberMiss"
       @progress="examDone = $event"
     />

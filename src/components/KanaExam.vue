@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import type { Word } from '@/types/word'
+import { buildChineseChoices, writingMatchesKana, type ExamChoice } from '@/utils/examChoices'
 import { drawExamItem, type ExamRound } from '@/utils/examQueue'
-import { buildKanaChoices, type KanaOption } from '@/utils/kanaConfusion'
+import { buildKanaChoices } from '@/utils/kanaConfusion'
 import correctSound from '../../docs/Music/button-correct.mp3'
 import wrongSound from '../../docs/Music/button-wrong.mp3'
 
 const props = defineProps<{
   words: Word[]
+  /** 整本词库。手写与假名相同时，错误中文从这里随机抽。 */
+  lexicon: Word[]
 }>()
 
 const emit = defineEmits<{
@@ -17,7 +20,8 @@ const emit = defineEmits<{
 }>()
 
 const prompt = ref('')
-const options = ref<KanaOption[]>([])
+const options = ref<ExamChoice[]>([])
+const choiceKind = ref<'kana' | 'cn'>('kana')
 const picked = ref<number | null>(null)
 const current = ref<Word | null>(null)
 const answered = ref(0)
@@ -31,10 +35,7 @@ function wordKey(word: Word) {
 function deal() {
   picked.value = null
   const pool = props.words.filter((word) => word.jp.trim())
-  const drawn = drawExamItem(pool, round, wordKey, (word) => {
-    const choices = buildKanaChoices(word.jp)
-    return choices.length === 4 ? choices : null
-  })
+  const drawn = drawExamItem(pool, round, wordKey, (word) => prepareChoices(word))
   round = drawn.round
   if (drawn.restarted) answered.value = 0
   emit('progress', answered.value)
@@ -46,7 +47,21 @@ function deal() {
   }
   const write = drawn.item.jp_write.trim()
   prompt.value = write || drawn.item.jp.trim()
+  choiceKind.value = writingMatchesKana(drawn.item.jp, drawn.item.jp_write) ? 'cn' : 'kana'
   options.value = drawn.prepared
+}
+
+/** 手写与假名不同时选假名；相同时选中文，错误项来自整本词库。 */
+function prepareChoices(word: Word): ExamChoice[] | null {
+  if (writingMatchesKana(word.jp, word.jp_write)) {
+    return buildChineseChoices(
+      word.cn,
+      props.lexicon.map((item) => item.cn),
+    )
+  }
+  const choices = buildKanaChoices(word.jp)
+  if (choices.length !== 4) return null
+  return choices.map((choice) => ({ text: choice.kana, correct: choice.correct }))
 }
 
 function play(src: string) {
@@ -75,21 +90,21 @@ watch(() => props.words, deal, { immediate: true })
 </script>
 
 <template>
-  <section class="exam" aria-label="看手写选假名">
+  <section class="exam" :aria-label="choiceKind === 'cn' ? '看日语选中文' : '看手写选假名'">
     <p v-if="options.length === 0" class="empty">这一范围没有可以出的单词。</p>
     <template v-else>
       <p class="write">{{ prompt }}</p>
       <div class="choices">
         <button
           v-for="(option, index) in options"
-          :key="`${option.kana}-${index}`"
+          :key="`${option.text}-${index}`"
           type="button"
           class="choice"
-          :class="tone(index)"
+          :class="[tone(index), { 'is-cn': choiceKind === 'cn' }]"
           :disabled="picked !== null"
           @click="choose(index)"
         >
-          {{ option.kana }}
+          {{ option.text }}
         </button>
       </div>
       <button v-if="picked !== null" type="button" class="continue" @click="deal">继续</button>
@@ -136,8 +151,14 @@ watch(() => props.words, deal, { immediate: true })
   color: #2c2824;
   font: inherit;
   font-size: 22px;
+  overflow-wrap: anywhere;
   box-shadow: 0 4px 0 #e4ddd2;
   transition: transform 0.08s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.choice.is-cn {
+  font-size: 16px;
+  line-height: 1.35;
 }
 
 .choice:active:not(:disabled) {

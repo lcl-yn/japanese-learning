@@ -355,6 +355,7 @@ onMounted(async () => {
       <WordMobileBoard
         v-else
         :words="listedWords"
+        :lexicon="wordsStore.allWords"
         :scope-key="scopeKey"
         :books="wordsStore.manifest.books"
         :book-id="bookId"
