@@ -17,8 +17,10 @@ const props = withDefaults(
     scopeKey?: string
     /** 开发时在最右侧放出修改。 */
     editable?: boolean
+    /** 为 false 时不显示书写、假名的行内隐藏，并直接列出原文。 */
+    rowHide?: boolean
   }>(),
-  { voiceUri: '', scopeKey: '', editable: false },
+  { voiceUri: '', scopeKey: '', editable: false, rowHide: true },
 )
 
 const emit = defineEmits<{
@@ -62,11 +64,11 @@ function rowKey(order: number) {
 }
 
 function isRowHidden(order: number) {
-  return hiddenKey.value.includes(rowKey(order))
+  return props.rowHide && hiddenKey.value.includes(rowKey(order))
 }
 
 function isWriteHidden(order: number) {
-  return hiddenWriteKey.value.includes(rowKey(order))
+  return props.rowHide && hiddenWriteKey.value.includes(rowKey(order))
 }
 
 function toggleHide(order: number) {
@@ -149,7 +151,7 @@ function speechOf(word: Word) {
               >
                 <el-icon :size="14"><ZoomIn /></el-icon>
               </el-button>
-              <el-button size="small" @click="toggleWriteHide(row.order)">
+              <el-button v-if="rowHide" size="small" @click="toggleWriteHide(row.order)">
                 {{ isWriteHidden(row.order) ? '显示' : '隐藏' }}
               </el-button>
             </div>
@@ -166,7 +168,7 @@ function speechOf(word: Word) {
             </span>
             <div class="jp-actions">
               <el-button size="small" @click="onSpeak(row.word)">朗读</el-button>
-              <el-button size="small" @click="toggleHide(row.order)">
+              <el-button v-if="rowHide" size="small" @click="toggleHide(row.order)">
                 {{ isRowHidden(row.order) ? '显示' : '隐藏' }}
               </el-button>
             </div>

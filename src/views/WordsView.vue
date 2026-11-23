@@ -16,6 +16,9 @@ import { WORDS_DESCRIPTION } from '@/utils/seo'
 /** 输入法组字时回车的 keyCode，只确认候选，不触发搜索。 */
 const IME_PROCESS_KEY = 229
 
+/** 与页面壳一致：不超过这个宽度算手机布局。 */
+const NARROW_LAYOUT = '(max-width: 959px)'
+
 /** 单词本里「全部册」的取值，不对应清单里的某一册。 */
 const ALL_BOOKS = 'all'
 
@@ -269,6 +272,16 @@ function onLessonChange(nextLessonId: number) {
 }
 
 const examMode = ref(false)
+const narrowQuery = window.matchMedia(NARROW_LAYOUT)
+const narrowLayout = ref(narrowQuery.matches)
+
+/** 手机上不进入考试；已经在考的话退回词表。 */
+function onNarrowChange(event: MediaQueryListEvent) {
+  narrowLayout.value = event.matches
+  if (!event.matches || !examMode.value) return
+  examMode.value = false
+  wordsStore.endExam()
+}
 
 function toggleExam() {
   if (examMode.value) {
@@ -287,6 +300,7 @@ watch(scopeKey, () => {
 })
 
 onUnmounted(() => {
+  narrowQuery.removeEventListener('change', onNarrowChange)
   if (examMode.value) wordsStore.endExam()
 })
 
@@ -298,6 +312,7 @@ const selectedVoiceUri = ref('')
 const hasJapaneseVoice = ref(false)
 
 onMounted(async () => {
+  narrowQuery.addEventListener('change', onNarrowChange)
   const voices = await loadVoices()
   voiceOptions.value = voices
   const japanese =
@@ -372,7 +387,12 @@ onMounted(async () => {
       </div>
       <div class="switches">
         <el-button v-if="canAddWord" type="primary" @click="openAddDialog">添加单词</el-button>
-        <el-button type="primary" :disabled="!examMode && listedWords.length === 0" @click="toggleExam">
+        <el-button
+          v-if="!narrowLayout"
+          type="primary"
+          :disabled="!examMode && listedWords.length === 0"
+          @click="toggleExam"
+        >
           {{ examMode ? '返回词表' : '考试模式' }}
         </el-button>
         <template v-if="!examMode">
@@ -422,6 +442,7 @@ onMounted(async () => {
       :show-japanese="showJapanese"
       :voice-uri="selectedVoiceUri"
       :editable="canAddWord"
+      :row-hide="!narrowLayout"
       @edit="openEditDialog"
     />
     <el-dialog
