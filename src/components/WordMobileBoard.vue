@@ -24,6 +24,9 @@ const PAGE_SIZE = 12
 /** 手机词表的列表或两列卡片，下次打开仍用上次的选择。 */
 const LAYOUT_STORAGE_KEY = 'wordBoardLayout'
 
+/** 遮住答案时中文是否占着日文书写的位置。没遮住时不生效。 */
+const MASK_ORDER_KEY = 'wordBoardMaskOrder'
+
 type BoardLayout = 'list' | 'grid'
 
 const props = defineProps<{
@@ -60,6 +63,7 @@ const emit = defineEmits<{
 
 const visibleCount = ref(PAGE_SIZE)
 const maskOn = ref(false)
+const cnPrompt = ref(readMaskOrder())
 const menuOpen = ref(false)
 const examOn = ref(false)
 const missedOpen = ref(false)
@@ -84,6 +88,9 @@ const draftShowJapanese = ref(true)
 const draftVoiceUri = ref('')
 
 const shownWords = computed(() => props.words.slice(0, visibleCount.value))
+
+/** 对调后中文占书写的位置，遮住与否都换。 */
+const promptIsChinese = computed(() => cnPrompt.value)
 
 const scopeLabel = computed(() => {
   const book = props.books.find((item) => item.code === props.bookId)
@@ -120,6 +127,15 @@ function readBoardLayout(): BoardLayout {
     return localStorage.getItem(LAYOUT_STORAGE_KEY) === 'grid' ? 'grid' : 'list'
   } catch {
     return 'list'
+  }
+}
+
+/** 读上次遮住答案时的上下位置。缺省是日文书写在上。 */
+function readMaskOrder(): boolean {
+  try {
+    return localStorage.getItem(MASK_ORDER_KEY) === 'cn'
+  } catch {
+    return false
   }
 }
 
@@ -242,6 +258,17 @@ function openFromMenu(action: 'course' | 'filter' | 'search' | 'mask') {
   else if (action === 'filter') openDrawer('filter')
   else if (action === 'search') openSearch()
   else maskOn.value = !maskOn.value
+}
+
+/** 对调中文和日文书写的位置。没遮住答案时词卡也立刻换。 */
+function togglePromptSide() {
+  cnPrompt.value = !cnPrompt.value
+  if (maskOn.value) revealed.value = []
+  try {
+    localStorage.setItem(MASK_ORDER_KEY, cnPrompt.value ? 'cn' : 'write')
+  } catch {
+    /* 这一次打开仍然按刚选的来。 */
+  }
 }
 
 function openSearch() {
@@ -456,26 +483,54 @@ function speechOf(word: Word) {
           </svg>
           <span>选课</span>
         </button>
-        <button
-          type="button"
-          class="more-item"
-          :class="{ 'is-on': maskOn }"
-          :aria-pressed="maskOn"
-          @click="openFromMenu('mask')"
-        >
-          <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              fill="#fffdf8"
-              stroke="#14b8a6"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-              d="M3 12.2c2.4-3.5 5.2-5.2 9-5.2s6.6 1.7 9 5.2c-2.4 3.5-5.2 5.2-9 5.2s-6.6-1.7-9-5.2z"
-            />
-            <circle cx="12" cy="12.2" r="2.15" fill="#f6b429" stroke="#f8882c" stroke-width="0.7" />
-            <path fill="#c8f3ee" stroke="#14b8a6" stroke-width="1.2" stroke-linejoin="round" d="M4.4 9.4c2-1.8 4.6-2.6 7.6-2.6s5.6.8 7.6 2.6c-.6 1.1-3.2.2-7.6.2s-7 .9-7.6-.2z" />
-          </svg>
-          <span>{{ maskOn ? '答案已遮住' : '遮住答案' }}</span>
-        </button>
+        <div class="more-item mask-row" :class="{ 'is-on': maskOn }">
+          <button
+            type="button"
+            class="mask-toggle"
+            :aria-pressed="maskOn"
+            @click="openFromMenu('mask')"
+          >
+            <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#fffdf8"
+                stroke="#14b8a6"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+                d="M3 12.2c2.4-3.5 5.2-5.2 9-5.2s6.6 1.7 9 5.2c-2.4 3.5-5.2 5.2-9 5.2s-6.6-1.7-9-5.2z"
+              />
+              <circle cx="12" cy="12.2" r="2.15" fill="#f6b429" stroke="#f8882c" stroke-width="0.7" />
+              <path fill="#c8f3ee" stroke="#14b8a6" stroke-width="1.2" stroke-linejoin="round" d="M4.4 9.4c2-1.8 4.6-2.6 7.6-2.6s5.6.8 7.6 2.6c-.6 1.1-3.2.2-7.6.2s-7 .9-7.6-.2z" />
+            </svg>
+            <span>{{ maskOn ? '答案已遮住' : '遮住答案' }}</span>
+          </button>
+          <button
+            type="button"
+            class="swap-order"
+            :class="{ 'is-on': cnPrompt }"
+            :aria-pressed="cnPrompt"
+            aria-label="交换中文和日文书写的位置"
+            @click.stop="togglePromptSide"
+          >
+            <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#fffdf8"
+                stroke="#14b8a6"
+                stroke-width="1.45"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                d="M6.2 4.6h2.6v8.2h2.1L7.5 18.2 4.1 12.8h2.1z"
+              />
+              <path
+                fill="#fff7e6"
+                stroke="#f8882c"
+                stroke-width="1.45"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                d="M15.2 19.4h2.6v-8.2h2.1L16.5 5.8 13.1 11.2h2.1z"
+              />
+            </svg>
+          </button>
+        </div>
         <button type="button" class="more-item" @click="openFromMenu('search')">
           <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="10.4" cy="10.4" r="5.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.6" />
@@ -549,18 +604,33 @@ function speechOf(word: Word) {
     <div class="cards" :class="{ 'is-grid': layout === 'grid' }">
     <article v-for="word in shownWords" :key="wordKey(word)" class="card">
       <div class="card-top">
+        <template v-if="promptIsChinese">
+          <p v-if="showChinese" class="write as-text">
+            {{ word.cn }}
+            <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+          </p>
+          <p v-else class="write as-text is-hidden">中文已隐藏</p>
+        </template>
+        <template v-else>
+          <button
+            v-if="showJpWrite && word.jp_write.trim()"
+            type="button"
+            class="write"
+            :aria-label="`放大${word.jp_write}`"
+            @click="zoomedWrite = word.jp_write"
+          >
+            {{ word.jp_write }}
+          </button>
+          <p v-else-if="showJpWrite" class="write as-text">{{ word.jp_write }}</p>
+          <p v-else class="write as-text is-hidden">书写已隐藏</p>
+        </template>
         <button
-          v-if="showJpWrite && word.jp_write.trim()"
+          v-if="!promptIsChinese || !maskOn || isRevealed(word)"
           type="button"
-          class="write"
-          :aria-label="`放大${word.jp_write}`"
-          @click="zoomedWrite = word.jp_write"
+          class="speak"
+          aria-label="朗读"
+          @click="speak(word)"
         >
-          {{ word.jp_write }}
-        </button>
-        <p v-else-if="showJpWrite" class="write as-text">{{ word.jp_write }}</p>
-        <p v-else class="write as-text is-hidden">书写已隐藏</p>
-        <button type="button" class="speak" aria-label="朗读" @click="speak(word)">
           <el-icon :size="18"><Microphone /></el-icon>
         </button>
       </div>
@@ -572,11 +642,26 @@ function speechOf(word: Word) {
             <span v-if="word.scale" class="scale">{{ word.scale }}</span>
           </p>
           <p v-else class="kana is-hidden">假名已隐藏</p>
-          <p v-if="showChinese" class="cn">
-            {{ word.cn }}
-            <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
-          </p>
-          <p v-else class="cn is-hidden">中文已隐藏</p>
+          <template v-if="promptIsChinese">
+            <button
+              v-if="showJpWrite && word.jp_write.trim()"
+              type="button"
+              class="write in-answer"
+              :aria-label="`放大${word.jp_write}`"
+              @click="zoomedWrite = word.jp_write"
+            >
+              {{ word.jp_write }}
+            </button>
+            <p v-else-if="showJpWrite" class="write in-answer as-text">{{ word.jp_write }}</p>
+            <p v-else class="write in-answer as-text is-hidden">书写已隐藏</p>
+          </template>
+          <template v-else>
+            <p v-if="showChinese" class="cn">
+              {{ word.cn }}
+              <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+            </p>
+            <p v-else class="cn is-hidden">中文已隐藏</p>
+          </template>
           <p v-if="layout === 'list' && showChinese && visibleDescribe(word.describe)" class="describe">
             {{ visibleDescribe(word.describe) }}
           </p>
@@ -854,6 +939,66 @@ function speechOf(word: Word) {
   color: var(--m-orange);
 }
 
+.mask-row {
+  gap: 2px;
+  padding: 4px 4px 4px 8px;
+}
+
+.mask-toggle,
+.swap-order {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.mask-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.swap-order {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.swap-order:active {
+  transform: scale(0.9);
+}
+
+.swap-order.is-on {
+  background: #fff7f0;
+  box-shadow: inset 0 0 0 1.5px var(--m-orange);
+}
+
+.swap-order .toon {
+  transition: transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+.swap-order.is-on .toon {
+  transform: rotate(180deg);
+}
+
+.mask-toggle:focus-visible,
+.swap-order:focus-visible {
+  outline: 2px solid var(--m-orange);
+  outline-offset: 2px;
+}
+
 .missed,
 .cards {
   display: flex;
@@ -883,6 +1028,10 @@ function speechOf(word: Word) {
 .cards.is-grid .write {
   font-size: 22px;
   overflow-wrap: anywhere;
+}
+
+.cards.is-grid .write.in-answer {
+  font-size: 18px;
 }
 
 .cards.is-grid .speak {
@@ -998,6 +1147,19 @@ function speechOf(word: Word) {
 
 .write.as-text {
   cursor: default;
+}
+
+.write .speech {
+  margin-left: 6px;
+  font-size: 14px;
+}
+
+.write.in-answer {
+  font-size: 22px;
+}
+
+.kana + .write.in-answer {
+  margin-top: 6px;
 }
 
 .answer-slot {
