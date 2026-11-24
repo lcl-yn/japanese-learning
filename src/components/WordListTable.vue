@@ -89,8 +89,9 @@ function toggleWriteHide(order: number) {
   hiddenWriteKey.value = [...hiddenWriteKey.value, key]
 }
 
+/** 朗读这一条的日文书写。 */
 function onSpeak(word: Word) {
-  speakJapanese(word.jp, props.voiceUri)
+  speakJapanese(word.jp_write.trim(), props.voiceUri)
 }
 
 function canZoomWrite(word: Word, order: number) {

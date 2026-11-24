@@ -330,8 +330,9 @@ function toggleExam() {
   if (examOn.value) unlockExamSounds()
 }
 
+/** 朗读这一条的日文书写。 */
 function speak(word: Word) {
-  speakJapanese(word.jp, props.voiceUri)
+  speakJapanese(word.jp_write.trim(), props.voiceUri)
 }
 
 function speechOf(word: Word) {
