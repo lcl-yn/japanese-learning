@@ -34,17 +34,21 @@ describe('installPhoneLayout', () => {
       '(pointer: coarse)': false,
     }
     const listeners = new Map<string, Set<() => void>>()
-    window.matchMedia = ((query: string) => ({
-      get matches() {
-        return matches[query] ?? false
-      },
-      addEventListener: (_type: string, callback: () => void) => {
-        const group = listeners.get(query) ?? new Set()
-        group.add(callback)
-        listeners.set(query, group)
-      },
-      removeEventListener: () => undefined,
-    })) as typeof window.matchMedia
+    window.matchMedia = (query: string): MediaQueryList => {
+      const list = {
+        get matches() {
+          return matches[query] ?? false
+        },
+        media: query,
+        addEventListener: (_type: string, callback: () => void) => {
+          const group = listeners.get(query) ?? new Set()
+          group.add(callback)
+          listeners.set(query, group)
+        },
+        removeEventListener: () => undefined,
+      }
+      return list as unknown as MediaQueryList
+    }
 
     installPhoneLayout()
     expect(phoneLayout.value).toBe(false)
