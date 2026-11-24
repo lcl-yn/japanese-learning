@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { phoneLayout } from '@/utils/phoneLayout'
 import { loadVoices, restartJapanese, speakJapanese, stopSpeaking, type VoiceOption } from '@/utils/speech'
 
 /** 拖到视口边缘时留出的空隙 */
 const EDGE_GAP = 8
-const NARROW_LAYOUT = '(max-width: 959px)'
 
 const PLAY_ONCE = 'once'
 const PLAY_LOOP = 'loop'
@@ -25,14 +25,13 @@ const placed = ref(false)
 const x = ref(0)
 const y = ref(0)
 const dragging = ref(false)
-const narrow = ref(false)
 const speakerOpen = ref(false)
 /** 点过之后先去掉悬停色。手机上松手后悬停会粘住，所以要一直留到指针再次进来。 */
 const speakSettled = ref(false)
 /** 手指或按键按住小喇叭时为真，松手立刻收回，避免手机上按下色粘住 */
 const speakHolding = ref(false)
-const showBar = computed(() => !narrow.value || speakerOpen.value)
-const showLauncher = computed(() => narrow.value && !speakerOpen.value)
+const showBar = computed(() => !phoneLayout.value || speakerOpen.value)
+const showLauncher = computed(() => phoneLayout.value && !speakerOpen.value)
 
 const barStyle = computed(() => {
   if (!placed.value) return undefined
@@ -95,12 +94,10 @@ function onDragEnd() {
 }
 
 function syncSpeakerLayout() {
-  narrow.value = window.matchMedia(NARROW_LAYOUT).matches
-  document.documentElement.dataset.speaker = narrow.value && speakerOpen.value ? 'open' : ''
+  document.documentElement.dataset.speaker = phoneLayout.value && speakerOpen.value ? 'open' : ''
 }
 
 function onResize() {
-  syncSpeakerLayout()
   if (!placed.value || !formEl.value) return
   const rect = formEl.value.getBoundingClientRect()
   dragWidth = rect.width
@@ -108,7 +105,7 @@ function onResize() {
   applyPosition(x.value, y.value)
 }
 
-watch(speakerOpen, syncSpeakerLayout)
+watch([phoneLayout, speakerOpen], syncSpeakerLayout)
 
 onMounted(async () => {
   syncSpeakerLayout()
@@ -299,7 +296,7 @@ function onInputEnter(event: KeyboardEvent) {
         :value="voice.voiceURI"
       />
     </el-select>
-    <button v-if="narrow" type="button" class="speaker-collapse" aria-label="收起朗读" @click="speakerOpen = false">
+    <button v-if="phoneLayout" type="button" class="speaker-collapse" aria-label="收起朗读" @click="speakerOpen = false">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
         <path
           fill="currentColor"
@@ -468,22 +465,20 @@ function onInputEnter(event: KeyboardEvent) {
   width: 200px;
 }
 
-@media (max-width: 959px) {
-  .jp-speaker {
-    bottom: 12px;
-    flex-wrap: wrap;
-    width: min(760px, calc(100% - 24px));
-  }
+html[data-layout='phone'] .jp-speaker {
+  bottom: 12px;
+  flex-wrap: wrap;
+  width: min(760px, calc(100% - 24px));
+}
 
-  .jp-input {
-    flex: 1 0 100%;
-    order: -1;
-  }
+html[data-layout='phone'] .jp-input {
+  flex: 1 0 100%;
+  order: -1;
+}
 
-  .voice-select {
-    flex: 1;
-    width: auto;
-    min-width: 0;
-  }
+html[data-layout='phone'] .voice-select {
+  flex: 1;
+  width: auto;
+  min-width: 0;
 }
 </style>

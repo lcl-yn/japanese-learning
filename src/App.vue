@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 import AppSidebar from '@/components/AppSidebar.vue'
 import JapaneseSpeaker from '@/components/JapaneseSpeaker.vue'
 import { useWordsStore } from '@/stores/words'
+import { phoneLayout } from '@/utils/phoneLayout'
 import { applyDocumentSeo, resolveDescription, resolvePageTitle, resolveRobots, SITE_NAME, SITE_TAGLINE } from '@/utils/seo'
 
-const NARROW_LAYOUT = '(max-width: 959px)'
 const HEADER_SCROLL_GAP = 8
 
 const wordsStore = useWordsStore()
 const route = useRoute()
 const menuOpen = ref(false)
 const headerCollapsed = ref(false)
-const narrowQuery = window.matchMedia(NARROW_LAYOUT)
-const narrowLayout = ref(narrowQuery.matches)
 let lastMainScroll = 0
 let headerScrollLock = false
 
-const wordsMobile = computed(() => narrowLayout.value && route.meta.section === 'words')
+const wordsMobile = computed(() => phoneLayout.value && route.meta.section === 'words')
 
 /**
  * 窄屏往下读时收起顶栏，往上滚或回到顶部再展开。
@@ -29,7 +27,7 @@ function onMainScroll(event: Event) {
   const el = event.target
   if (!(el instanceof HTMLElement) || headerScrollLock) return
   const top = el.scrollTop
-  const narrow = narrowLayout.value
+  const narrow = phoneLayout.value
   if (narrow && route.meta.section === 'words') {
     lastMainScroll = top
     if (headerCollapsed.value) headerCollapsed.value = false
@@ -49,18 +47,12 @@ function onMainScroll(event: Event) {
   }, 250)
 }
 
-function onNarrowChange(event: MediaQueryListEvent) {
-  narrowLayout.value = event.matches
-  if (!event.matches) headerCollapsed.value = false
-}
-
-onMounted(() => {
-  narrowQuery.addEventListener('change', onNarrowChange)
-  void wordsStore.loadWords()
+watch(phoneLayout, (phone) => {
+  if (!phone) headerCollapsed.value = false
 })
 
-onUnmounted(() => {
-  narrowQuery.removeEventListener('change', onNarrowChange)
+onMounted(() => {
+  void wordsStore.loadWords()
 })
 
 watch(
@@ -356,35 +348,33 @@ main {
   color: #9f3d2f;
 }
 
-@media (max-width: 959px) {
-  .nav-toggle {
-    display: inline-flex;
-  }
+html[data-layout='phone'] .nav-toggle {
+  display: inline-flex;
+}
 
-  .app-aside {
-    display: none;
-  }
+html[data-layout='phone'] .app-aside {
+  display: none;
+}
 
-  .app-header.is-collapsed {
-    height: 0;
-    border-bottom-width: 0;
-  }
+html[data-layout='phone'] .app-header.is-collapsed {
+  height: 0;
+  border-bottom-width: 0;
+}
 
-  .app-footer {
-    display: none;
-  }
+html[data-layout='phone'] .app-footer {
+  display: none;
+}
 
-  main {
-    padding: 16px 16px 72px;
-  }
+html[data-layout='phone'] main {
+  padding: 16px 16px 72px;
+}
 
-  main:has(.words-view.is-narrow) .crumbs {
-    display: none;
-  }
+html[data-layout='phone'] main:has(.words-view.is-narrow) .crumbs {
+  display: none;
+}
 
-  .app-frame:has(.words-view.is-narrow) {
-    background: #f6f1e8;
-  }
+html[data-layout='phone'] .app-frame:has(.words-view.is-narrow) {
+  background: #f6f1e8;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -403,10 +393,8 @@ body,
   margin: 0;
 }
 
-@media (max-width: 959px) {
-  html[data-speaker='open'] main {
-    padding-bottom: 124px;
-  }
+html[data-layout='phone'][data-speaker='open'] main {
+  padding-bottom: 124px;
 }
 
 .nav-drawer.el-drawer {

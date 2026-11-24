@@ -12,13 +12,11 @@ import { parseWordAppendBody, parseWordUpdateBody } from '@/utils/wordAppend'
 import { matchesCnPrefix } from '@/utils/cnSearch'
 import { wordPages } from '@/utils/unitPages'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { phoneLayout } from '@/utils/phoneLayout'
 import { WORDS_DESCRIPTION } from '@/utils/seo'
 
 /** 输入法组字时回车的 keyCode，只确认候选，不触发搜索。 */
 const IME_PROCESS_KEY = 229
-
-/** 与页面壳一致：不超过这个宽度算手机布局。 */
-const NARROW_LAYOUT = '(max-width: 959px)'
 
 /** 单词本里「全部册」的取值，不对应清单里的某一册。 */
 const ALL_BOOKS = 'all'
@@ -274,12 +272,6 @@ function onLessonChange(nextLessonId: number) {
 }
 
 const examMode = ref(false)
-const narrowQuery = window.matchMedia(NARROW_LAYOUT)
-const narrowLayout = ref(narrowQuery.matches)
-
-function onNarrowChange(event: MediaQueryListEvent) {
-  narrowLayout.value = event.matches
-}
 
 function onMobileSearch(query: string) {
   cnDraft.value = query
@@ -321,7 +313,6 @@ watch(scopeKey, () => {
 })
 
 onUnmounted(() => {
-  narrowQuery.removeEventListener('change', onNarrowChange)
   if (examMode.value) wordsStore.endExam()
 })
 
@@ -333,7 +324,6 @@ const selectedVoiceUri = ref('')
 const hasJapaneseVoice = ref(false)
 
 onMounted(async () => {
-  narrowQuery.addEventListener('change', onNarrowChange)
   const voices = await loadVoices()
   voiceOptions.value = voices
   const japanese =
@@ -345,8 +335,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="words-view" :class="{ 'is-narrow': narrowLayout }">
-    <template v-if="narrowLayout">
+  <div class="words-view" :class="{ 'is-narrow': phoneLayout }">
+    <template v-if="phoneLayout">
       <div v-if="examMode" class="mobile-exam">
         <button type="button" class="mobile-back" @click="toggleExam">返回词表</button>
         <PracticeSession v-if="listedWords.length > 0" />

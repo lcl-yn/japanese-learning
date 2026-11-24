@@ -449,25 +449,23 @@ async function confirmLeave(): Promise<boolean> {
   white-space: normal;
 }
 
-@media (max-width: 959px) {
-  .lesson-body {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html[data-layout='phone'] .lesson-body {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  .lesson-column {
-    grid-row: 1;
-  }
+html[data-layout='phone'] .lesson-column {
+  grid-row: 1;
+}
 
-  .lesson-outline {
-    display: none;
-  }
+html[data-layout='phone'] .lesson-outline {
+  display: none;
+}
 
-  .outline-fab {
-    display: inline-flex;
-  }
+html[data-layout='phone'] .outline-fab {
+  display: inline-flex;
+}
 
-  .outline-sheet {
-    display: block;
-  }
+html[data-layout='phone'] .outline-sheet {
+  display: block;
 }
 </style>

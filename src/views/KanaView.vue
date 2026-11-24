@@ -247,31 +247,29 @@ onMounted(async () => {
   min-width: 0;
 }
 
-@media (max-width: 959px) {
-  .kana-body {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+html[data-layout='phone'] .kana-body {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
 
-  .kana-nav {
-    flex-direction: row;
-    max-height: none;
-    overflow-x: auto;
-    z-index: 2;
-    margin: 0 -16px;
-    padding: 0 16px 8px;
-    background: #fbf8f3;
-  }
+html[data-layout='phone'] .kana-nav {
+  flex-direction: row;
+  max-height: none;
+  overflow-x: auto;
+  z-index: 2;
+  margin: 0 -16px;
+  padding: 0 16px 8px;
+  background: #fbf8f3;
+}
 
-  .kana-nav button {
-    flex: none;
-    border-left: 0;
-    border-bottom: 2px solid transparent;
-  }
+html[data-layout='phone'] .kana-nav button {
+  flex: none;
+  border-left: 0;
+  border-bottom: 2px solid transparent;
+}
 
-  .kana-nav button.active {
-    border-bottom-color: #9f3d2f;
-  }
+html[data-layout='phone'] .kana-nav button.active {
+  border-bottom-color: #9f3d2f;
 }
 
 .toolbar {
@@ -366,10 +364,8 @@ onMounted(async () => {
   min-height: 4.8em;
 }
 
-@media (max-width: 959px) {
-  .pitch-card p {
-    min-height: 0;
-  }
+html[data-layout='phone'] .pitch-card p {
+  min-height: 0;
 }
 
 .legend-gap {
