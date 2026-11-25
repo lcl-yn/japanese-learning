@@ -6,6 +6,13 @@ import type { VoiceOption } from '@/utils/speech'
 import { unlockExamSounds } from '@/utils/examSound'
 import { speakJapanese } from '@/utils/speech'
 import { wordPages } from '@/utils/unitPages'
+import {
+  boardWordKey,
+  forgotWordsInOrder,
+  readForgotKeys,
+  toggleForgotKey,
+  writeForgotKeys,
+} from '@/utils/forgotWords'
 import { visibleDescribe } from '@/utils/wordDisplay'
 import KanaExam from '@/components/KanaExam.vue'
 
@@ -67,6 +74,8 @@ const cnPrompt = ref(readMaskOrder())
 const menuOpen = ref(false)
 const examOn = ref(false)
 const missedOpen = ref(false)
+const forgotOpen = ref(false)
+const forgotKeys = ref<string[]>(readForgotKeys())
 const missedWords = ref<Word[]>([])
 const examDone = ref(0)
 const layout = ref<BoardLayout>(readBoardLayout())
@@ -76,6 +85,7 @@ const searchDraft = ref('')
 const filterOpen = ref(false)
 const drawerMode = ref<'course' | 'filter'>('course')
 const zoomedWrite = ref('')
+const explained = ref<Word | null>(null)
 const moreSentinel = ref<HTMLElement | null>(null)
 let moreObserver: IntersectionObserver | null = null
 
@@ -88,6 +98,9 @@ const draftShowJapanese = ref(true)
 const draftVoiceUri = ref('')
 
 const shownWords = computed(() => props.words.slice(0, visibleCount.value))
+
+/** 背错题本按记下的顺序取词，已经不在词库里的跳过。 */
+const forgotWords = computed(() => forgotWordsInOrder(forgotKeys.value, props.lexicon))
 
 /** 对调后中文占书写的位置，遮住与否都换。 */
 const promptIsChinese = computed(() => cnPrompt.value)
@@ -147,9 +160,22 @@ function onZoomKey(event: KeyboardEvent) {
   if (event.key === 'Escape') closeZoom()
 }
 
+function closeExplain() {
+  explained.value = null
+}
+
+function onExplainKey(event: KeyboardEvent) {
+  if (event.key === 'Escape') closeExplain()
+}
+
 watch(zoomedWrite, (value) => {
   if (value) window.addEventListener('keydown', onZoomKey)
   else window.removeEventListener('keydown', onZoomKey)
+})
+
+watch(explained, (word) => {
+  if (word) window.addEventListener('keydown', onExplainKey)
+  else window.removeEventListener('keydown', onExplainKey)
 })
 
 function onMenuKey(event: KeyboardEvent) {
@@ -163,6 +189,7 @@ watch(menuOpen, (open) => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', onZoomKey)
+  window.removeEventListener('keydown', onExplainKey)
   window.removeEventListener('keydown', onMenuKey)
   moreObserver?.disconnect()
 })
@@ -182,6 +209,10 @@ watch(examOn, (on) => {
   examDone.value = 0
 })
 
+watch(maskOn, (on) => {
+  if (!on) forgotOpen.value = false
+})
+
 /** 记下这一次答错的词。同一词再错一次不再重复列入。 */
 function rememberMiss(word: Word) {
   const key = wordKey(word)
@@ -190,7 +221,36 @@ function rememberMiss(word: Word) {
 }
 
 function wordKey(word: Word) {
-  return `${word.bookId}:${word.unit}:${word.lesson}:${word.fileIndex ?? ''}:${word.jp}:${word.cn}`
+  return boardWordKey(word)
+}
+
+function isForgot(word: Word) {
+  return forgotKeys.value.includes(wordKey(word))
+}
+
+/** 点一次记入背错题本，再点一次移出。写不进本机时，这一次打开仍按刚点的来。 */
+function toggleForgot(word: Word) {
+  forgotKeys.value = toggleForgotKey(forgotKeys.value, wordKey(word))
+  try {
+    writeForgotKeys(forgotKeys.value)
+  } catch {
+    /* 这一次打开仍然按刚点的来。 */
+  }
+}
+
+function toggleForgotBook() {
+  forgotOpen.value = !forgotOpen.value
+  if (forgotOpen.value) missedOpen.value = false
+}
+
+function toggleMissed() {
+  missedOpen.value = !missedOpen.value
+  if (missedOpen.value) forgotOpen.value = false
+}
+
+/** 中文在上、答案还盖着时不放朗读。 */
+function showSpeak(word: Word) {
+  return !promptIsChinese.value || !maskOn.value || isRevealed(word)
 }
 
 function isRevealed(word: Word) {
@@ -354,7 +414,10 @@ function confirmFilter() {
 /** 打开考试时先唤醒音频通道，点选项才能直接播已经解码的提示音。 */
 function toggleExam() {
   examOn.value = !examOn.value
-  if (examOn.value) unlockExamSounds()
+  if (examOn.value) {
+    forgotOpen.value = false
+    unlockExamSounds()
+  }
 }
 
 /** 朗读这一条的日文书写。 */
@@ -365,11 +428,31 @@ function speak(word: Word) {
 function speechOf(word: Word) {
   return word.part_of_speech.trim()
 }
+
+/** 卡片两列不直接铺说明。有说明、并且中文还显示着，才在词性后放「释」。 */
+function showExplain(word: Word) {
+  return layout.value === 'grid' && props.showChinese && visibleDescribe(word.describe) !== ''
+}
 </script>
 
 <template>
   <div class="board">
     <Teleport to="#words-mobile-tools">
+      <button
+        v-if="maskOn"
+        type="button"
+        class="icon-button is-book"
+        :class="{ 'is-on': forgotOpen }"
+        aria-label="背错题本"
+        :aria-pressed="forgotOpen"
+        @click="toggleForgotBook"
+      >
+        <svg class="recite-mark forgot-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="6.2" y="4.6" width="19.6" height="22.8" rx="3.2" fill="#fffdf8" stroke="#14b8a6" stroke-width="1.7" />
+          <text x="16" y="20.6" text-anchor="middle" font-size="14" font-weight="700" fill="#f8882c">忘</text>
+        </svg>
+        <span v-if="forgotWords.length" class="miss-count">{{ forgotWords.length }}</span>
+      </button>
       <button
         v-if="examOn"
         type="button"
@@ -377,7 +460,7 @@ function speechOf(word: Word) {
         :class="{ 'is-on': missedOpen }"
         aria-label="错题本"
         :aria-pressed="missedOpen"
-        @click="missedOpen = !missedOpen"
+        @click="toggleMissed"
       >
         <el-icon :size="20"><Memo /></el-icon>
         <span v-if="missedWords.length" class="miss-count">{{ missedWords.length }}</span>
@@ -561,9 +644,15 @@ function speechOf(word: Word) {
     </p>
     <p v-if="!hasJapaneseVoice" class="hint">未检测到本机日语语音包，朗读会使用浏览器的日语语音。</p>
     <div class="count place">
-      <button v-if="!missedOpen" type="button" class="scope-mark" @click="openDrawer('course')">{{ scopeLabel }}</button>
-      <span v-else class="scope-mark">{{ scopeLabel }}</span>
-      <span v-if="examOn && missedOpen" class="place-count">{{ missedWords.length }} 个错词</span>
+      <button
+        v-if="!missedOpen && !forgotOpen"
+        type="button"
+        class="scope-mark"
+        @click="openDrawer('course')"
+      >{{ scopeLabel }}</button>
+      <span v-else class="scope-mark">{{ forgotOpen ? '背错题本' : scopeLabel }}</span>
+      <span v-if="forgotOpen" class="place-count">{{ forgotWords.length }} 个词</span>
+      <span v-else-if="examOn && missedOpen" class="place-count">{{ missedWords.length }} 个错词</span>
       <span
         v-else-if="examOn"
         class="place-count"
@@ -574,13 +663,13 @@ function speechOf(word: Word) {
 
     <KanaExam
       v-if="examOn"
-      v-show="!missedOpen"
+      v-show="!missedOpen && !forgotOpen"
       :words="words"
       :lexicon="lexicon"
       @miss="rememberMiss"
       @progress="examDone = $event"
     />
-    <section v-if="examOn && missedOpen" class="missed" aria-label="错题本">
+    <section v-if="examOn && missedOpen && !forgotOpen" class="missed" aria-label="错题本">
       <p v-if="missedWords.length === 0" class="empty">还没有答错的单词。</p>
       <article v-for="word in missedWords" :key="wordKey(word)" class="card">
         <p class="write as-text">{{ word.jp_write.trim() || word.jp }}</p>
@@ -598,7 +687,57 @@ function speechOf(word: Word) {
       </article>
     </section>
 
-    <template v-if="!examOn">
+    <section v-if="forgotOpen" class="missed" aria-label="背错题本">
+      <p v-if="forgotWords.length === 0" class="empty">还没有记下的单词。</p>
+      <article v-for="word in forgotWords" :key="wordKey(word)" class="card">
+        <div class="card-top">
+          <p class="write as-text">{{ word.jp_write.trim() || word.jp }}</p>
+          <div class="card-tools">
+            <button
+              type="button"
+              class="discard"
+              aria-label="记住了，从背错题本移除"
+              @click="toggleForgot(word)"
+            >
+              <svg class="toon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="#f6b429"
+                  stroke="#f8882c"
+                  stroke-width="1.2"
+                  stroke-linejoin="round"
+                  d="M9.4 6.2V5c0-.5.4-.9 1-.9h3.2c.6 0 1 .4 1 .9v1.2z"
+                />
+                <rect x="4.4" y="6" width="15.2" height="2.3" rx="1.15" fill="#fff7e6" stroke="#f8882c" stroke-width="1.3" />
+                <path
+                  fill="#fffdf8"
+                  stroke="#14b8a6"
+                  stroke-width="1.45"
+                  stroke-linejoin="round"
+                  d="M6.3 9.1h11.4l-.9 9.3a1.6 1.6 0 0 1-1.6 1.5H8.8a1.6 1.6 0 0 1-1.6-1.5z"
+                />
+                <path fill="none" stroke="#14b8a6" stroke-width="1.15" stroke-linecap="round" d="M10 12v4.6M14 12v4.6" />
+              </svg>
+            </button>
+            <button type="button" class="speak" aria-label="朗读" @click="speak(word)">
+              <el-icon :size="18"><Microphone /></el-icon>
+            </button>
+          </div>
+        </div>
+        <div class="answer">
+          <p class="kana">
+            <span>{{ word.jp }}</span>
+            <span v-if="word.scale" class="scale">{{ word.scale }}</span>
+          </p>
+          <p class="cn">
+            {{ word.cn }}
+            <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+          </p>
+          <p v-if="visibleDescribe(word.describe)" class="describe">{{ visibleDescribe(word.describe) }}</p>
+        </div>
+      </article>
+    </section>
+
+    <template v-if="!examOn && !forgotOpen">
     <p v-if="words.length === 0" class="empty">这一范围没有单词。</p>
 
     <div class="cards" :class="{ 'is-grid': layout === 'grid' }">
@@ -608,6 +747,15 @@ function speechOf(word: Word) {
           <p v-if="showChinese" class="write as-text">
             {{ word.cn }}
             <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+            <button
+              v-if="showExplain(word)"
+              type="button"
+              class="explain"
+              aria-label="单词说明"
+              @click.stop="explained = word"
+            >
+              释
+            </button>
           </p>
           <p v-else class="write as-text is-hidden">中文已隐藏</p>
         </template>
@@ -624,15 +772,28 @@ function speechOf(word: Word) {
           <p v-else-if="showJpWrite" class="write as-text">{{ word.jp_write }}</p>
           <p v-else class="write as-text is-hidden">书写已隐藏</p>
         </template>
-        <button
-          v-if="!promptIsChinese || !maskOn || isRevealed(word)"
-          type="button"
-          class="speak"
-          aria-label="朗读"
-          @click="speak(word)"
-        >
-          <el-icon :size="18"><Microphone /></el-icon>
-        </button>
+        <div class="card-tools">
+          <button
+            v-if="maskOn"
+            type="button"
+            class="forget"
+            :class="{ 'is-on': isForgot(word) }"
+            :aria-pressed="isForgot(word)"
+            :aria-label="isForgot(word) ? '从背错题本移除' : '记入背错题本'"
+            @click="toggleForgot(word)"
+          >
+            忘
+          </button>
+          <button
+            v-if="showSpeak(word)"
+            type="button"
+            class="speak"
+            aria-label="朗读"
+            @click="speak(word)"
+          >
+            <el-icon :size="18"><Microphone /></el-icon>
+          </button>
+        </div>
       </div>
 
       <div class="answer-slot">
@@ -659,6 +820,16 @@ function speechOf(word: Word) {
             <p v-if="showChinese" class="cn">
               {{ word.cn }}
               <span v-if="speechOf(word)" class="speech">[{{ speechOf(word) }}]</span>
+              <button
+                v-if="showExplain(word)"
+                type="button"
+                class="explain"
+                :class="{ 'is-front': maskOn && isRevealed(word) }"
+                aria-label="单词说明"
+                @click.stop="explained = word"
+              >
+                释
+              </button>
             </p>
             <p v-else class="cn is-hidden">中文已隐藏</p>
           </template>
@@ -782,6 +953,33 @@ function speechOf(word: Word) {
     </el-drawer>
 
     <div
+      v-if="explained"
+      class="explain-layer"
+      role="dialog"
+      aria-label="单词说明"
+      @click="closeExplain"
+    >
+      <article class="explain-sheet" @click.stop>
+        <div class="explain-head">
+          <p class="explain-kicker">说明</p>
+          <button type="button" class="icon-button" aria-label="关闭" @click="closeExplain">
+            <el-icon :size="18"><Close /></el-icon>
+          </button>
+        </div>
+        <p class="explain-write">{{ explained.jp_write.trim() || explained.jp }}</p>
+        <p class="explain-kana">
+          <span>{{ explained.jp }}</span>
+          <span v-if="explained.scale" class="scale">{{ explained.scale }}</span>
+        </p>
+        <p class="explain-cn">
+          {{ explained.cn }}
+          <span v-if="speechOf(explained)" class="speech">[{{ speechOf(explained) }}]</span>
+        </p>
+        <p class="explain-body">{{ visibleDescribe(explained.describe) }}</p>
+      </article>
+    </div>
+
+    <div
       v-if="zoomedWrite"
       class="zoom-layer"
       role="dialog"
@@ -810,6 +1008,8 @@ function speechOf(word: Word) {
 
 .icon-button,
 .speak,
+.forget,
+.discard,
 .write,
 .search-list button,
 .text-button {
@@ -817,7 +1017,9 @@ function speechOf(word: Word) {
 }
 
 .icon-button,
-.speak {
+.speak,
+.forget,
+.discard {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -850,14 +1052,43 @@ function speechOf(word: Word) {
   box-shadow: none;
 }
 
+.forget {
+  flex: none;
+  color: var(--m-green);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: inset 0 0 0 1.5px var(--m-green);
+}
+
+.forget.is-on {
+  background: var(--m-orange);
+  color: #fff;
+  box-shadow: none;
+}
+
+.discard .toon {
+  width: 26px;
+  height: 26px;
+}
+
+.card-tools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
 .icon-button.is-on {
   background: #f8882c;
   color: #fff;
   box-shadow: none;
 }
 
-.icon-button.is-recite.is-on {
+.icon-button.is-recite.is-on,
+.icon-button.is-book.is-on {
   background: #fff;
+  color: #2c2824;
   box-shadow: 0 0 0 2px #f8882c;
 }
 
@@ -865,6 +1096,10 @@ function speechOf(word: Word) {
   display: block;
   width: 28px;
   height: 28px;
+}
+
+.forgot-mark text {
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 .toon {
@@ -1034,10 +1269,19 @@ function speechOf(word: Word) {
   font-size: 18px;
 }
 
-.cards.is-grid .speak {
+.cards.is-grid .card-tools {
+  gap: 6px;
+}
+
+.cards.is-grid .speak,
+.cards.is-grid .forget {
   flex: none;
   width: 32px;
   height: 32px;
+}
+
+.cards.is-grid .forget {
+  font-size: 14px;
 }
 
 .cards.is-grid .answer-slot {
@@ -1180,7 +1424,7 @@ function speechOf(word: Word) {
 
 .kana {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
   column-gap: 14px;
   color: #6f6a62;
@@ -1188,11 +1432,17 @@ function speechOf(word: Word) {
 }
 
 .scale {
+  position: relative;
+  top: 2px;
   color: #f8882c;
   letter-spacing: 0.08em;
 }
 
 .cn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 4px;
   margin-top: 4px;
   color: var(--m-ink);
   font-size: 16px;
@@ -1204,6 +1454,105 @@ function speechOf(word: Word) {
 .is-hidden {
   color: #b0a89c;
   font-weight: 400;
+}
+
+.explain {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.25px #f6b429;
+  color: #e39b12;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.explain.is-front {
+  position: relative;
+  z-index: 1;
+}
+
+.explain-layer {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: rgb(44 40 36 / 32%);
+}
+
+.explain-sheet {
+  width: 100%;
+  max-height: 72vh;
+  overflow: auto;
+  padding: 14px 20px 28px;
+  border-radius: 22px 22px 0 0;
+  background: #fffdf8;
+  box-shadow: 0 -8px 32px rgb(44 40 36 / 12%);
+}
+
+.explain-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.explain-kicker {
+  margin: 0;
+  color: #e39b12;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.explain-write {
+  margin: 4px 0 0;
+  color: var(--m-ink);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.explain-kana,
+.explain-cn,
+.explain-body {
+  margin: 0;
+}
+
+.explain-kana {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  color: #6f6a62;
+  font-size: 15px;
+}
+
+.explain-cn {
+  margin-top: 8px;
+  color: var(--m-ink);
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.explain-body {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--m-line);
+  color: var(--m-ink);
+  font-size: 15px;
+  line-height: 1.75;
+  white-space: pre-line;
 }
 
 .describe {
