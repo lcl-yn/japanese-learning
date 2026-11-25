@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { Close, Memo, Microphone, MoreFilled } from '@element-plus/icons-vue'
+import { Close, MoreFilled } from '@element-plus/icons-vue'
 import type { BookMeta, Word } from '@/types/word'
 import type { VoiceOption } from '@/utils/speech'
 import { unlockExamSounds } from '@/utils/examSound'
@@ -456,13 +456,47 @@ function showExplain(word: Word) {
       <button
         v-if="examOn"
         type="button"
-        class="icon-button"
+        class="icon-button is-miss"
         :class="{ 'is-on': missedOpen }"
         aria-label="错题本"
         :aria-pressed="missedOpen"
         @click="toggleMissed"
       >
-        <el-icon :size="20"><Memo /></el-icon>
+        <svg class="recite-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path
+            fill="#c8f3ee"
+            d="M6.2 22.4c1.4 2.6 5 4 9.8 3.2 4.8.8 8.4-.6 9.8-3.2-.8 1.6-4.2 3.2-9.8 2.6-5.6.6-9-.8-9.8-2.6z"
+          />
+          <path
+            fill="#fffdf8"
+            stroke="#14b8a6"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+            d="M5.6 12.2c.3-2.4 2.5-3.6 5.4-3L15.2 10.4v12.8c-2.8.7-6.8.1-8.4-1.5-.8-.8-1.2-7.2-1.2-9.5z"
+          />
+          <path
+            fill="#fffdf8"
+            stroke="#14b8a6"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+            d="M16.8 10.4l4.4-1.2c2.8-.6 5.2.6 5.4 3 .2 2.4-.2 8.6-1.2 9.5-1.6 1.6-5.6 2.2-8.6 1.5V10.4z"
+          />
+          <path fill="none" stroke="#14b8a6" stroke-width="1.7" stroke-linecap="round" d="M16 10.6v12.6" />
+          <path
+            fill="none"
+            stroke="#e6d9c8"
+            stroke-width="1.35"
+            stroke-linecap="round"
+            d="M8.2 14h5M8.2 16.7h3.6M8.2 19.3h4.4"
+          />
+          <path
+            fill="none"
+            stroke="#f8882c"
+            stroke-width="2.1"
+            stroke-linecap="round"
+            d="M19.6 14.2l5.2 5.2M24.8 14.2l-5.2 5.2"
+          />
+        </svg>
         <span v-if="missedWords.length" class="miss-count">{{ missedWords.length }}</span>
       </button>
       <button
@@ -719,7 +753,12 @@ function showExplain(word: Word) {
               </svg>
             </button>
             <button type="button" class="speak" aria-label="朗读" @click="speak(word)">
-              <el-icon :size="18"><Microphone /></el-icon>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a3.5 3.5 0 0 0-1.8-3.06v6.12A3.5 3.5 0 0 0 15.5 12zm-1.8-6.36v2.06a6 6 0 0 1 0 8.6v2.06a8 8 0 0 0 0-12.72z"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -791,7 +830,12 @@ function showExplain(word: Word) {
             aria-label="朗读"
             @click="speak(word)"
           >
-            <el-icon :size="18"><Microphone /></el-icon>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a3.5 3.5 0 0 0-1.8-3.06v6.12A3.5 3.5 0 0 0 15.5 12zm-1.8-6.36v2.06a6 6 0 0 1 0 8.6v2.06a8 8 0 0 0 0-12.72z"
+              />
+            </svg>
           </button>
         </div>
       </div>
@@ -1086,7 +1130,8 @@ function showExplain(word: Word) {
 }
 
 .icon-button.is-recite.is-on,
-.icon-button.is-book.is-on {
+.icon-button.is-book.is-on,
+.icon-button.is-miss.is-on {
   background: #fff;
   color: #2c2824;
   box-shadow: 0 0 0 2px #f8882c;
@@ -1193,7 +1238,8 @@ function showExplain(word: Word) {
   gap: 10px;
   flex: 1;
   min-width: 0;
-  padding: 8px 4px;
+  /* 左侧不再加 padding，和选课、搜索等 more-item 的图标纵列对齐 */
+  padding: 8px 4px 8px 0;
   border-radius: 10px;
   text-align: left;
 }

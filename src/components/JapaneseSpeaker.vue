@@ -466,9 +466,13 @@ function onInputEnter(event: KeyboardEvent) {
 }
 
 html[data-layout='phone'] .jp-speaker {
-  bottom: 12px;
   flex-wrap: wrap;
   width: min(760px, calc(100% - 24px));
+}
+
+/* 未拖动时贴底；拖动后只留 top，避免和 bottom 一起把条纵向拉高 */
+html[data-layout='phone'] .jp-speaker:not(.is-placed) {
+  bottom: 12px;
 }
 
 html[data-layout='phone'] .jp-input {
