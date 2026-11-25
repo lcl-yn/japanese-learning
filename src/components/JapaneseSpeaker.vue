@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { phoneLayout } from '@/utils/phoneLayout'
 import { loadVoices, restartJapanese, speakJapanese, stopSpeaking, type VoiceOption } from '@/utils/speech'
 
 /** 拖到视口边缘时留出的空隙 */
 const EDGE_GAP = 8
+
+/** 手机收起气泡的边长，和样式里的宽高一致 */
+const LAUNCHER_SIZE = 44
+
+/** 按住气泡时，位移超过这个像素才算拖动，不算点开 */
+const DRAG_THRESHOLD = 8
 
 const PLAY_ONCE = 'once'
 const PLAY_LOOP = 'loop'
@@ -21,6 +27,7 @@ const voiceOptions = ref<VoiceOption[]>([])
 const selectedVoiceUri = ref('')
 const hasJapaneseVoice = ref(false)
 const formEl = ref<HTMLFormElement | null>(null)
+const launcherEl = ref<HTMLButtonElement | null>(null)
 const placed = ref(false)
 const x = ref(0)
 const y = ref(0)
@@ -38,16 +45,25 @@ const barStyle = computed(() => {
   return { left: `${x.value}px`, top: `${y.value}px` }
 })
 
+const launcherStyle = computed(() => {
+  if (!placed.value) return undefined
+  return { left: `${x.value}px`, top: `${y.value}px` }
+})
+
 let dragOffsetX = 0
 let dragOffsetY = 0
 let dragWidth = 0
 let dragHeight = 0
+let launcherPointerId: number | null = null
+let launcherStartX = 0
+let launcherStartY = 0
+let launcherMoved = false
 let loopToken = 0
 let loopTimer = 0
 
 /**
- * 把朗读条限制在视口内。
- * 条比安全区还宽或还高时改为居中，避免贴边后左右来回弹。
+ * 把朗读条或气泡限制在视口内。
+ * 比安全区还宽或还高时改为居中，避免贴边后左右来回弹。
  */
 function clampToViewport(left: number, top: number, width: number, height: number) {
   const maxLeft = window.innerWidth - width - EDGE_GAP
@@ -63,6 +79,31 @@ function applyPosition(left: number, top: number) {
   x.value = next.left
   y.value = next.top
   placed.value = true
+}
+
+/** 收起时把气泡停在当前朗读条这一行的右侧。 */
+function parkLauncherAtBarRight() {
+  const rect = formEl.value?.getBoundingClientRect()
+  dragWidth = LAUNCHER_SIZE
+  dragHeight = LAUNCHER_SIZE
+  const top = rect ? rect.top : y.value
+  applyPosition(window.innerWidth - EDGE_GAP - LAUNCHER_SIZE, top)
+}
+
+/** 从气泡打开时，朗读条跟气泡同一高度，水平居中。 */
+async function openSpeaker() {
+  speakerOpen.value = true
+  await nextTick()
+  if (!placed.value || !formEl.value) return
+  const rect = formEl.value.getBoundingClientRect()
+  dragWidth = rect.width
+  dragHeight = rect.height
+  applyPosition((window.innerWidth - rect.width) / 2, y.value)
+}
+
+function collapseSpeaker() {
+  parkLauncherAtBarRight()
+  speakerOpen.value = false
 }
 
 function onDragStart(event: PointerEvent) {
@@ -93,16 +134,62 @@ function onDragEnd() {
   window.removeEventListener('pointercancel', onDragEnd)
 }
 
+/** 按住气泡开始拖；位移够大才算移动，松手几乎没动则打开朗读条。 */
+function onLauncherPointerDown(event: PointerEvent) {
+  if (!launcherEl.value || event.button !== 0) return
+  const rect = launcherEl.value.getBoundingClientRect()
+  dragOffsetX = event.clientX - rect.left
+  dragOffsetY = event.clientY - rect.top
+  dragWidth = rect.width
+  dragHeight = rect.height
+  launcherPointerId = event.pointerId
+  launcherStartX = event.clientX
+  launcherStartY = event.clientY
+  launcherMoved = false
+  dragging.value = true
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.setPointerCapture(event.pointerId)
+  window.addEventListener('pointermove', onLauncherPointerMove)
+  window.addEventListener('pointerup', onLauncherPointerUp)
+  window.addEventListener('pointercancel', onLauncherPointerUp)
+  event.preventDefault()
+}
+
+function onLauncherPointerMove(event: PointerEvent) {
+  if (!dragging.value || event.pointerId !== launcherPointerId) return
+  const dx = event.clientX - launcherStartX
+  const dy = event.clientY - launcherStartY
+  if (!launcherMoved && dx * dx + dy * dy < DRAG_THRESHOLD * DRAG_THRESHOLD) return
+  launcherMoved = true
+  applyPosition(event.clientX - dragOffsetX, event.clientY - dragOffsetY)
+}
+
+function onLauncherPointerUp(event: PointerEvent) {
+  if (launcherPointerId !== null && event.pointerId !== launcherPointerId) return
+  const moved = launcherMoved
+  dragging.value = false
+  launcherPointerId = null
+  window.removeEventListener('pointermove', onLauncherPointerMove)
+  window.removeEventListener('pointerup', onLauncherPointerUp)
+  window.removeEventListener('pointercancel', onLauncherPointerUp)
+  if (!moved) void openSpeaker()
+}
+
 function syncSpeakerLayout() {
   document.documentElement.dataset.speaker = phoneLayout.value && speakerOpen.value ? 'open' : ''
 }
 
 function onResize() {
-  if (!placed.value || !formEl.value) return
-  const rect = formEl.value.getBoundingClientRect()
-  dragWidth = rect.width
-  dragHeight = rect.height
-  applyPosition(x.value, y.value)
+  if (!placed.value) return
+  if (speakerOpen.value && formEl.value) {
+    const rect = formEl.value.getBoundingClientRect()
+    dragWidth = rect.width
+    dragHeight = rect.height
+    applyPosition(x.value, y.value)
+    return
+  }
+  dragWidth = LAUNCHER_SIZE
+  dragHeight = LAUNCHER_SIZE
+  applyPosition(window.innerWidth - EDGE_GAP - LAUNCHER_SIZE, y.value)
 }
 
 watch([phoneLayout, speakerOpen], syncSpeakerLayout)
@@ -123,6 +210,9 @@ onBeforeUnmount(() => {
   delete document.documentElement.dataset.speaker
   window.removeEventListener('resize', onResize)
   onDragEnd()
+  window.removeEventListener('pointermove', onLauncherPointerMove)
+  window.removeEventListener('pointerup', onLauncherPointerUp)
+  window.removeEventListener('pointercancel', onLauncherPointerUp)
   stopLoop()
 })
 
@@ -218,7 +308,16 @@ function onInputEnter(event: KeyboardEvent) {
 </script>
 
 <template>
-  <button v-show="showLauncher" type="button" class="speaker-launcher" aria-label="打开朗读" @click="speakerOpen = true">
+  <button
+    v-show="showLauncher"
+    ref="launcherEl"
+    type="button"
+    class="speaker-launcher"
+    :class="{ 'is-placed': placed, 'is-dragging': dragging }"
+    :style="launcherStyle"
+    aria-label="打开朗读"
+    @pointerdown="onLauncherPointerDown"
+  >
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
       <path
         fill="currentColor"
@@ -296,7 +395,7 @@ function onInputEnter(event: KeyboardEvent) {
         :value="voice.voiceURI"
       />
     </el-select>
-    <button v-if="phoneLayout" type="button" class="speaker-collapse" aria-label="收起朗读" @click="speakerOpen = false">
+    <button v-if="phoneLayout" type="button" class="speaker-collapse" aria-label="收起朗读" @click="collapseSpeaker">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
         <path
           fill="currentColor"
@@ -334,6 +433,16 @@ function onInputEnter(event: KeyboardEvent) {
 .jp-input {
   flex: 1;
   min-width: 0;
+}
+
+/* 手机浏览器聚焦字号小于 16px 的输入框会放大整页。下拉内部的输入框也要到 16px。 */
+.jp-input :deep(.el-input__wrapper),
+.jp-input :deep(.el-input__inner),
+.mode-select :deep(.el-select__wrapper),
+.mode-select :deep(.el-select__input),
+.voice-select :deep(.el-select__wrapper),
+.voice-select :deep(.el-select__input) {
+  font-size: 16px;
 }
 
 .drag {
@@ -445,6 +554,17 @@ function onInputEnter(event: KeyboardEvent) {
   padding: 0;
   border-radius: 999px;
   box-shadow: 0 8px 24px rgba(28, 25, 23, 0.12);
+  touch-action: none;
+  cursor: grab;
+}
+
+.speaker-launcher.is-placed {
+  right: auto;
+  bottom: auto;
+}
+
+.speaker-launcher.is-dragging {
+  cursor: grabbing;
 }
 
 .speaker-collapse {
