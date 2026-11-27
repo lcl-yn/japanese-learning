@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Close } from '@element-plus/icons-vue'
 import KanaChart from '@/components/KanaChart.vue'
@@ -162,30 +162,31 @@ const ageBands: CounterCell[][] = [
   ],
 ]
 
+/** 斜线后的零宽空格只给手机窄列换行，桌面表格仍排成一行。 */
 const smallNumberColumns: CounterCell[][] = [
   [
-    { label: '0', readings: ['れい／ぜろ'] },
+    { label: '0', readings: ['れい／\u200bぜろ'] },
     { label: '1', readings: ['いち'] },
     { label: '2', readings: ['に'] },
     { label: '3', readings: ['さん'] },
-    { label: '4', readings: ['し／よん'] },
+    { label: '4', readings: ['し／\u200bよん'] },
     { label: '5', readings: ['ご'] },
     { label: '6', readings: ['ろく'] },
-    { label: '7', readings: ['しち／なな'] },
+    { label: '7', readings: ['しち／\u200bなな'] },
     { label: '8', readings: ['はち'] },
-    { label: '9', readings: ['く／きゅう'] },
+    { label: '9', readings: ['く／\u200bきゅう'] },
   ],
   [
     { label: '10', readings: ['じゅう'] },
     { label: '11', readings: ['じゅういち'] },
     { label: '12', readings: ['じゅうに'] },
     { label: '13', readings: ['じゅうさん'] },
-    { label: '14', readings: ['じゅうし／じゅうよん'] },
+    { label: '14', readings: ['じゅうし／\u200bじゅうよん'] },
     { label: '15', readings: ['じゅうご'] },
     { label: '16', readings: ['じゅうろく'] },
-    { label: '17', readings: ['じゅうしち／じゅうなな'] },
+    { label: '17', readings: ['じゅうしち／\u200bじゅうなな'] },
     { label: '18', readings: ['じゅうはち'] },
-    { label: '19', readings: ['じゅうく／じゅうきゅう'] },
+    { label: '19', readings: ['じゅうく／\u200bじゅうきゅう'] },
   ],
   [
     { label: '20', readings: ['にじゅう'] },
@@ -279,7 +280,7 @@ const minuteQuestions: CounterQuestion[] = [
   { jp: '今何時何分ですか。', reading: 'いまなんじなんぷんですか' },
 ]
 
-const QUIZ_CARD_COUNT = 10
+const QUIZ_CARD_COUNT = 4
 
 const quizKinds: { type: QuestionType; label: string }[] = [
   { type: 'integer', label: '数字' },
@@ -295,7 +296,6 @@ const quizCards = ref<NumberQuestion[]>([])
 const quizRevealed = ref<boolean[]>([])
 
 const quizLabel = computed(() => quizKinds.find((kind) => kind.type === quizType.value)?.label ?? '')
-const quizSeen = computed(() => quizRevealed.value.filter(Boolean).length)
 
 /** 生成一批读音卡，并重新盖住答案。 */
 function startQuiz(type: QuestionType) {
@@ -312,7 +312,7 @@ function closeQuiz() {
   quizType.value = null
 }
 
-/** 同一类再抽 10 张。 */
+/** 同一类再抽 4 张。 */
 function replayQuiz() {
   if (!quizType.value) return
   startQuiz(quizType.value)
@@ -325,6 +325,10 @@ function revealQuiz(index: number) {
 
 function onQuizKey(event: KeyboardEvent) {
   if (event.key !== 'Escape') return
+  if (jumpMenuOpen.value) {
+    jumpMenuOpen.value = false
+    return
+  }
   if (phoneLayout.value && quizCards.value.length) {
     closeQuiz()
     return
@@ -380,6 +384,15 @@ const counterJumps = [
 ] as const
 
 const activeCounterJump = ref<(typeof counterJumps)[number]['id']>('ones')
+const jumpBar = ref<HTMLElement | null>(null)
+const jumpMeasure = ref<HTMLElement | null>(null)
+const jumpVisibleCount = ref(counterJumps.length)
+const jumpMenuOpen = ref(false)
+const visibleJumps = computed(() => counterJumps.slice(0, jumpVisibleCount.value))
+const overflowJumps = computed(() => counterJumps.slice(jumpVisibleCount.value))
+const overflowActive = computed(() => overflowJumps.value.some((item) => item.id === activeCounterJump.value))
+let jumpObserver: ResizeObserver | null = null
+
 const stickHidden = ref(false)
 const kanaStick = ref<HTMLElement | null>(null)
 let lastStickScroll = 0
@@ -390,6 +403,7 @@ function onStickScroll(event: Event) {
   const main = event.target
   if (!(main instanceof HTMLElement) || !phoneLayout.value || stickScrollLock) return
   const top = main.scrollTop
+  if (Math.abs(top - lastStickScroll) > 4) jumpMenuOpen.value = false
   if (top <= 8) stickHidden.value = false
   else if (top > lastStickScroll + 8) stickHidden.value = true
   else if (top < lastStickScroll - 8) stickHidden.value = false
@@ -398,8 +412,57 @@ function onStickScroll(event: Event) {
   if (stick) stick.style.setProperty('--stick-h', `${stick.offsetHeight}px`)
 }
 
+/**
+ * 量出一行能放下几个分段。放不下的收进末尾四个空心方块，不再横向滑出屏幕。
+ */
+function fitJumpChips() {
+  const bar = jumpBar.value
+  const measure = jumpMeasure.value
+  if (!bar || !measure) return
+  const chips = [...measure.querySelectorAll('button')]
+  const more = chips[chips.length - 1]
+  const items = chips.slice(0, -1)
+  if (!more || items.length !== counterJumps.length || items.some((item) => item.offsetWidth === 0)) return
+  const styles = getComputedStyle(bar)
+  const available = bar.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight)
+  const gap = parseFloat(getComputedStyle(measure).columnGap) || 0
+  const moreWidth = more.offsetWidth
+  let used = 0
+  let count = items.length
+  for (let index = 0; index < items.length; index += 1) {
+    const next = used + (used ? gap : 0) + items[index].offsetWidth
+    const hasRest = index < items.length - 1
+    const limit = hasRest ? available - gap - moreWidth : available
+    if (next > limit + 0.5) {
+      count = index
+      break
+    }
+    used = next
+  }
+  jumpVisibleCount.value = count
+  if (count >= counterJumps.length) jumpMenuOpen.value = false
+}
+
+/** 分段条出现或变宽时重新量一次。 */
+function watchJumpBar() {
+  const bar = jumpBar.value
+  if (!bar) return
+  jumpObserver ??= new ResizeObserver(() => fitJumpChips())
+  jumpObserver.observe(bar)
+  fitJumpChips()
+}
+
+function onJumpPointer(event: PointerEvent) {
+  if (!jumpMenuOpen.value) return
+  const node = event.target
+  const element = node instanceof Element ? node : node instanceof Node ? node.parentElement : null
+  if (element?.closest('.counter-jump')) return
+  jumpMenuOpen.value = false
+}
+
 /** 把量词卡片滚到页签下面，避免被吸顶的导航挡住。 */
 function jumpToCounter(id: (typeof counterJumps)[number]['id']) {
+  jumpMenuOpen.value = false
   activeCounterJump.value = id
   const target = document.getElementById(`counter-${id}`)
   const main = document.querySelector('main')
@@ -456,12 +519,16 @@ onMounted(async () => {
   // 没有日语引擎时保持空选，朗读走 lang=ja-JP
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
   window.addEventListener('keydown', onQuizKey)
+  window.addEventListener('pointerdown', onJumpPointer)
   document.querySelector('main')?.addEventListener('scroll', onStickScroll, { passive: true })
+  nextTick(watchJumpBar)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', onQuizKey)
+  window.removeEventListener('pointerdown', onJumpPointer)
   document.querySelector('main')?.removeEventListener('scroll', onStickScroll)
+  jumpObserver?.disconnect()
 })
 
 watch(activeSection, () => {
@@ -469,7 +536,9 @@ watch(activeSection, () => {
   stickHidden.value = false
   lastStickScroll = 0
   quizMenuOpen.value = false
+  jumpMenuOpen.value = false
   closeQuiz()
+  nextTick(watchJumpBar)
 })
 </script>
 
@@ -492,15 +561,47 @@ watch(activeSection, () => {
         </button>
       </nav>
       <nav v-if="phoneLayout && activeSection === 'counter'" class="counter-jump" aria-label="量词分段">
-        <button
-          v-for="item in counterJumps"
-          :key="item.id"
-          type="button"
-          :class="{ 'is-on': item.id === activeCounterJump }"
-          @click="jumpToCounter(item.id)"
-        >
-          {{ item.label }}
-        </button>
+        <div ref="jumpBar" class="jump-row">
+          <div ref="jumpMeasure" class="jump-measure" aria-hidden="true">
+            <button v-for="item in counterJumps" :key="item.id" type="button" tabindex="-1">{{ item.label }}</button>
+            <button type="button" class="jump-more" tabindex="-1">
+              <span class="jump-more-grid"><i></i><i></i><i></i><i></i></span>
+            </button>
+          </div>
+          <button
+            v-for="item in visibleJumps"
+            :key="item.id"
+            type="button"
+            :class="{ 'is-on': item.id === activeCounterJump }"
+            @click="jumpToCounter(item.id)"
+          >
+            {{ item.label }}
+          </button>
+          <button
+            v-if="overflowJumps.length"
+            type="button"
+            class="jump-more"
+            :class="{ 'is-on': overflowActive || jumpMenuOpen }"
+            aria-label="更多分段"
+            aria-haspopup="menu"
+            :aria-expanded="jumpMenuOpen"
+            @click="jumpMenuOpen = !jumpMenuOpen"
+          >
+            <span class="jump-more-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </button>
+        </div>
+        <div v-if="jumpMenuOpen" class="jump-menu" role="menu">
+          <button
+            v-for="item in overflowJumps"
+            :key="item.id"
+            type="button"
+            role="menuitem"
+            :class="{ 'is-on': item.id === activeCounterJump }"
+            @click="jumpToCounter(item.id)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
       </nav>
       </div>
 
@@ -897,7 +998,7 @@ watch(activeSection, () => {
             <el-icon :size="18"><Close /></el-icon>
           </button>
         </div>
-        <p class="sheet-lead">选一类，一次 10 张。点「查看答案」才显示假名。</p>
+        <p class="sheet-lead">选一类，一次 4 张。点「查看答案」才显示假名。</p>
         <button
           v-for="kind in quizKinds"
           :key="kind.type"
@@ -926,7 +1027,6 @@ watch(activeSection, () => {
           <el-icon :size="18"><Close /></el-icon>
         </button>
       </header>
-      <p class="quiz-progress">已看 {{ quizSeen }} / {{ quizCards.length }}</p>
       <div class="quiz-grid">
         <article
           v-for="(card, index) in quizCards"
@@ -947,7 +1047,9 @@ watch(activeSection, () => {
           </p>
         </article>
       </div>
-      <button type="button" class="quiz-again" @click="replayQuiz">再来一组</button>
+      <div class="quiz-foot">
+        <button type="button" class="quiz-again" @click="replayQuiz">再来一组</button>
+      </div>
     </div>
   </div>
 </template>
@@ -1030,7 +1132,7 @@ html[data-layout='phone'] .page-lead {
 }
 
 html[data-layout='phone'] .kana-body {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
@@ -1047,8 +1149,15 @@ html[data-layout='phone'] .kana-nav {
   background: #f6f1e8;
 }
 
+html[data-layout='phone'] .kana-stick,
+html[data-layout='phone'] .kana-panel {
+  min-width: 0;
+  max-width: 100%;
+}
+
 html[data-layout='phone'] .kana-panel {
   padding: 0 16px;
+  box-sizing: border-box;
 }
 
 html[data-layout='phone'] .kana-nav button {
@@ -1071,15 +1180,29 @@ html[data-layout='phone'] .kana-nav button.active {
 }
 
 .counter-jump {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding: 0 16px 8px;
-  scrollbar-width: none;
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
 }
 
-.counter-jump::-webkit-scrollbar {
-  display: none;
+.jump-row,
+.jump-measure {
+  display: flex;
+  gap: 6px;
+}
+
+.jump-row {
+  min-width: 0;
+  overflow: hidden;
+  padding: 0 16px 8px;
+}
+
+.jump-measure {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .counter-jump button {
@@ -1099,6 +1222,56 @@ html[data-layout='phone'] .kana-nav button.active {
   background: #fff7f0;
   color: #f8882c;
   box-shadow: inset 0 0 0 1.5px #f8882c;
+}
+
+.counter-jump .jump-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 26px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.jump-more-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 6px);
+  gap: 2px;
+}
+
+.jump-more-grid i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  box-sizing: border-box;
+  border: 1.5px solid #1c1917;
+  border-radius: 1px;
+  background: transparent;
+}
+
+.jump-more.is-on .jump-more-grid i {
+  border-color: #f8882c;
+}
+
+.jump-menu {
+  position: absolute;
+  z-index: 6;
+  top: calc(100% - 4px);
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 88px;
+  padding: 8px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgb(44 40 36 / 16%);
+}
+
+.jump-menu button {
+  text-align: center;
 }
 
 html[data-layout='phone'] .toolbar {
@@ -1516,6 +1689,8 @@ html[data-layout='phone'] .irregular {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .mark-card,
@@ -1577,8 +1752,7 @@ html[data-layout='phone'] .irregular {
   cursor: pointer;
 }
 
-.quiz-launch,
-.quiz-again {
+.quiz-launch {
   width: 100%;
   height: 44px;
   border-radius: 14px;
@@ -1586,21 +1760,23 @@ html[data-layout='phone'] .irregular {
   color: #fff;
   font-size: 15px;
   font-weight: 700;
-}
-
-.quiz-launch {
   box-shadow: 0 8px 16px rgb(248 136 44 / 28%);
 }
 
 .count-card {
-  padding: 14px 14px 6px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 14px 16px 6px;
+  box-sizing: border-box;
 }
 
 .count-duo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px;
   align-items: start;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .count-duo .count-card {
@@ -1614,8 +1790,8 @@ html[data-layout='phone'] .irregular {
 
 .count-lines.is-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 16px;
 }
 
 .count-lines.is-split .count-label,
@@ -1624,15 +1800,12 @@ html[data-layout='phone'] .irregular {
   font-size: 13px;
 }
 
-.count-lines.is-split .count-read {
-  overflow-wrap: anywhere;
-}
-
 .count-line {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
+  min-width: 0;
   margin: 0;
   padding: 8px 0;
   border-bottom: 1px dashed #efe6d8;
@@ -1644,14 +1817,19 @@ html[data-layout='phone'] .irregular {
 }
 
 .count-label {
+  flex: none;
   color: #2c2824;
   font-weight: 700;
 }
 
 .count-read {
+  flex: 1;
+  min-width: 0;
   color: #6f6a62;
   font-size: 14px;
   text-align: right;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .count-read span {
@@ -1697,8 +1875,7 @@ html[data-layout='phone'] .irregular {
   letter-spacing: 0.12em;
 }
 
-.sheet-lead,
-.quiz-progress {
+.sheet-lead {
   margin: 0 0 8px;
   color: #8a8478;
   font-size: 13px;
@@ -1741,9 +1918,13 @@ html[data-layout='phone'] .irregular {
 .quiz-layer {
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+  overflow: hidden;
+  padding: 12px 16px 0;
   background: #f6f1e8;
+}
+
+.quiz-head {
+  margin-bottom: 12px;
 }
 
 .quiz-head h3 {
@@ -1754,26 +1935,44 @@ html[data-layout='phone'] .irregular {
 
 .quiz-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-auto-rows: auto;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding-bottom: 8px;
 }
 
 .quiz-tile {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 112px;
-  padding: 14px 12px 12px;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+  min-height: 148px;
+  padding: 16px 14px 14px;
   text-align: center;
+  container-type: inline-size;
+}
+
+.quiz-tile.is-open {
+  justify-content: flex-start;
 }
 
 .quiz-tile .quiz-prompt {
-  font-size: 22px;
+  width: 100%;
+  margin: 0;
+  font-size: clamp(18px, 15cqw, 28px);
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 .quiz-tile button {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 0;
   padding: 8px 0;
   border-radius: 999px;
   background: #fff7f0;
@@ -1783,12 +1982,30 @@ html[data-layout='phone'] .irregular {
 }
 
 .quiz-tile .quiz-reading {
-  margin-top: 8px;
+  width: 100%;
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.quiz-foot {
+  flex: none;
+  padding: 8px 8px calc(16px + env(safe-area-inset-bottom));
 }
 
 .quiz-again {
-  position: sticky;
-  bottom: 0;
-  margin-top: 12px;
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  background: #f8882c;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: 0 8px 18px rgb(248 136 44 / 32%);
+}
+
+.quiz-again:active {
+  background: #e57a1f;
 }
 </style>
