@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { kanaColumns, type KanaCell, type KanaColumn, type KanaRow } from '@/data/kana'
+import { phoneLayout } from '@/utils/phoneLayout'
 import { speakJapanese } from '@/utils/speech'
+
+/** 五段在手机卡片上用假名标出，和列顺序一致。 */
+const vowelHeads = ['あ', 'い', 'う', 'え', 'お']
 
 const props = withDefaults(
   defineProps<{
@@ -25,7 +29,26 @@ function onSpeakCell(row: KanaRow, column: KanaColumn, script: 'hiragana' | 'kat
 <template>
   <section class="kana-chart">
     <h3>{{ title }}</h3>
-    <el-table :data="rows" border style="width: 100%">
+    <div v-if="phoneLayout" class="kana-board">
+      <div class="vowel-row" aria-hidden="true">
+        <span v-for="vowel in vowelHeads" :key="vowel">{{ vowel }}</span>
+      </div>
+      <div v-for="(row, rowIndex) in rows" :key="rowIndex" class="kana-row">
+        <template v-for="col in kanaColumns" :key="col">
+          <div v-if="cellAt(row, col)" class="kana-tile">
+            <button type="button" class="hira" @click="onSpeakCell(row, col, 'hiragana')">
+              {{ cellAt(row, col)?.hiragana }}
+            </button>
+            <button type="button" class="kata" @click="onSpeakCell(row, col, 'katakana')">
+              {{ cellAt(row, col)?.katakana }}
+            </button>
+            <span class="roma">{{ cellAt(row, col)?.romaji }}</span>
+          </div>
+          <div v-else class="kana-tile is-empty" />
+        </template>
+      </div>
+    </div>
+    <el-table v-else :data="rows" border style="width: 100%">
       <el-table-column v-for="col in kanaColumns" :key="col" :label="col" align="center">
         <template #default="{ row }">
           <div v-if="cellAt(row, col)" class="kana-pair">
@@ -74,5 +97,84 @@ h3 {
 
 .kana-btn:hover {
   color: var(--accent, #aa3bff);
+}
+
+.kana-board {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vowel-row,
+.kana-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vowel-row span {
+  color: #f8882c;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.kana-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 6px 0 5px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgb(92 72 40 / 6%);
+}
+
+.kana-tile.is-empty {
+  background: transparent;
+  box-shadow: none;
+}
+
+.kana-tile button {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2c2824;
+  font: inherit;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.kana-tile button:active {
+  color: #f8882c;
+}
+
+.hira {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.kata {
+  margin-top: 2px;
+  color: #6f6a62;
+  font-size: 13px;
+}
+
+.roma {
+  margin-top: 2px;
+  color: #b0a89c;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+
+html[data-layout='phone'] h3 {
+  margin: 14px 0 8px;
+  text-align: left;
+  color: #8a8478;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 </style>

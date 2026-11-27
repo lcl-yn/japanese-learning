@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Close } from '@element-plus/icons-vue'
 import KanaChart from '@/components/KanaChart.vue'
 import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
 import {
@@ -9,6 +10,7 @@ import {
   type NumberQuestion,
   type QuestionType,
 } from '@/utils/numberQuestion'
+import { phoneLayout } from '@/utils/phoneLayout'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
 import { KANA_DESCRIPTION } from '@/utils/seo'
 
@@ -45,10 +47,6 @@ function openSection(id: KanaSectionId) {
   if (id === activeSection.value) return
   void router.push({ path: '/kana', query: id === 'chart' ? {} : { topic: id } })
 }
-
-watch(activeSection, () => {
-  document.querySelector('main')?.scrollTo({ top: 0 })
-})
 
 type PitchLevel = 'low' | 'high'
 
@@ -291,20 +289,68 @@ const quizKinds: { type: QuestionType; label: string }[] = [
 ]
 
 const quizMenuOpen = ref(false)
+const quizType = ref<QuestionType | null>(null)
 const quizCards = ref<NumberQuestion[]>([])
 const quizRevealed = ref<boolean[]>([])
+
+const quizLabel = computed(() => quizKinds.find((kind) => kind.type === quizType.value)?.label ?? '')
+const quizSeen = computed(() => quizRevealed.value.filter(Boolean).length)
 
 /** 生成一批读音卡，并重新盖住答案。 */
 function startQuiz(type: QuestionType) {
   quizMenuOpen.value = false
+  quizType.value = type
   quizCards.value = collectQuestions(QUIZ_CARD_COUNT, () => generateQuestion(type))
   quizRevealed.value = quizCards.value.map(() => false)
+}
+
+/** 关掉这一轮测试，回到量词表。 */
+function closeQuiz() {
+  quizCards.value = []
+  quizRevealed.value = []
+  quizType.value = null
+}
+
+/** 同一类再抽 10 张。 */
+function replayQuiz() {
+  if (!quizType.value) return
+  startQuiz(quizType.value)
 }
 
 /** 点开这一张的全部假名。 */
 function revealQuiz(index: number) {
   quizRevealed.value[index] = true
 }
+
+function onQuizKey(event: KeyboardEvent) {
+  if (event.key !== 'Escape') return
+  if (phoneLayout.value && quizCards.value.length) {
+    closeQuiz()
+    return
+  }
+  quizMenuOpen.value = false
+}
+
+/** 手机上百、千、万各成一列，空格不占位。 */
+function columnCells(rows: CounterCell[][], index: number): CounterCell[] {
+  return rows.flatMap((row) => {
+    const cell = row[index]
+    return cell?.label ? [cell] : []
+  })
+}
+
+const phoneDigitGroups: { title: string; cells: CounterCell[]; split: boolean }[] = [
+  { title: '个位', cells: smallNumberColumns[0] ?? [], split: true },
+  { title: '十几', cells: smallNumberColumns[1] ?? [], split: false },
+  { title: '整十', cells: smallNumberColumns[2] ?? [], split: true },
+  { title: '小数 · 分数', cells: smallNumberExtras, split: true },
+]
+
+const phoneLargeGroups: { title: string; cells: CounterCell[]; wide: boolean }[] = [
+  { title: '百', cells: columnCells(largeNumberRows, 0), wide: false },
+  { title: '千', cells: columnCells(largeNumberRows, 1), wide: false },
+  { title: '万', cells: columnCells(largeNumberRows, 2), wide: true },
+]
 
 const minuteRows: CounterCell[][] = [
   [
@@ -327,6 +373,16 @@ const minuteRows: CounterCell[][] = [
   ],
 ]
 
+const minuteExtras: CounterCell[] = [
+  { label: '30分', readings: ['さんじゅっぷん', 'はん'], irregular: true },
+  { label: '45分', readings: ['よんじゅうごふん'] },
+  { label: '何分', readings: ['なんぷん'], irregular: true },
+]
+
+const phoneAgeCells = ageBands.flat()
+const phoneHourCells = hourRows.flat()
+const phoneMinuteCells = [...minuteRows.flat(), ...minuteExtras]
+
 onMounted(async () => {
   const voices = await loadVoices()
   voiceOptions.value = voices
@@ -336,11 +392,22 @@ onMounted(async () => {
   hasJapaneseVoice.value = Boolean(japanese)
   // 没有日语引擎时保持空选，朗读走 lang=ja-JP
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
+  window.addEventListener('keydown', onQuizKey)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', onQuizKey)
+})
+
+watch(activeSection, () => {
+  document.querySelector('main')?.scrollTo({ top: 0 })
+  quizMenuOpen.value = false
+  closeQuiz()
 })
 </script>
 
 <template>
-  <div class="kana-view">
+  <div class="kana-view" :class="{ 'is-narrow': phoneLayout }">
     <h2>50音图</h2>
     <p class="page-lead">{{ KANA_DESCRIPTION }}</p>
     <div class="kana-body">
@@ -380,6 +447,7 @@ onMounted(async () => {
           <p v-if="!hasJapaneseVoice" class="voice-hint">
             未检测到本机日语语音包，将使用浏览器日语朗读；也可手动选中文语音（发音可能不准确）。
           </p>
+          <p v-if="phoneLayout" class="tap-hint">点平假名或片假名即可朗读。</p>
           <KanaChart title="基本50音" :rows="hiraganaChart" :voice-uri="selectedVoiceUri" />
           <KanaChart title="拗音" :rows="youonChart" :voice-uri="selectedVoiceUri" />
           <KanaChart title="浊音半浊音" :rows="dakuonChart" :voice-uri="selectedVoiceUri" />
@@ -387,7 +455,17 @@ onMounted(async () => {
 
         <section v-else-if="activeSection === 'marks'" class="kana-marks">
           <h3>符号</h3>
-          <el-table :data="kanaMarks" border style="width: 100%">
+          <div v-if="phoneLayout" class="mark-list">
+            <article v-for="mark in kanaMarks" :key="mark.symbol" class="mark-card">
+              <p class="mark-badge" lang="ja">{{ mark.symbol }}</p>
+              <div>
+                <h4>{{ mark.name }}</h4>
+                <p class="mark-effect" v-html="mark.effect"></p>
+                <p class="mark-example" lang="ja">{{ mark.example }}</p>
+              </div>
+            </article>
+          </div>
+          <el-table v-else :data="kanaMarks" border style="width: 100%">
             <el-table-column label="符号" width="100" align="center">
               <template #default="{ row }">
                 <span class="mark-symbol">{{ row.symbol }}</span>
@@ -422,19 +500,20 @@ onMounted(async () => {
         </section>
 
         <section v-else-if="activeSection === 'counter'" class="kana-counter">
-          <div class="counter-heading">
+          <div v-if="!phoneLayout" class="counter-heading">
             <h3>量词</h3>
             <button type="button" :aria-expanded="quizMenuOpen" @click="quizMenuOpen = !quizMenuOpen">
               随机测试
             </button>
           </div>
-          <div v-if="quizMenuOpen" class="quiz-kinds">
+          <div v-if="!phoneLayout && quizMenuOpen" class="quiz-kinds">
             <button v-for="kind in quizKinds" :key="kind.type" type="button" @click="startQuiz(kind.type)">
               {{ kind.label }}
             </button>
           </div>
+          <button v-if="phoneLayout" type="button" class="quiz-launch" @click="quizMenuOpen = true">随机测试</button>
           <p class="counter-lead"><span class="irregular">橙色</span>是特殊读音。1、3、4、6、8、10 在量词里经常变。<span class="ask">红字</span>是一般的问法。</p>
-          <div v-if="quizCards.length" class="quiz-board">
+          <div v-if="!phoneLayout && quizCards.length" class="quiz-board">
             <article v-for="(card, index) in quizCards" :key="index" class="quiz-card">
               <p class="quiz-prompt" lang="ja">{{ card.display }}</p>
               <button v-if="!quizRevealed[index]" type="button" @click="revealQuiz(index)">查看答案</button>
@@ -444,6 +523,7 @@ onMounted(async () => {
             </article>
           </div>
 
+          <template v-if="!phoneLayout">
           <h4>100以下的数字</h4>
           <div class="counter-columns">
             <table
@@ -610,8 +690,172 @@ onMounted(async () => {
               </tbody>
             </table>
           </div>
+          </template>
+
+          <div v-else class="phone-counter">
+            <article v-for="group in phoneDigitGroups" :key="group.title" class="count-card">
+              <h4>{{ group.title }}</h4>
+              <div class="count-lines" :class="{ 'is-split': group.split }">
+                <p v-for="cell in group.cells" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read" :class="{ irregular: cell.irregular }">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <div class="count-duo">
+              <article v-for="group in phoneLargeGroups.filter((group) => !group.wide)" :key="group.title" class="count-card">
+                <h4>{{ group.title }}</h4>
+                <div class="count-lines">
+                  <p v-for="cell in group.cells" :key="cell.label" class="count-line">
+                    <span class="count-label">{{ cell.label }}</span>
+                    <span class="count-read" :class="{ irregular: cell.irregular }">
+                      <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                    </span>
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <article v-for="group in phoneLargeGroups.filter((group) => group.wide)" :key="group.title" class="count-card">
+              <h4>{{ group.title }}</h4>
+              <div class="count-lines">
+                <p v-for="cell in group.cells" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read" :class="{ irregular: cell.irregular }">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <p class="counter-note">一百、一千不加「いち」，读ひゃく、せん。一万、一千万、一亿要加「いち」。中间是 0 的位数不读。</p>
+
+            <article class="count-card">
+              <h4>位数里的 0</h4>
+              <div class="count-lines">
+                <p v-for="cell in largeNumberExamples" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <article class="count-card">
+              <h4>年龄</h4>
+              <p class="counter-ask">
+                一般这么问：
+                <span v-for="(item, index) in ageQuestions" :key="index" class="ask" lang="ja">
+                  {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
+                </span>
+              </p>
+              <div class="count-lines">
+                <p v-for="cell in phoneAgeCells" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read" :class="{ irregular: cell.irregular }">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <article class="count-card">
+              <h4>时间</h4>
+              <p class="counter-ask">
+                一般这么问：
+                <span v-for="(item, index) in hourQuestions" :key="index" class="ask" lang="ja">
+                  {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
+                </span>
+              </p>
+              <div class="count-lines">
+                <p v-for="cell in phoneHourCells" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read" :class="{ irregular: cell.irregular }">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <article class="count-card">
+              <h4>分</h4>
+              <p class="counter-ask">
+                一般这么问：
+                <span v-for="(item, index) in minuteQuestions" :key="index" class="ask" lang="ja">
+                  {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
+                </span>
+              </p>
+              <div class="count-lines">
+                <p v-for="cell in phoneMinuteCells" :key="cell.label" class="count-line">
+                  <span class="count-label">{{ cell.label }}</span>
+                  <span class="count-read" :class="{ irregular: cell.irregular }">
+                    <span v-for="(reading, readingIndex) in cell.readings" :key="readingIndex">{{ reading }}</span>
+                  </span>
+                </p>
+              </div>
+            </article>
+          </div>
         </section>
       </div>
+    </div>
+
+    <div v-if="phoneLayout && quizMenuOpen" class="sheet-layer" @click="quizMenuOpen = false">
+      <article class="sheet" role="dialog" aria-modal="true" aria-label="随机测试" @click.stop>
+        <div class="sheet-head">
+          <p>随机测试</p>
+          <button type="button" class="sheet-close" aria-label="关闭" @click="quizMenuOpen = false">
+            <el-icon :size="18"><Close /></el-icon>
+          </button>
+        </div>
+        <p class="sheet-lead">选一类，一次 10 张。点「查看答案」才显示假名。</p>
+        <button
+          v-for="kind in quizKinds"
+          :key="kind.type"
+          type="button"
+          class="kind-btn"
+          @click="startQuiz(kind.type)"
+        >
+          {{ kind.label }}
+        </button>
+      </article>
+    </div>
+
+    <div
+      v-if="phoneLayout && quizCards.length"
+      class="quiz-layer"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="`${quizLabel}测试`"
+    >
+      <header class="quiz-head">
+        <div>
+          <p class="quiz-kicker">随机测试</p>
+          <h3>{{ quizLabel }}</h3>
+        </div>
+        <button type="button" class="sheet-close" aria-label="关闭" @click="closeQuiz">
+          <el-icon :size="18"><Close /></el-icon>
+        </button>
+      </header>
+      <p class="quiz-progress">已看 {{ quizSeen }} / {{ quizCards.length }}</p>
+      <div class="quiz-grid">
+        <article
+          v-for="(card, index) in quizCards"
+          :key="index"
+          class="quiz-tile"
+          :class="{ 'is-open': quizRevealed[index] }"
+        >
+          <p class="quiz-prompt" lang="ja">{{ card.display }}</p>
+          <button v-if="!quizRevealed[index]" type="button" @click="revealQuiz(index)">查看答案</button>
+          <p v-else class="quiz-reading" lang="ja">
+            <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">{{ reading }}</span>
+          </p>
+        </article>
+      </div>
+      <button type="button" class="quiz-again" @click="replayQuiz">再来一组</button>
     </div>
   </div>
 </template>
@@ -664,46 +908,135 @@ onMounted(async () => {
   min-width: 0;
 }
 
+html[data-layout='phone'] .kana-view > h2,
+html[data-layout='phone'] .page-lead {
+  display: none;
+}
+
 html[data-layout='phone'] .kana-body {
   grid-template-columns: 1fr;
   gap: 12px;
 }
 
 html[data-layout='phone'] .kana-nav {
+  position: sticky;
   /* 主区上内边距会把粘性栏顶下去，滚动内容从缝里露出来。往上贴齐主区顶边。 */
   top: calc(-1 * var(--main-pad-top, 16px));
-  flex-direction: row;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
   max-height: none;
-  overflow-x: auto;
-  z-index: 2;
-  margin: 0 -16px;
-  padding: 0 16px 8px;
-  background: #fbf8f3;
+  overflow: visible;
+  margin: 0 -16px 2px;
+  padding: 8px 16px 10px;
+  background: #f6f1e8;
 }
 
 html[data-layout='phone'] .kana-nav button {
   flex: none;
-  border-left: 0;
-  border-bottom: 2px solid transparent;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #8a8478;
+  font-size: 13px;
+  font-weight: 650;
+  text-align: center;
+  box-shadow: 0 1px 2px rgb(44 40 36 / 8%);
 }
 
 html[data-layout='phone'] .kana-nav button.active {
-  border-bottom-color: #9f3d2f;
+  border: 0;
+  background: #f8882c;
+  color: #fff;
 }
 
-html[data-layout='phone'] .counter-heading {
-  display: flex;
+html[data-layout='phone'] .toolbar {
+  justify-content: stretch;
+  margin-bottom: 8px;
+}
+
+html[data-layout='phone'] .voice {
+  flex: 1;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 6px;
 }
 
-html[data-layout='phone'] .kana-counter h3,
-html[data-layout='phone'] .counter-heading > button {
-  grid-column: auto;
+html[data-layout='phone'] .voice span {
+  color: #8a8478;
+  font-size: 13px;
 }
 
-html[data-layout='phone'] .quiz-kinds {
-  justify-content: center;
+html[data-layout='phone'] .voice-select {
+  width: 100%;
+}
+
+html[data-layout='phone'] .voice-select :deep(.el-select__wrapper),
+html[data-layout='phone'] .voice-select :deep(.el-select__input) {
+  font-size: 16px;
+}
+
+html[data-layout='phone'] .voice-hint,
+html[data-layout='phone'] .tap-hint {
+  margin: 0 0 4px;
+  color: #8a8478;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+html[data-layout='phone'] .kana-marks > h3,
+html[data-layout='phone'] .kana-pitch > h3 {
+  display: none;
+}
+
+html[data-layout='phone'] .pitch-grid {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+html[data-layout='phone'] .pitch-card {
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgb(92 72 40 / 6%);
+}
+
+html[data-layout='phone'] .pitch-card p {
+  min-height: 0;
+}
+
+html[data-layout='phone'] .pitch-chart {
+  width: min(100%, 220px);
+  height: auto;
+}
+
+html[data-layout='phone'] .dot.high,
+html[data-layout='phone'] .pitch-chart circle.high {
+  background: #f8882c;
+  fill: #f8882c;
+}
+
+html[data-layout='phone'] .counter-lead,
+html[data-layout='phone'] .counter-note,
+html[data-layout='phone'] .counter-ask {
+  color: #6f6a62;
+  text-align: left;
+}
+
+html[data-layout='phone'] .counter-ask .ask + .ask {
+  display: inline;
+  margin-left: 0;
+}
+
+html[data-layout='phone'] .counter-ask .ask {
+  display: block;
+  margin-top: 4px;
+}
+
+html[data-layout='phone'] .irregular {
+  color: #f8882c;
 }
 
 .toolbar {
@@ -796,10 +1129,6 @@ html[data-layout='phone'] .quiz-kinds {
   font-size: 14px;
   line-height: 1.6;
   min-height: 4.8em;
-}
-
-html[data-layout='phone'] .pitch-card p {
-  min-height: 0;
 }
 
 .legend-gap {
@@ -1027,5 +1356,276 @@ html[data-layout='phone'] .pitch-card p {
 .irregular {
   color: #c2410c;
   font-weight: 600;
+}
+
+.mark-list,
+.phone-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mark-card,
+.count-card,
+.quiz-tile {
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(92 72 40 / 6%);
+}
+
+.mark-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+}
+
+.mark-badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0;
+  border-radius: 16px;
+  background: #fff7f0;
+  color: #f8882c;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.mark-card h4,
+.count-card h4 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mark-card .mark-effect {
+  margin: 0;
+  color: #2c2824;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.mark-example {
+  margin: 6px 0 0;
+  color: #8a8478;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.quiz-launch,
+.quiz-again,
+.kind-btn,
+.sheet-close,
+.quiz-tile button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.quiz-launch,
+.quiz-again {
+  width: 100%;
+  height: 44px;
+  border-radius: 14px;
+  background: #f8882c;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.quiz-launch {
+  box-shadow: 0 8px 16px rgb(248 136 44 / 28%);
+}
+
+.count-card {
+  padding: 14px 14px 6px;
+}
+
+.count-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.count-duo .count-card {
+  padding: 12px 10px 4px;
+}
+
+.count-duo .count-label,
+.count-duo .count-read {
+  font-size: 13px;
+}
+
+.count-lines.is-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 14px;
+}
+
+.count-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px dashed #efe6d8;
+}
+
+.count-lines.is-split .count-line:nth-last-child(-n + 2),
+.count-lines:not(.is-split) .count-line:last-child {
+  border-bottom: 0;
+}
+
+.count-label {
+  color: #2c2824;
+  font-weight: 700;
+}
+
+.count-read {
+  color: #6f6a62;
+  font-size: 14px;
+  text-align: right;
+}
+
+.count-read span {
+  display: block;
+  line-height: 1.45;
+}
+
+.sheet-layer,
+.quiz-layer {
+  position: fixed;
+  z-index: 66;
+  inset: 0;
+}
+
+.sheet-layer {
+  display: flex;
+  align-items: flex-end;
+  background: rgb(44 40 36 / 32%);
+}
+
+.sheet {
+  width: 100%;
+  padding: 8px 16px calc(20px + env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0;
+  background: #fffdf8;
+  box-shadow: 0 -8px 32px rgb(44 40 36 / 12%);
+}
+
+.sheet-head,
+.quiz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sheet-head p,
+.quiz-kicker {
+  margin: 0;
+  color: #f8882c;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.sheet-lead,
+.quiz-progress {
+  margin: 0 0 8px;
+  color: #8a8478;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #fff;
+  color: #2c2824;
+  box-shadow: inset 0 0 0 1.5px #efe6d8;
+}
+
+.kind-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fff;
+  color: #2c2824;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  box-shadow: inset 0 0 0 1.5px #efe6d8;
+}
+
+.kind-btn:active {
+  background: #fff7f0;
+  color: #f8882c;
+  box-shadow: inset 0 0 0 1.5px #f8882c;
+}
+
+.quiz-layer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+  background: #f6f1e8;
+}
+
+.quiz-head h3 {
+  margin: 2px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quiz-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 112px;
+  padding: 14px 12px 12px;
+  text-align: center;
+}
+
+.quiz-tile .quiz-prompt {
+  font-size: 22px;
+}
+
+.quiz-tile button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 0;
+  border-radius: 999px;
+  background: #fff7f0;
+  color: #f8882c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.quiz-tile .quiz-reading {
+  margin-top: 8px;
+}
+
+.quiz-again {
+  position: sticky;
+  bottom: 0;
+  margin-top: 12px;
 }
 </style>

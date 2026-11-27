@@ -370,11 +370,13 @@ html[data-layout='phone'] main {
   padding: var(--main-pad-top) 16px 72px;
 }
 
-html[data-layout='phone'] main:has(.words-view.is-narrow) .crumbs {
+html[data-layout='phone'] main:has(.words-view.is-narrow) .crumbs,
+html[data-layout='phone'] main:has(.kana-view.is-narrow) .crumbs {
   display: none;
 }
 
-html[data-layout='phone'] .app-frame:has(.words-view.is-narrow) {
+html[data-layout='phone'] .app-frame:has(.words-view.is-narrow),
+html[data-layout='phone'] .app-frame:has(.kana-view.is-narrow) {
   background: #f6f1e8;
 }
 
