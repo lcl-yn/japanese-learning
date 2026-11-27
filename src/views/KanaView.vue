@@ -592,11 +592,13 @@ watch(activeSection, () => {
       </nav>
       <nav v-if="phoneLayout && activeSection === 'counter'" class="counter-jump" aria-label="量词分段">
         <div ref="jumpBar" class="jump-row">
+          <div class="jump-measure-host">
           <div ref="jumpMeasure" class="jump-measure" aria-hidden="true">
             <button v-for="item in counterJumps" :key="item.id" type="button" tabindex="-1">{{ item.label }}</button>
             <button type="button" class="jump-more" tabindex="-1">
               <span class="jump-more-grid"><i></i><i></i><i></i><i></i></span>
             </button>
+          </div>
           </div>
           <button
             v-for="item in visibleJumps"
@@ -1232,12 +1234,15 @@ html[data-layout='phone'] .kana-nav button.active {
   padding: 0 16px 8px;
 }
 
-.jump-measure {
+.jump-measure-host {
   position: absolute;
-  top: 0;
-  left: 16px;
-  visibility: hidden;
-  pointer-events: none;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.jump-measure {
+  width: max-content;
 }
 
 .counter-jump button {
