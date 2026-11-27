@@ -366,7 +366,8 @@ html[data-layout='phone'] .app-footer {
 }
 
 html[data-layout='phone'] main {
-  padding: 16px 16px 72px;
+  --main-pad-top: 16px;
+  padding: var(--main-pad-top) 16px 72px;
 }
 
 html[data-layout='phone'] main:has(.words-view.is-narrow) .crumbs {

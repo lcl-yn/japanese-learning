@@ -3,6 +3,12 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import KanaChart from '@/components/KanaChart.vue'
 import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
+import {
+  collectQuestions,
+  generateQuestion,
+  type NumberQuestion,
+  type QuestionType,
+} from '@/utils/numberQuestion'
 import { loadVoices, type VoiceOption } from '@/utils/speech'
 import { KANA_DESCRIPTION } from '@/utils/seo'
 
@@ -274,10 +280,36 @@ const minuteQuestions: CounterQuestion[] = [
   { jp: '今何時何分ですか。', reading: 'いまなんじなんぷんですか' },
 ]
 
+const QUIZ_CARD_COUNT = 10
+
+const quizKinds: { type: QuestionType; label: string }[] = [
+  { type: 'integer', label: '数字' },
+  { type: 'fraction', label: '分数' },
+  { type: 'decimal', label: '小数' },
+  { type: 'time', label: '时间' },
+  { type: 'age', label: '年龄' },
+]
+
+const quizMenuOpen = ref(false)
+const quizCards = ref<NumberQuestion[]>([])
+const quizRevealed = ref<boolean[]>([])
+
+/** 生成一批读音卡，并重新盖住答案。 */
+function startQuiz(type: QuestionType) {
+  quizMenuOpen.value = false
+  quizCards.value = collectQuestions(QUIZ_CARD_COUNT, () => generateQuestion(type))
+  quizRevealed.value = quizCards.value.map(() => false)
+}
+
+/** 点开这一张的全部假名。 */
+function revealQuiz(index: number) {
+  quizRevealed.value[index] = true
+}
+
 const minuteRows: CounterCell[][] = [
   [
     { label: '1分', readings: ['いっぷん'], irregular: true },
-    { label: '4分', readings: ['よんぷん'] },
+    { label: '4分', readings: ['よんぷん'], irregular: true },
     { label: '7分', readings: ['ななふん'] },
     { label: '10分', readings: ['じゅっぷん'], irregular: true },
   ],
@@ -390,8 +422,27 @@ onMounted(async () => {
         </section>
 
         <section v-else-if="activeSection === 'counter'" class="kana-counter">
-          <h3>量词</h3>
-          <p class="counter-lead"><span class="irregular">橙色</span>是特殊读音。1、3、4、6、8 在量词里经常变。<span class="ask">红字</span>是一般的问法。</p>
+          <div class="counter-heading">
+            <h3>量词</h3>
+            <button type="button" :aria-expanded="quizMenuOpen" @click="quizMenuOpen = !quizMenuOpen">
+              随机测试
+            </button>
+          </div>
+          <div v-if="quizMenuOpen" class="quiz-kinds">
+            <button v-for="kind in quizKinds" :key="kind.type" type="button" @click="startQuiz(kind.type)">
+              {{ kind.label }}
+            </button>
+          </div>
+          <p class="counter-lead"><span class="irregular">橙色</span>是特殊读音。1、3、4、6、8、10 在量词里经常变。<span class="ask">红字</span>是一般的问法。</p>
+          <div v-if="quizCards.length" class="quiz-board">
+            <article v-for="(card, index) in quizCards" :key="index" class="quiz-card">
+              <p class="quiz-prompt" lang="ja">{{ card.display }}</p>
+              <button v-if="!quizRevealed[index]" type="button" @click="revealQuiz(index)">查看答案</button>
+              <p v-else class="quiz-reading" lang="ja">
+                <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">{{ reading }}</span>
+              </p>
+            </article>
+          </div>
 
           <h4>100以下的数字</h4>
           <div class="counter-columns">
@@ -619,6 +670,8 @@ html[data-layout='phone'] .kana-body {
 }
 
 html[data-layout='phone'] .kana-nav {
+  /* 主区上内边距会把粘性栏顶下去，滚动内容从缝里露出来。往上贴齐主区顶边。 */
+  top: calc(-1 * var(--main-pad-top, 16px));
   flex-direction: row;
   max-height: none;
   overflow-x: auto;
@@ -636,6 +689,21 @@ html[data-layout='phone'] .kana-nav button {
 
 html[data-layout='phone'] .kana-nav button.active {
   border-bottom-color: #9f3d2f;
+}
+
+html[data-layout='phone'] .counter-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+html[data-layout='phone'] .kana-counter h3,
+html[data-layout='phone'] .counter-heading > button {
+  grid-column: auto;
+}
+
+html[data-layout='phone'] .quiz-kinds {
+  justify-content: center;
 }
 
 .toolbar {
@@ -782,11 +850,88 @@ html[data-layout='phone'] .pitch-card p {
   margin-bottom: 30px;
 }
 
+.counter-heading {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 .kana-counter h3 {
-  margin: 0 0 8px;
+  grid-column: 2;
+  margin: 0;
   text-align: center;
   font-size: 18px;
   font-weight: 600;
+}
+
+.counter-heading > button {
+  grid-column: 3;
+  justify-self: end;
+}
+
+.counter-heading > button,
+.quiz-kinds button,
+.quiz-card button {
+  padding: 4px 10px;
+  border: 1px solid #e4e7ed;
+  border-radius: 6px;
+  background: #fff;
+  color: #1c1917;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.counter-heading > button[aria-expanded='true'] {
+  border-color: #c2410c;
+  color: #c2410c;
+}
+
+.quiz-kinds {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.quiz-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quiz-card {
+  padding: 12px;
+  border: 1px solid #e4e7ed;
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.quiz-card p {
+  margin: 0;
+}
+
+.quiz-prompt {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.quiz-card button,
+.quiz-card .quiz-reading {
+  margin-top: 8px;
+}
+
+.quiz-reading span {
+  display: block;
+  color: #c2410c;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .kana-counter h4 {
