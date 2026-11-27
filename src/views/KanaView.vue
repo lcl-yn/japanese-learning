@@ -386,7 +386,7 @@ const counterJumps = [
 const activeCounterJump = ref<(typeof counterJumps)[number]['id']>('ones')
 const jumpBar = ref<HTMLElement | null>(null)
 const jumpMeasure = ref<HTMLElement | null>(null)
-const jumpVisibleCount = ref(counterJumps.length)
+const jumpVisibleCount = ref<number>(counterJumps.length)
 const jumpMenuOpen = ref(false)
 const visibleJumps = computed(() => counterJumps.slice(0, jumpVisibleCount.value))
 const overflowJumps = computed(() => counterJumps.slice(jumpVisibleCount.value))
@@ -428,7 +428,7 @@ function fitJumpChips() {
   const gap = parseFloat(getComputedStyle(measure).columnGap) || 0
   const moreWidth = more.offsetWidth
   let used = 0
-  let count = items.length
+  let count: number = items.length
   for (let index = 0; index < items.length; index += 1) {
     const next = used + (used ? gap : 0) + items[index].offsetWidth
     const hasRest = index < items.length - 1
