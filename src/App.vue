@@ -19,23 +19,16 @@ let headerScrollLock = false
 
 const wordsMobile = computed(() => phoneLayout.value && route.meta.section === 'words')
 
-/** 单词本和五十音图整页滚动，iOS 才能收起浏览器的地址栏和底栏。 */
+/** 单词本和五十音图整页滚动，顶栏吸在窗口顶部。 */
 const windowScroll = computed(
-  () => phoneLayout.value && (wordsMobile.value || route.name === 'kana'),
+  () => wordsMobile.value || (phoneLayout.value && route.name === 'kana'),
 )
 
 watch(
   windowScroll,
   (on) => {
-    if (on) {
-      document.documentElement.dataset.scroll = 'window'
-      // 停在顶部时 iOS 会展开地址栏。挪开 1 像素，让上下栏收起。
-      requestAnimationFrame(() => {
-        if (window.scrollY < 1) window.scrollTo(0, 1)
-      })
-    } else {
-      delete document.documentElement.dataset.scroll
-    }
+    if (on) document.documentElement.dataset.scroll = 'window'
+    else delete document.documentElement.dataset.scroll
   },
   { immediate: true },
 )

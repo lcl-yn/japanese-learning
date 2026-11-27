@@ -11,7 +11,7 @@ import type { Word } from '@/types/word'
 import { parseWordAppendBody, parseWordUpdateBody } from '@/utils/wordAppend'
 import { matchesCnPrefix } from '@/utils/cnSearch'
 import { wordPages } from '@/utils/unitPages'
-import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { loadVoices, preferredJapaneseVoice, type VoiceOption } from '@/utils/speech'
 import { phoneLayout } from '@/utils/phoneLayout'
 import { WORDS_DESCRIPTION } from '@/utils/seo'
 
@@ -326,10 +326,8 @@ const hasJapaneseVoice = ref(false)
 onMounted(async () => {
   const voices = await loadVoices()
   voiceOptions.value = voices
-  const japanese =
-    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
-    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
-  hasJapaneseVoice.value = Boolean(japanese)
+  const japanese = preferredJapaneseVoice(voices)
+  hasJapaneseVoice.value = japanese !== null
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
 })
 </script>

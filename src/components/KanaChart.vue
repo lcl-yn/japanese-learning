@@ -46,7 +46,6 @@ function scriptPairStacks(cell: KanaCell | null): boolean {
             v-if="cellAt(row, col)"
             type="button"
             class="kana-tile"
-            :class="{ 'is-stacked': scriptPairStacks(cellAt(row, col)) }"
             @click="onSpeakCell(row, col)"
           >
             <span class="scripts" :class="{ 'is-stacked': scriptPairStacks(cellAt(row, col)) }">

@@ -1,5 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { restartJapanese, stopSpeaking } from './speech'
+import { preferredJapaneseVoice, restartJapanese, stopSpeaking } from './speech'
+
+describe('preferredJapaneseVoice', () => {
+  it('prefers Ichiro, then any Japanese voice', () => {
+    const kyoko = { name: 'Kyoko', lang: 'ja-JP', voiceURI: 'kyoko' }
+    const ichiro = { name: 'Microsoft Ichiro', lang: 'ja-JP', voiceURI: 'ichiro' }
+    expect(preferredJapaneseVoice([kyoko, ichiro])?.voiceURI).toBe('ichiro')
+    expect(preferredJapaneseVoice([kyoko])?.voiceURI).toBe('kyoko')
+    expect(preferredJapaneseVoice([{ name: 'Huihui', lang: 'zh-CN', voiceURI: 'huihui' }])).toBeNull()
+  })
+})
 
 describe('restartJapanese', () => {
   const speak = vi.fn()

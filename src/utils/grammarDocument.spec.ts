@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import {
   emptyGrammarDocument,
   grammarHasText,
-  grammarRelativePath,
   lessonRelativePath,
   lessonSavePath,
   unitPageRelativePath,
@@ -25,14 +24,6 @@ describe('isGrammarLocation', () => {
     expect(isGrammarLocation('beginner-upper', 0, 1)).toBe(false)
     expect(isGrammarLocation('beginner-upper', 1.5, 1)).toBe(false)
     expect(isGrammarLocation('beginner-upper', 1, 1000)).toBe(false)
-  })
-})
-
-describe('grammarRelativePath', () => {
-  it('pads the unit and lesson', () => {
-    expect(grammarRelativePath('beginner-upper', 1, 2)).toBe(
-      'data/grammar/beginner-upper/unit-01-lesson-02.json',
-    )
   })
 })
 
@@ -60,6 +51,9 @@ describe('lessonRelativePath', () => {
   it('puts a reading file in its own folder', () => {
     expect(lessonRelativePath('reading', 'beginner-upper', 1, 2)).toBe(
       'data/reading/beginner-upper/unit-01-lesson-02.json',
+    )
+    expect(lessonRelativePath('grammar', 'beginner-upper', 1, 2)).toBe(
+      'data/grammar/beginner-upper/unit-01-lesson-02.json',
     )
     expect(lessonSavePath('reading')).toBe('/__reading')
   })

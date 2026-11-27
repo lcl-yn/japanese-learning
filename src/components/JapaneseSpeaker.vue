@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { phoneLayout } from '@/utils/phoneLayout'
-import { loadVoices, restartJapanese, speakJapanese, stopSpeaking, type VoiceOption } from '@/utils/speech'
+import { loadVoices, preferredJapaneseVoice, restartJapanese, speakJapanese, stopSpeaking, type VoiceOption } from '@/utils/speech'
 
 /** 拖到视口边缘时留出的空隙 */
 const EDGE_GAP = 8
@@ -199,10 +199,8 @@ onMounted(async () => {
   window.addEventListener('resize', onResize)
   const voices = await loadVoices()
   voiceOptions.value = voices
-  const japanese =
-    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
-    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
-  hasJapaneseVoice.value = Boolean(japanese)
+  const japanese = preferredJapaneseVoice(voices)
+  hasJapaneseVoice.value = japanese !== null
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
 })
 

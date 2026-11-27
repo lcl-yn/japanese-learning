@@ -122,19 +122,6 @@ export function unitPageRelativePath(bookId: string, unit: number, pageId: strin
 }
 
 /**
- * 一课一份语法文件的相对路径，相对于 public。
- * 调用前先用 isGrammarLocation 确认参数。
- *
- * @param bookId 册 id
- * @param unit 单元号
- * @param lesson 课号
- * @return 如 data/grammar/beginner-upper/unit-01-lesson-01.json
- */
-export function grammarRelativePath(bookId: string, unit: number, lesson: number): string {
-  return lessonRelativePath('grammar', bookId, unit, lesson)
-}
-
-/**
  * 还没有写过的一课，用空文档占位。
  *
  * @return 只有一个空段落的文档

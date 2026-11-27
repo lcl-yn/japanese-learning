@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import WordListTable from '@/components/WordListTable.vue'
 import { useWordsStore } from '@/stores/words'
-import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { loadVoices, preferredJapaneseVoice, type VoiceOption } from '@/utils/speech'
 
 const props = defineProps<{
   lesson: number
@@ -31,10 +31,8 @@ const hasJapaneseVoice = ref(false)
 onMounted(async () => {
   const voices = await loadVoices()
   voiceOptions.value = voices
-  const japanese =
-    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
-    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
-  hasJapaneseVoice.value = Boolean(japanese)
+  const japanese = preferredJapaneseVoice(voices)
+  hasJapaneseVoice.value = japanese !== null
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
 })
 </script>

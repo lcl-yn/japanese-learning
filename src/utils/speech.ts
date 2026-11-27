@@ -32,6 +32,15 @@ function readVoices(): SpeechSynthesisVoice[] {
   return window.speechSynthesis.getVoices()
 }
 
+/** 默认朗读音色。优先一朗，否则用第一个日语引擎。没有日语时为空。 */
+export function preferredJapaneseVoice(voices: readonly VoiceOption[]): VoiceOption | null {
+  return (
+    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
+    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang)) ??
+    null
+  )
+}
+
 /**
  * 加载语音选项。优先返回日语；没有日语时返回全部，方便下拉可选。
  * 只返回普通对象，避免 SpeechSynthesisVoice 进入 Vue 响应式。

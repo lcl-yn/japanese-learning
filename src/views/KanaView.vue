@@ -12,7 +12,7 @@ import {
   type QuestionType,
 } from '@/utils/numberQuestion'
 import { phoneLayout } from '@/utils/phoneLayout'
-import { loadVoices, type VoiceOption } from '@/utils/speech'
+import { loadVoices, preferredJapaneseVoice, type VoiceOption } from '@/utils/speech'
 import { KANA_DESCRIPTION } from '@/utils/seo'
 
 const voiceOptions = ref<VoiceOption[]>([])
@@ -427,8 +427,6 @@ function onStickScroll() {
   else if (top > lastStickScroll + 8) stickHidden.value = true
   else if (top < lastStickScroll - 8) stickHidden.value = false
   lastStickScroll = top
-  const stick = kanaStick.value
-  if (stick) stick.style.setProperty('--stick-h', `${stick.offsetHeight}px`)
 }
 
 /**
@@ -532,10 +530,8 @@ const phoneMinuteCells = inReadingOrder([...minuteRows.flat(), ...minuteExtras])
 onMounted(async () => {
   const voices = await loadVoices()
   voiceOptions.value = voices
-  const japanese =
-    voices.find((voice) => voice.name.includes('Microsoft Ichiro')) ??
-    voices.find((voice) => /^ja([-_]|$)/i.test(voice.lang))
-  hasJapaneseVoice.value = Boolean(japanese)
+  const japanese = preferredJapaneseVoice(voices)
+  hasJapaneseVoice.value = japanese !== null
   // 没有日语引擎时保持空选，朗读走 lang=ja-JP
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
   window.addEventListener('keydown', onQuizKey)
