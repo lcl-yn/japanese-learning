@@ -36,11 +36,15 @@ export const youonChart: KanaRow[] = [
   { a: { hiragana: 'りゃ', katakana: 'リャ', romaji: 'rya' }, i: { hiragana: 'りゅ', katakana: 'リュ', romaji: 'ryu' }, u: null, e: null, o: { hiragana: 'りょ', katakana: 'リョ', romaji: 'ryo' } },
 ]
 
-/** 浊音 / 半浊音 */
+/** 浊音 */
 export const dakuonChart: KanaRow[] = [
   { a: { hiragana: 'が', katakana: 'ガ', romaji: 'ga' }, i: { hiragana: 'ぎ', katakana: 'ギ', romaji: 'gi' }, u: { hiragana: 'ぐ', katakana: 'グ', romaji: 'gu' }, e: { hiragana: 'げ', katakana: 'ゲ', romaji: 'ge' }, o: { hiragana: 'ご', katakana: 'ゴ', romaji: 'go' } },
   { a: { hiragana: 'ざ', katakana: 'ザ', romaji: 'za' }, i: { hiragana: 'じ', katakana: 'ジ', romaji: 'ji' }, u: { hiragana: 'ず', katakana: 'ズ', romaji: 'zu' }, e: { hiragana: 'ぜ', katakana: 'ゼ', romaji: 'ze' }, o: { hiragana: 'ぞ', katakana: 'ゾ', romaji: 'zo' } },
   { a: { hiragana: 'だ', katakana: 'ダ', romaji: 'da' }, i: { hiragana: 'ぢ', katakana: 'ヂ', romaji: 'ji' }, u: { hiragana: 'づ', katakana: 'ヅ', romaji: 'zu' }, e: { hiragana: 'で', katakana: 'デ', romaji: 'de' }, o: { hiragana: 'ど', katakana: 'ド', romaji: 'do' } },
   { a: { hiragana: 'ば', katakana: 'バ', romaji: 'ba' }, i: { hiragana: 'び', katakana: 'ビ', romaji: 'bi' }, u: { hiragana: 'ぶ', katakana: 'ブ', romaji: 'bu' }, e: { hiragana: 'べ', katakana: 'ベ', romaji: 'be' }, o: { hiragana: 'ぼ', katakana: 'ボ', romaji: 'bo' } },
+]
+
+/** 半浊音 */
+export const handakuonChart: KanaRow[] = [
   { a: { hiragana: 'ぱ', katakana: 'パ', romaji: 'pa' }, i: { hiragana: 'ぴ', katakana: 'ピ', romaji: 'pi' }, u: { hiragana: 'ぷ', katakana: 'プ', romaji: 'pu' }, e: { hiragana: 'ぺ', katakana: 'ペ', romaji: 'pe' }, o: { hiragana: 'ぽ', katakana: 'ポ', romaji: 'po' } },
 ]

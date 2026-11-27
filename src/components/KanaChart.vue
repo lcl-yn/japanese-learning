@@ -19,10 +19,17 @@ function cellAt(row: KanaRow, column: KanaColumn): KanaCell | null {
   return row[column] ?? null
 }
 
-function onSpeakCell(row: KanaRow, column: KanaColumn, script: 'hiragana' | 'katakana') {
+/** 卡片上的平假名和片假名读音相同，不传时只读平假名。 */
+function onSpeakCell(row: KanaRow, column: KanaColumn, script: 'hiragana' | 'katakana' = 'hiragana') {
   const cell = cellAt(row, column)
   if (!cell) return
   speakJapanese(cell[script], props.voiceUri)
+}
+
+/** 拗音是两个字，横排会挤出格子，仍上下叠放。 */
+function scriptPairStacks(cell: KanaCell | null): boolean {
+  if (!cell) return false
+  return cell.hiragana.length > 1 || cell.katakana.length > 1
 }
 </script>
 
@@ -35,15 +42,19 @@ function onSpeakCell(row: KanaRow, column: KanaColumn, script: 'hiragana' | 'kat
       </div>
       <div v-for="(row, rowIndex) in rows" :key="rowIndex" class="kana-row">
         <template v-for="col in kanaColumns" :key="col">
-          <div v-if="cellAt(row, col)" class="kana-tile">
-            <button type="button" class="hira" @click="onSpeakCell(row, col, 'hiragana')">
-              {{ cellAt(row, col)?.hiragana }}
-            </button>
-            <button type="button" class="kata" @click="onSpeakCell(row, col, 'katakana')">
-              {{ cellAt(row, col)?.katakana }}
-            </button>
+          <button
+            v-if="cellAt(row, col)"
+            type="button"
+            class="kana-tile"
+            :class="{ 'is-stacked': scriptPairStacks(cellAt(row, col)) }"
+            @click="onSpeakCell(row, col)"
+          >
+            <span class="scripts" :class="{ 'is-stacked': scriptPairStacks(cellAt(row, col)) }">
+              <span class="hira">{{ cellAt(row, col)?.hiragana }}</span>
+              <span class="kata">{{ cellAt(row, col)?.katakana }}</span>
+            </span>
             <span class="roma">{{ cellAt(row, col)?.romaji }}</span>
-          </div>
+          </button>
           <div v-else class="kana-tile is-empty" />
         </template>
       </div>
@@ -123,11 +134,29 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   min-width: 0;
   padding: 6px 0 5px;
+  border: 0;
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 6px 16px rgb(92 72 40 / 6%);
+  color: inherit;
+  font: inherit;
+}
+
+button.kana-tile {
+  cursor: pointer;
+}
+
+.kana-tile:active .hira,
+.kana-tile:active .kata {
+  color: #f8882c;
+}
+
+.kana-tile:focus-visible {
+  outline: 2px solid #f8882c;
+  outline-offset: 2px;
 }
 
 .kana-tile.is-empty {
@@ -135,31 +164,29 @@ h3 {
   box-shadow: none;
 }
 
-.kana-tile button {
+.scripts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   width: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
+}
+
+.scripts.is-stacked {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hira,
+.kata {
   color: #2c2824;
-  font: inherit;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1.15;
-  cursor: pointer;
-}
-
-.kana-tile button:active {
-  color: #f8882c;
-}
-
-.hira {
-  font-size: 22px;
-  font-weight: 700;
 }
 
 .kata {
-  margin-top: 2px;
   color: #6f6a62;
-  font-size: 13px;
 }
 
 .roma {

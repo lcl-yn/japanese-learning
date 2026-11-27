@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Close } from '@element-plus/icons-vue'
 import KanaChart from '@/components/KanaChart.vue'
-import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
+import { dakuonChart, handakuonChart, hiraganaChart, youonChart } from '@/data/kana'
 import {
   collectQuestions,
   generateQuestion,
@@ -628,10 +628,11 @@ watch(activeSection, () => {
           <p v-if="!hasJapaneseVoice" class="voice-hint">
             未检测到本机日语语音包，将使用浏览器日语朗读；也可手动选中文语音（发音可能不准确）。
           </p>
-          <p v-if="phoneLayout" class="tap-hint">点平假名或片假名即可朗读。</p>
+          <p v-if="phoneLayout" class="tap-hint">点卡片即可朗读。</p>
           <KanaChart title="基本50音" :rows="hiraganaChart" :voice-uri="selectedVoiceUri" />
           <KanaChart title="拗音" :rows="youonChart" :voice-uri="selectedVoiceUri" />
-          <KanaChart title="浊音半浊音" :rows="dakuonChart" :voice-uri="selectedVoiceUri" />
+          <KanaChart title="浊音" :rows="dakuonChart" :voice-uri="selectedVoiceUri" />
+          <KanaChart title="半浊音" :rows="handakuonChart" :voice-uri="selectedVoiceUri" />
         </template>
 
         <section v-else-if="activeSection === 'marks'" class="kana-marks">
