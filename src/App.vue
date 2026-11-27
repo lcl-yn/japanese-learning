@@ -28,7 +28,8 @@ function onMainScroll(event: Event) {
   if (!(el instanceof HTMLElement) || headerScrollLock) return
   const top = el.scrollTop
   const narrow = phoneLayout.value
-  if (narrow && route.meta.section === 'words') {
+  // 单词本和五十音图的顶栏不跟着滚动收起。高度一变，iOS 会把整页拖走并卡住。
+  if (narrow && (route.meta.section === 'words' || route.name === 'kana')) {
     lastMainScroll = top
     if (headerCollapsed.value) headerCollapsed.value = false
     return
@@ -367,7 +368,17 @@ html[data-layout='phone'] .app-footer {
 
 html[data-layout='phone'] main {
   --main-pad-top: 16px;
+  min-height: 0;
   padding: var(--main-pad-top) 16px 72px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+html[data-layout='phone'] main:has(.kana-view.is-narrow) {
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 html[data-layout='phone'] main:has(.words-view.is-narrow) .crumbs,
@@ -394,6 +405,14 @@ body,
 #app {
   height: 100%;
   margin: 0;
+}
+
+html[data-layout='phone'],
+html[data-layout='phone'] body,
+html[data-layout='phone'] #app {
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 html[data-layout='phone'][data-speaker='open'] main {

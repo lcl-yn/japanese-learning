@@ -163,6 +163,83 @@ export function readAge(years: number): string[] {
   return [`${base}さい`]
 }
 
+export type ReadingPiece = {
+  text: string
+  /** 这一段是变音，页面上沿用答案的橙色 */
+  changed: boolean
+}
+
+/**
+ * 把一条答案拆成普通假名和整段变音。
+ * 变音按百、千、分、岁、时整段标出，例如はっぴゃく、ろっぴゃく、さんぜん。
+ * 不把ひゃくじゅう里的「くじ」当成 9 时。
+ *
+ * @param reading 一条假名，可含半角空格
+ * @return 按原文顺序的片段，拼回去与原文相同
+ */
+export function splitReading(reading: string): ReadingPiece[] {
+  const pieces: ReadingPiece[] = []
+  const push = (text: string, changed: boolean) => {
+    const last = pieces[pieces.length - 1]
+    if (last && last.changed === changed) last.text += text
+    else pieces.push({ text, changed })
+  }
+  let index = 0
+  while (index < reading.length) {
+    const rest = reading.slice(index)
+    const phrase = CHANGED_PHRASES.find((item) => rest.startsWith(item))
+    if (phrase) {
+      push(phrase, true)
+      index += phrase.length
+      continue
+    }
+    if (isHalfToken(reading, index, 'はん') || isHalfToken(reading, index, 'くじ')) {
+      const token = rest.startsWith('はん') ? 'はん' : 'くじ'
+      push(token, true)
+      index += token.length
+      continue
+    }
+    if (rest.startsWith('いってん') || rest.startsWith('はってん')) {
+      push(rest.slice(0, 2), true)
+      index += 2
+      continue
+    }
+    push(rest[0] ?? '', false)
+    index += 1
+  }
+  return pieces
+}
+
+/** 整段都要标出的变音。长的放前面，避免被短的截断。 */
+const CHANGED_PHRASES = [
+  'ろっぴゃく',
+  'はっぴゃく',
+  'さんびゃく',
+  'じゅっぷん',
+  'さんぜん',
+  'じゅっさい',
+  'はっせん',
+  'いっせん',
+  'いっぷん',
+  'ろっぷん',
+  'はっぷん',
+  'よんぷん',
+  'さんぷん',
+  'いっさい',
+  'はっさい',
+  'しちじ',
+  'はたち',
+  'よじ',
+] as const
+
+/** 半角空格隔开的整段，避免把别的词里的同形假名标成变音。 */
+function isHalfToken(reading: string, index: number, token: string): boolean {
+  if (!reading.startsWith(token, index)) return false
+  const before = index === 0 ? ' ' : reading[index - 1]
+  const after = reading[index + token.length] ?? ' '
+  return before === ' ' && after === ' '
+}
+
 /**
  * 按题型出一道题。未知题型直接失败。
  *

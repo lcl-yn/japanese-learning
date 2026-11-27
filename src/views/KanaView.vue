@@ -7,6 +7,7 @@ import { dakuonChart, hiraganaChart, youonChart } from '@/data/kana'
 import {
   collectQuestions,
   generateQuestion,
+  splitReading,
   type NumberQuestion,
   type QuestionType,
 } from '@/utils/numberQuestion'
@@ -331,6 +332,18 @@ function onQuizKey(event: KeyboardEvent) {
   quizMenuOpen.value = false
 }
 
+/** 手机双列从左到右按数字排，0 和问法放在最后。 */
+function inReadingOrder(cells: CounterCell[]): CounterCell[] {
+  const sortKey = (label: string) => {
+    if (label.startsWith('何')) return Number.POSITIVE_INFINITY
+    const matched = label.match(/\d+/)
+    if (!matched) return Number.POSITIVE_INFINITY
+    const value = Number(matched[0])
+    return value === 0 ? 1000 : value
+  }
+  return [...cells].sort((a, b) => sortKey(a.label) - sortKey(b.label))
+}
+
 /** 手机上百、千、万各成一列，空格不占位。 */
 function columnCells(rows: CounterCell[][], index: number): CounterCell[] {
   return rows.flatMap((row) => {
@@ -339,18 +352,68 @@ function columnCells(rows: CounterCell[][], index: number): CounterCell[] {
   })
 }
 
-const phoneDigitGroups: { title: string; cells: CounterCell[]; split: boolean }[] = [
-  { title: '个位', cells: smallNumberColumns[0] ?? [], split: true },
-  { title: '十几', cells: smallNumberColumns[1] ?? [], split: false },
-  { title: '整十', cells: smallNumberColumns[2] ?? [], split: true },
-  { title: '小数 · 分数', cells: smallNumberExtras, split: true },
+const phoneDigitGroups: { id: string; title: string; cells: CounterCell[]; split: boolean }[] = [
+  { id: 'ones', title: '个位', cells: smallNumberColumns[0] ?? [], split: true },
+  { id: 'teens', title: '十几', cells: smallNumberColumns[1] ?? [], split: true },
+  { id: 'tens', title: '整十', cells: smallNumberColumns[2] ?? [], split: true },
+  { id: 'fraction', title: '小数 · 分数', cells: smallNumberExtras, split: true },
 ]
 
-const phoneLargeGroups: { title: string; cells: CounterCell[]; wide: boolean }[] = [
-  { title: '百', cells: columnCells(largeNumberRows, 0), wide: false },
-  { title: '千', cells: columnCells(largeNumberRows, 1), wide: false },
-  { title: '万', cells: columnCells(largeNumberRows, 2), wide: true },
+const phoneLargeGroups: { id: string; title: string; cells: CounterCell[]; wide: boolean }[] = [
+  { id: 'hundred', title: '百', cells: columnCells(largeNumberRows, 0), wide: false },
+  { id: 'thousand', title: '千', cells: columnCells(largeNumberRows, 1), wide: false },
+  { id: 'man', title: '万', cells: columnCells(largeNumberRows, 2), wide: true },
 ]
+
+/** 手机量词页签下面的分段，点一下跳到对应卡片。 */
+const counterJumps = [
+  { id: 'ones', label: '个位' },
+  { id: 'teens', label: '十几' },
+  { id: 'tens', label: '整十' },
+  { id: 'fraction', label: '小数' },
+  { id: 'hundred', label: '百' },
+  { id: 'thousand', label: '千' },
+  { id: 'man', label: '万' },
+  { id: 'age', label: '年龄' },
+  { id: 'hour', label: '时间' },
+  { id: 'minute', label: '分' },
+] as const
+
+const activeCounterJump = ref<(typeof counterJumps)[number]['id']>('ones')
+const stickHidden = ref(false)
+const kanaStick = ref<HTMLElement | null>(null)
+let lastStickScroll = 0
+let stickScrollLock = false
+
+/** 往下滚收起页签，往上滚或回到顶部再展开。高度不变，避免整页被拖走。 */
+function onStickScroll(event: Event) {
+  const main = event.target
+  if (!(main instanceof HTMLElement) || !phoneLayout.value || stickScrollLock) return
+  const top = main.scrollTop
+  if (top <= 8) stickHidden.value = false
+  else if (top > lastStickScroll + 8) stickHidden.value = true
+  else if (top < lastStickScroll - 8) stickHidden.value = false
+  lastStickScroll = top
+  const stick = kanaStick.value
+  if (stick) stick.style.setProperty('--stick-h', `${stick.offsetHeight}px`)
+}
+
+/** 把量词卡片滚到页签下面，避免被吸顶的导航挡住。 */
+function jumpToCounter(id: (typeof counterJumps)[number]['id']) {
+  activeCounterJump.value = id
+  const target = document.getElementById(`counter-${id}`)
+  const main = document.querySelector('main')
+  const stick = kanaStick.value
+  if (!target || !(main instanceof HTMLElement) || !stick) return
+  stickHidden.value = false
+  stickScrollLock = true
+  const top = target.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - stick.offsetHeight - 8
+  main.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+  window.setTimeout(() => {
+    stickScrollLock = false
+    lastStickScroll = main.scrollTop
+  }, 450)
+}
 
 const minuteRows: CounterCell[][] = [
   [
@@ -380,8 +443,8 @@ const minuteExtras: CounterCell[] = [
 ]
 
 const phoneAgeCells = ageBands.flat()
-const phoneHourCells = hourRows.flat()
-const phoneMinuteCells = [...minuteRows.flat(), ...minuteExtras]
+const phoneHourCells = inReadingOrder(hourRows.flat())
+const phoneMinuteCells = inReadingOrder([...minuteRows.flat(), ...minuteExtras])
 
 onMounted(async () => {
   const voices = await loadVoices()
@@ -393,14 +456,18 @@ onMounted(async () => {
   // 没有日语引擎时保持空选，朗读走 lang=ja-JP
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
   window.addEventListener('keydown', onQuizKey)
+  document.querySelector('main')?.addEventListener('scroll', onStickScroll, { passive: true })
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', onQuizKey)
+  document.querySelector('main')?.removeEventListener('scroll', onStickScroll)
 })
 
 watch(activeSection, () => {
   document.querySelector('main')?.scrollTo({ top: 0 })
+  stickHidden.value = false
+  lastStickScroll = 0
   quizMenuOpen.value = false
   closeQuiz()
 })
@@ -411,6 +478,7 @@ watch(activeSection, () => {
     <h2>50音图</h2>
     <p class="page-lead">{{ KANA_DESCRIPTION }}</p>
     <div class="kana-body">
+      <div ref="kanaStick" class="kana-stick" :class="{ 'is-hidden': stickHidden }">
       <nav class="kana-nav" aria-label="五十音内容">
         <button
           v-for="section in kanaSections"
@@ -423,6 +491,18 @@ watch(activeSection, () => {
           {{ section.label }}
         </button>
       </nav>
+      <nav v-if="phoneLayout && activeSection === 'counter'" class="counter-jump" aria-label="量词分段">
+        <button
+          v-for="item in counterJumps"
+          :key="item.id"
+          type="button"
+          :class="{ 'is-on': item.id === activeCounterJump }"
+          @click="jumpToCounter(item.id)"
+        >
+          {{ item.label }}
+        </button>
+      </nav>
+      </div>
 
       <div class="kana-panel">
         <template v-if="activeSection === 'chart'">
@@ -518,7 +598,13 @@ watch(activeSection, () => {
               <p class="quiz-prompt" lang="ja">{{ card.display }}</p>
               <button v-if="!quizRevealed[index]" type="button" @click="revealQuiz(index)">查看答案</button>
               <p v-else class="quiz-reading" lang="ja">
-                <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">{{ reading }}</span>
+                <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">
+                  <span
+                    v-for="(piece, pieceIndex) in splitReading(reading)"
+                    :key="pieceIndex"
+                    :class="{ 'is-changed': piece.changed }"
+                  >{{ piece.text }}</span>
+                </span>
               </p>
             </article>
           </div>
@@ -693,7 +779,7 @@ watch(activeSection, () => {
           </template>
 
           <div v-else class="phone-counter">
-            <article v-for="group in phoneDigitGroups" :key="group.title" class="count-card">
+            <article v-for="group in phoneDigitGroups" :key="group.title" :id="`counter-${group.id}`" class="count-card">
               <h4>{{ group.title }}</h4>
               <div class="count-lines" :class="{ 'is-split': group.split }">
                 <p v-for="cell in group.cells" :key="cell.label" class="count-line">
@@ -706,7 +792,7 @@ watch(activeSection, () => {
             </article>
 
             <div class="count-duo">
-              <article v-for="group in phoneLargeGroups.filter((group) => !group.wide)" :key="group.title" class="count-card">
+              <article v-for="group in phoneLargeGroups.filter((group) => !group.wide)" :key="group.title" :id="`counter-${group.id}`" class="count-card">
                 <h4>{{ group.title }}</h4>
                 <div class="count-lines">
                   <p v-for="cell in group.cells" :key="cell.label" class="count-line">
@@ -719,9 +805,9 @@ watch(activeSection, () => {
               </article>
             </div>
 
-            <article v-for="group in phoneLargeGroups.filter((group) => group.wide)" :key="group.title" class="count-card">
+            <article v-for="group in phoneLargeGroups.filter((group) => group.wide)" :key="group.title" :id="`counter-${group.id}`" class="count-card">
               <h4>{{ group.title }}</h4>
-              <div class="count-lines">
+              <div class="count-lines is-split">
                 <p v-for="cell in group.cells" :key="cell.label" class="count-line">
                   <span class="count-label">{{ cell.label }}</span>
                   <span class="count-read" :class="{ irregular: cell.irregular }">
@@ -745,7 +831,7 @@ watch(activeSection, () => {
               </div>
             </article>
 
-            <article class="count-card">
+            <article id="counter-age" class="count-card">
               <h4>年龄</h4>
               <p class="counter-ask">
                 一般这么问：
@@ -753,7 +839,7 @@ watch(activeSection, () => {
                   {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
                 </span>
               </p>
-              <div class="count-lines">
+              <div class="count-lines is-split">
                 <p v-for="cell in phoneAgeCells" :key="cell.label" class="count-line">
                   <span class="count-label">{{ cell.label }}</span>
                   <span class="count-read" :class="{ irregular: cell.irregular }">
@@ -763,7 +849,7 @@ watch(activeSection, () => {
               </div>
             </article>
 
-            <article class="count-card">
+            <article id="counter-hour" class="count-card">
               <h4>时间</h4>
               <p class="counter-ask">
                 一般这么问：
@@ -771,7 +857,7 @@ watch(activeSection, () => {
                   {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
                 </span>
               </p>
-              <div class="count-lines">
+              <div class="count-lines is-split">
                 <p v-for="cell in phoneHourCells" :key="cell.label" class="count-line">
                   <span class="count-label">{{ cell.label }}</span>
                   <span class="count-read" :class="{ irregular: cell.irregular }">
@@ -781,7 +867,7 @@ watch(activeSection, () => {
               </div>
             </article>
 
-            <article class="count-card">
+            <article id="counter-minute" class="count-card">
               <h4>分</h4>
               <p class="counter-ask">
                 一般这么问：
@@ -789,7 +875,7 @@ watch(activeSection, () => {
                   {{ item.jp }}<template v-if="item.reading">（{{ item.reading }}）</template>
                 </span>
               </p>
-              <div class="count-lines">
+              <div class="count-lines is-split">
                 <p v-for="cell in phoneMinuteCells" :key="cell.label" class="count-line">
                   <span class="count-label">{{ cell.label }}</span>
                   <span class="count-read" :class="{ irregular: cell.irregular }">
@@ -851,7 +937,13 @@ watch(activeSection, () => {
           <p class="quiz-prompt" lang="ja">{{ card.display }}</p>
           <button v-if="!quizRevealed[index]" type="button" @click="revealQuiz(index)">查看答案</button>
           <p v-else class="quiz-reading" lang="ja">
-            <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">{{ reading }}</span>
+            <span v-for="(reading, readingIndex) in card.readings" :key="readingIndex">
+              <span
+                v-for="(piece, pieceIndex) in splitReading(reading)"
+                :key="pieceIndex"
+                :class="{ 'is-changed': piece.changed }"
+              >{{ piece.text }}</span>
+            </span>
           </p>
         </article>
       </div>
@@ -908,6 +1000,30 @@ watch(activeSection, () => {
   min-width: 0;
 }
 
+.kana-stick {
+  display: contents;
+}
+
+html[data-layout='phone'] .kana-stick {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: block;
+  margin: 0 0 8px;
+  background: #f6f1e8;
+  transition: top 0.2s ease;
+}
+
+html[data-layout='phone'] .kana-stick.is-hidden {
+  top: calc(-1 * var(--stick-h, 96px));
+  pointer-events: none;
+}
+
+html[data-layout='phone'] .kana-stick .kana-nav {
+  position: static;
+  margin: 0;
+}
+
 html[data-layout='phone'] .kana-view > h2,
 html[data-layout='phone'] .page-lead {
   display: none;
@@ -920,17 +1036,19 @@ html[data-layout='phone'] .kana-body {
 
 html[data-layout='phone'] .kana-nav {
   position: sticky;
-  /* 主区上内边距会把粘性栏顶下去，滚动内容从缝里露出来。往上贴齐主区顶边。 */
-  top: calc(-1 * var(--main-pad-top, 16px));
+  top: 0;
   z-index: 3;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   max-height: none;
-  overflow: visible;
-  margin: 0 -16px 2px;
+  margin: 0 0 2px;
   padding: 8px 16px 10px;
   background: #f6f1e8;
+}
+
+html[data-layout='phone'] .kana-panel {
+  padding: 0 16px;
 }
 
 html[data-layout='phone'] .kana-nav button {
@@ -950,6 +1068,37 @@ html[data-layout='phone'] .kana-nav button.active {
   border: 0;
   background: #f8882c;
   color: #fff;
+}
+
+.counter-jump {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 16px 8px;
+  scrollbar-width: none;
+}
+
+.counter-jump::-webkit-scrollbar {
+  display: none;
+}
+
+.counter-jump button {
+  flex: none;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #8a8478;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgb(44 40 36 / 8%);
+}
+
+.counter-jump button.is-on {
+  background: #fff7f0;
+  color: #f8882c;
+  box-shadow: inset 0 0 0 1.5px #f8882c;
 }
 
 html[data-layout='phone'] .toolbar {
@@ -1255,12 +1404,16 @@ html[data-layout='phone'] .irregular {
   margin-top: 8px;
 }
 
-.quiz-reading span {
+.quiz-reading > span {
   display: block;
-  color: #c2410c;
+  color: #1c1917;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.5;
+}
+
+.quiz-reading .is-changed {
+  color: #c2410c;
 }
 
 .kana-counter h4 {
@@ -1463,6 +1616,16 @@ html[data-layout='phone'] .irregular {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 14px;
+}
+
+.count-lines.is-split .count-label,
+.count-lines.is-split .count-read {
+  min-width: 0;
+  font-size: 13px;
+}
+
+.count-lines.is-split .count-read {
+  overflow-wrap: anywhere;
 }
 
 .count-line {

@@ -9,6 +9,7 @@ import {
   readFraction,
   readInteger,
   readTime,
+  splitReading,
   type NumberQuestion,
 } from './numberQuestion'
 
@@ -216,6 +217,53 @@ describe('collectQuestions', () => {
   it('keeps a duplicate after the redraw limit', () => {
     const batch = collectQuestions(2, () => question('1歳'), 2)
     expect(batch.map((item) => item.display)).toEqual(['1歳', '1歳'])
+  })
+})
+
+describe('splitReading', () => {
+  it('keeps the original kana when the pieces are joined', () => {
+    const readings = [
+      'さんびゃく',
+      'ろっぴゃく',
+      'ごぜん よじ さんじゅっぷん',
+      'はたち',
+    ]
+    for (const reading of readings) {
+      expect(splitReading(reading).map((piece) => piece.text).join('')).toBe(reading)
+    }
+  })
+
+  it('marks a whole changed counter, and leaves regular kana black', () => {
+    const changed = (reading: string) =>
+      splitReading(reading)
+        .filter((piece) => piece.changed)
+        .map((piece) => piece.text)
+        .join('')
+    expect(changed('ごひゃくじゅうなな')).toBe('')
+    expect(changed('ひゃく')).toBe('')
+    expect(changed('さんびゃく')).toBe('さんびゃく')
+    expect(changed('ろっぴゃく')).toBe('ろっぴゃく')
+    expect(changed('はっぴゃくろくじゅう')).toBe('はっぴゃく')
+    expect(changed('きゅうせんひゃくろくじゅうまんにせんろっぴゃくよんじゅうきゅう')).toBe('ろっぴゃく')
+    expect(changed('さんぜん')).toBe('さんぜん')
+    expect(changed('ごぜん')).toBe('')
+    expect(changed('はっせん')).toBe('はっせん')
+    expect(changed('いっせんまん')).toBe('いっせん')
+    expect(changed('いってんいち')).toBe('いっ')
+    expect(changed('ごぜん いちじ')).toBe('')
+    expect(changed('ごぜん よじ')).toBe('よじ')
+    expect(changed('ろくじ')).toBe('')
+    expect(changed('しちじ')).toBe('しちじ')
+    expect(changed('ごぜん くじ')).toBe('くじ')
+    expect(changed('にふん')).toBe('')
+    expect(changed('さんぷん')).toBe('さんぷん')
+    expect(changed('じゅういっぷん')).toBe('いっぷん')
+    expect(changed('にじゅっぷん')).toBe('じゅっぷん')
+    expect(changed('ごご じゅうにじ はん')).toBe('はん')
+    expect(changed('はちさい')).toBe('')
+    expect(changed('はっさい')).toBe('はっさい')
+    expect(changed('じゅっさい')).toBe('じゅっさい')
+    expect(changed('はたち')).toBe('はたち')
   })
 })
 
