@@ -398,11 +398,30 @@ const kanaStick = ref<HTMLElement | null>(null)
 let lastStickScroll = 0
 let stickScrollLock = false
 
-/** 往下滚收起页签，往上滚或回到顶部再展开。高度不变，避免整页被拖走。 */
-function onStickScroll(event: Event) {
-  const main = event.target
-  if (!(main instanceof HTMLElement) || !phoneLayout.value || stickScrollLock) return
-  const top = main.scrollTop
+/** 单词本和五十音图整页滚动时，滚动位置在窗口上。 */
+function windowScrolling(): boolean {
+  return document.documentElement.dataset.scroll === 'window'
+}
+
+function pageScrollTop(): number {
+  if (windowScrolling()) return window.scrollY
+  const main = document.querySelector('main')
+  return main instanceof HTMLElement ? main.scrollTop : 0
+}
+
+function scrollPage(top: number, behavior: ScrollBehavior = 'auto') {
+  if (windowScrolling()) {
+    window.scrollTo({ top, behavior })
+    return
+  }
+  const main = document.querySelector('main')
+  if (main instanceof HTMLElement) main.scrollTo({ top, behavior })
+}
+
+/** 往下滚收起页签，往上滚或回到顶部再展开。只平移页签，避免把浏览器上下栏顶出来。 */
+function onStickScroll() {
+  if (!phoneLayout.value || stickScrollLock) return
+  const top = pageScrollTop()
   if (Math.abs(top - lastStickScroll) > 4) jumpMenuOpen.value = false
   if (top <= 8) stickHidden.value = false
   else if (top > lastStickScroll + 8) stickHidden.value = true
@@ -465,16 +484,17 @@ function jumpToCounter(id: (typeof counterJumps)[number]['id']) {
   jumpMenuOpen.value = false
   activeCounterJump.value = id
   const target = document.getElementById(`counter-${id}`)
-  const main = document.querySelector('main')
   const stick = kanaStick.value
-  if (!target || !(main instanceof HTMLElement) || !stick) return
+  if (!target || !stick) return
+  const header = document.querySelector('.app-header')
+  const headerOffset = windowScrolling() && header instanceof HTMLElement ? header.offsetHeight : 0
   stickHidden.value = false
   stickScrollLock = true
-  const top = target.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - stick.offsetHeight - 8
-  main.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+  const top = pageScrollTop() + target.getBoundingClientRect().top - stick.offsetHeight - headerOffset - 8
+  scrollPage(Math.max(0, top), 'smooth')
   window.setTimeout(() => {
     stickScrollLock = false
-    lastStickScroll = main.scrollTop
+    lastStickScroll = pageScrollTop()
   }, 450)
 }
 
@@ -520,19 +540,29 @@ onMounted(async () => {
   selectedVoiceUri.value = japanese?.voiceURI ?? ''
   window.addEventListener('keydown', onQuizKey)
   window.addEventListener('pointerdown', onJumpPointer)
-  document.querySelector('main')?.addEventListener('scroll', onStickScroll, { passive: true })
+  bindStickScroll()
   nextTick(watchJumpBar)
 })
+
+let stickScrollTarget: EventTarget | null = null
+
+function bindStickScroll() {
+  if (stickScrollTarget) stickScrollTarget.removeEventListener('scroll', onStickScroll)
+  stickScrollTarget = windowScrolling() ? window : document.querySelector('main')
+  stickScrollTarget?.addEventListener('scroll', onStickScroll, { passive: true })
+}
 
 onUnmounted(() => {
   window.removeEventListener('keydown', onQuizKey)
   window.removeEventListener('pointerdown', onJumpPointer)
-  document.querySelector('main')?.removeEventListener('scroll', onStickScroll)
+  stickScrollTarget?.removeEventListener('scroll', onStickScroll)
   jumpObserver?.disconnect()
 })
 
+watch(phoneLayout, () => nextTick(bindStickScroll))
+
 watch(activeSection, () => {
-  document.querySelector('main')?.scrollTo({ top: 0 })
+  scrollPage(0)
   stickHidden.value = false
   lastStickScroll = 0
   quizMenuOpen.value = false
@@ -1118,8 +1148,12 @@ html[data-layout='phone'] .kana-stick {
 }
 
 html[data-layout='phone'] .kana-stick.is-hidden {
-  top: calc(-1 * var(--stick-h, 96px));
+  transform: translateY(calc(-100% - var(--app-header-height, 0px) - 8px));
   pointer-events: none;
+}
+
+html[data-scroll='window'] .kana-stick {
+  top: var(--app-header-height, 56px);
 }
 
 html[data-layout='phone'] .kana-stick .kana-nav {

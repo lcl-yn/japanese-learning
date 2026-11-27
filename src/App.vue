@@ -19,6 +19,27 @@ let headerScrollLock = false
 
 const wordsMobile = computed(() => phoneLayout.value && route.meta.section === 'words')
 
+/** 单词本和五十音图整页滚动，iOS 才能收起浏览器的地址栏和底栏。 */
+const windowScroll = computed(
+  () => phoneLayout.value && (wordsMobile.value || route.name === 'kana'),
+)
+
+watch(
+  windowScroll,
+  (on) => {
+    if (on) {
+      document.documentElement.dataset.scroll = 'window'
+      // 停在顶部时 iOS 会展开地址栏。挪开 1 像素，让上下栏收起。
+      requestAnimationFrame(() => {
+        if (window.scrollY < 1) window.scrollTo(0, 1)
+      })
+    } else {
+      delete document.documentElement.dataset.scroll
+    }
+  },
+  { immediate: true },
+)
+
 /**
  * 窄屏往下读时收起顶栏，往上滚或回到顶部再展开。
  * 顶栏高度一变，主区会跟着冒出滚动事件，这段时间先不改状态。
@@ -417,6 +438,30 @@ html[data-layout='phone'] #app {
 
 html[data-layout='phone'][data-speaker='open'] main {
   padding-bottom: 124px;
+}
+
+html[data-layout='phone'][data-scroll='window'],
+html[data-layout='phone'][data-scroll='window'] body,
+html[data-layout='phone'][data-scroll='window'] #app {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+html[data-layout='phone'][data-scroll='window'] .app-frame {
+  height: auto;
+  min-height: 100dvh;
+  --app-header-height: 56px;
+}
+
+html[data-layout='phone'][data-scroll='window'] .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+html[data-layout='phone'][data-scroll='window'] main {
+  overflow: visible;
 }
 
 .nav-drawer.el-drawer {
