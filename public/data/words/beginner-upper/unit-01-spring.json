@@ -352,6 +352,14 @@
         "scale": "①"
     },
     {
+        "cn": "洗发水",
+        "jp": "シャンプー",
+        "jp_write": "シャンプー",
+        "describe": "",
+        "part_of_speech": "名",
+        "scale": "①"
+    },
+    {
         "cn": "浴槽,浴缸",
         "jp": "バスタブ",
         "jp_write": "バスタブ",
@@ -366,14 +374,6 @@
         "describe": "",
         "part_of_speech": "名",
         "scale": "⓪"
-    },
-    {
-        "cn": "洗发水",
-        "jp": "シャンプー",
-        "jp_write": "シャンプー",
-        "describe": "",
-        "part_of_speech": "名",
-        "scale": "①"
     },
     {
         "cn": "洗衣机",
