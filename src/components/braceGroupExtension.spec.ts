@@ -29,6 +29,16 @@ beforeAll(() => {
   }
 })
 
+/** 读出一块里的第一段文字。空行或文本节点没有这段文字时为空字符串。 */
+function blockText(node: unknown): string {
+  if (!node || typeof node !== 'object' || !('content' in node)) return ''
+  const { content } = node
+  if (!Array.isArray(content)) return ''
+  const first: unknown = content[0]
+  if (!first || typeof first !== 'object' || !('text' in first) || typeof first.text !== 'string') return ''
+  return first.text
+}
+
 function createEditor() {
   const element = document.createElement('div')
   document.body.append(element)
@@ -97,8 +107,8 @@ describe('brace group', () => {
     editor.commands.insertContent('二类')
 
     const group = editor.getJSON().content?.[0]
-    expect(group?.content?.[0]?.content?.[0]?.text).toBe('动词')
-    expect(group?.content?.slice(1).map((node) => node.content?.[0]?.text ?? '')).toEqual(['一类', '二类', ''])
+    expect(blockText(group?.content?.[0])).toBe('动词')
+    expect(group?.content?.slice(1).map((node) => blockText(node))).toEqual(['一类', '二类', ''])
     editor.destroy()
   })
 
