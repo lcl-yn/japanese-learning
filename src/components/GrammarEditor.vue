@@ -1715,7 +1715,7 @@ defineExpose({ scrollToHeading })
 .grammar-editor :deep(.tiptap td) {
   position: relative;
   min-width: 48px;
-  border: 1px solid #d6d3d1;
+  border: 1px solid #000;
   padding: 6px 8px;
   vertical-align: top;
   box-sizing: border-box;
