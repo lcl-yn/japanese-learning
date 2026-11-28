@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Extension } from '@tiptap/core'
-import { TableKit } from '@tiptap/extension-table'
 import { liftListItem, sinkListItem } from '@tiptap/pm/schema-list'
 import { TextSelection, NodeSelection } from '@tiptap/pm/state'
 import { CellSelection, columnResizing } from '@tiptap/pm/tables'
@@ -12,9 +11,11 @@ import { TextStyleKit } from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import { computed, ref, watch } from 'vue'
 import { lessonAudioFiles } from 'virtual:lesson-audio'
+import { braceGroupExtensions, BRACE_ITEM, BRACE_LABEL, emptyBraceGroup, BRACE_GROUP, focusBraceLabel } from '@/components/braceGroupExtension'
 import { lessonAudioExtension } from '@/components/lessonAudioExtension'
 import type { GrammarDocument } from '@/types/grammar'
 import { isGrammarDocument } from '@/utils/grammarDocument'
+import { cssColorToHex, selectionCellFills, setCellFill, sharedCellFill, tableFillExtensions } from '@/utils/tableCellFill'
 import { isLessonAudioSrc, lessonAudioLabel, lessonAudioNamesForBook, lessonAudioSrc, orderLessonAudioForLesson } from '@/utils/lessonAudio'
 import { quoteEnter } from '@/utils/quoteEnter'
 
@@ -89,9 +90,44 @@ const tableCells = Array.from({ length: tablePickerRows * tablePickerColumns }, 
   col: (index % tablePickerColumns) + 1,
 }))
 
+const LAST_TEXT_COLOR_KEY = 'grammarLastTextColor'
+const LAST_CELL_FILL_KEY = 'grammarLastCellFill'
+
+/**
+ * 读出上次用过的文字颜色。
+ * 没有记下，或存的不是色值时，当作还没选过。
+ */
+function readRememberedTextColor(): string | null {
+  try {
+    const stored = localStorage.getItem(LAST_TEXT_COLOR_KEY)
+    if (stored && /^#[0-9a-fA-F]{6}$/.test(stored)) return stored
+  } catch {
+    // 读不到时色块用正文默认色
+  }
+  return null
+}
+
+/**
+ * 读出上次用过的表格底色。
+ * 没有记下，或存的不是色值时，当作还没选过。
+ */
+function readRememberedCellFill(): string | null {
+  try {
+    const stored = localStorage.getItem(LAST_CELL_FILL_KEY)
+    if (stored && /^#[0-9a-fA-F]{6}$/.test(stored)) return stored.toLowerCase()
+  } catch {
+    // 读不到时油漆桶不带底色
+  }
+  return null
+}
+
 const colorOpen = ref(false)
+const rememberedTextColor = ref<string | null>(readRememberedTextColor())
+const fillOpen = ref(false)
+const rememberedCellFill = ref<string | null>(readRememberedCellFill())
 const alignOpen = ref(false)
 const moreColorInput = ref<HTMLInputElement | null>(null)
+const fillColorInput = ref<HTMLInputElement | null>(null)
 const defaultTextColor = '#1c1917'
 const tableOpen = ref(false)
 const tableCustomOpen = ref(false)
@@ -243,13 +279,19 @@ const editor = useEditor({
       alignments: ['left', 'center', 'right', 'justify'],
     }),
     Placeholder.configure({
-      placeholder: props.placeholder,
+      includeChildren: true,
+      showOnlyCurrent: false,
+      placeholder: ({ node, editor: current }) => {
+        if (node.type.name === BRACE_LABEL) return '总称'
+        if (node.type.name === BRACE_ITEM) return '一项'
+        if (current.isEmpty) return props.placeholder
+        return ''
+      },
     }),
-    TableKit.configure({
-      table: { resizable: false, cellMinWidth: tableCellMinWidth },
-    }),
+    ...tableFillExtensions(tableCellMinWidth),
     tableColumnResize,
     lessonAudioExtension,
+    ...braceGroupExtensions,
   ],
   editorProps: {
     attributes: {
@@ -462,6 +504,15 @@ const active = computed((): EditorActive => {
   }
 })
 
+const fillActive = computed(() => {
+  const current = editor.value
+  if (!current) return { inTable: false, uniform: false, fill: '' }
+  void current.state
+  const fills = selectionCellFills(current.state)
+  const shared = sharedCellFill(fills)
+  return { inTable: fills.length > 0, uniform: shared.same, fill: shared.color }
+})
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
@@ -506,13 +557,35 @@ function sameColor(left: string, right: string): boolean {
 }
 
 /**
+ * 记下这次选的文字颜色，下次点色块就能直接再用。
+ *
+ * @param value 选中的颜色；null 表示改回默认色
+ */
+function rememberTextColor(value: string | null) {
+  rememberedTextColor.value = value
+  try {
+    if (value) localStorage.setItem(LAST_TEXT_COLOR_KEY, value)
+    else localStorage.removeItem(LAST_TEXT_COLOR_KEY)
+  } catch {
+    // 浏览器关掉存储时，这一次编辑里仍然记住
+  }
+}
+
+/**
  * 把选中文字设为预设色，空值则恢复正文默认色。
+ * 同时把这个颜色留在色块上。
  *
  * @param value 预设色；null 表示恢复默认
  */
 function pickColor(value: string | null) {
+  rememberTextColor(value)
   onColor(value)
   colorOpen.value = false
+}
+
+/** 用色块上记住的颜色给选中文字上色。还没选过时恢复默认色。 */
+function applyRememberedColor() {
+  onColor(rememberedTextColor.value)
 }
 
 /**
@@ -521,7 +594,7 @@ function pickColor(value: string | null) {
 function openMoreColors() {
   const input = moreColorInput.value
   if (!input) return
-  input.value = active.value.color || defaultTextColor
+  input.value = rememberedTextColor.value || active.value.color || defaultTextColor
   input.click()
 }
 
@@ -529,6 +602,63 @@ function onMoreColor(event: Event) {
   const input = event.target
   if (!(input instanceof HTMLInputElement) || !input.value) return
   pickColor(input.value)
+}
+
+/**
+ * 记下这次选的表格底色，下次点油漆桶就能直接再用。
+ *
+ * @param value 选中的底色；null 表示清掉
+ */
+function rememberCellFill(value: string | null) {
+  rememberedCellFill.value = value
+  try {
+    if (value) localStorage.setItem(LAST_CELL_FILL_KEY, value)
+    else localStorage.removeItem(LAST_CELL_FILL_KEY)
+  } catch {
+    // 浏览器关掉存储时，这一次编辑里仍然记住
+  }
+}
+
+/** 给当前格子或已框选的格子铺上底色。null 表示清掉。 */
+function paintCells(value: string | null) {
+  const current = editor.value
+  if (!current || !fillActive.value.inTable) return
+  current.commands.focus()
+  setCellFill(current.state, (tr) => current.view.dispatch(tr), value)
+}
+
+/** 用油漆桶上记住的底色再涂一次。还没选过时不改格子。 */
+function applyRememberedFill() {
+  if (!rememberedCellFill.value) return
+  paintCells(rememberedCellFill.value)
+}
+
+/**
+ * 把选中的格子设为这个底色，空值则清掉。
+ * 同时把这个颜色留在油漆桶上。
+ *
+ * @param value 底色；null 表示清掉
+ */
+function pickFill(value: string | null) {
+  const color = value ? cssColorToHex(value) : null
+  if (value && !color) return
+  rememberCellFill(color)
+  paintCells(color)
+  fillOpen.value = false
+}
+
+/** 打开系统取色框，确认后写入表格底色。 */
+function openMoreFills() {
+  const input = fillColorInput.value
+  if (!input) return
+  input.value = rememberedCellFill.value || fillActive.value.fill || '#ffaf00'
+  input.click()
+}
+
+function onMoreFill(event: Event) {
+  const input = event.target
+  if (!(input instanceof HTMLInputElement) || !input.value) return
+  pickFill(input.value)
 }
 
 function toggleBold() {
@@ -566,6 +696,41 @@ function align(value: TextAlignValue) {
 
 function insertRule() {
   editor.value?.chain().focus().setHorizontalRule().run()
+}
+
+/**
+ * 在光标处插入一组大括号。左边是总称，右边先放三行。
+ * 当前是空段时换掉这一段；已经在一组括号里时，插到这组后面。
+ */
+function insertBrace() {
+  const current = editor.value
+  if (!current) return
+  const { selection } = current.state
+  const { $from } = selection
+  let from = selection.from
+  let to = selection.to
+  for (let depth = $from.depth; depth > 0; depth -= 1) {
+    if ($from.node(depth).type.name !== BRACE_GROUP) continue
+    from = $from.after(depth)
+    to = from
+    break
+  }
+  const replaceEmptyParagraph =
+    from === selection.from &&
+    selection.empty &&
+    $from.parent.type.name === 'paragraph' &&
+    $from.parent.content.size === 0 &&
+    $from.depth === 1
+  if (replaceEmptyParagraph) {
+    from = $from.before()
+    to = $from.after()
+  }
+  current
+    .chain()
+    .focus()
+    .insertContentAt({ from, to }, emptyBraceGroup())
+    .command(({ tr }) => focusBraceLabel(tr))
+    .run()
 }
 
 /**
@@ -773,39 +938,115 @@ defineExpose({ scrollToHeading })
           :value="option.value"
         />
       </el-select>
-      <el-popover
-        v-model:visible="colorOpen"
-        trigger="click"
-        placement="bottom-start"
-        :width="248"
-        popper-class="grammar-color-popper"
-      >
-        <template #reference>
-          <button type="button" class="tool color-trigger" aria-label="文字颜色" :aria-expanded="colorOpen" @mousedown.prevent>
-            <span class="color-chip" :style="{ background: active.color || defaultTextColor }" />
-          </button>
-        </template>
-        <div class="color-panel" @mousedown.prevent>
-          <button type="button" class="color-default" :class="{ 'is-current': active.color === '' }" @click="pickColor(null)">
-            <span class="swatch swatch-default" />
-            默认颜色
-          </button>
-          <div class="color-grid">
-            <button
-              v-for="color in colorPresets"
-              :key="color"
-              type="button"
-              class="swatch"
-              :class="{ 'is-current': sameColor(color, active.color) }"
-              :style="{ background: color }"
-              :aria-label="`文字颜色 ${color}`"
-              @click="pickColor(color)"
-            />
+      <div class="color-tool">
+        <button
+          type="button"
+          class="tool color-apply"
+          :aria-label="rememberedTextColor ? `沿用文字颜色 ${rememberedTextColor}` : '沿用文字颜色'"
+          :style="{ background: rememberedTextColor || defaultTextColor }"
+          @mousedown.prevent
+          @click="applyRememberedColor"
+        ></button>
+        <el-popover
+          v-model:visible="colorOpen"
+          trigger="click"
+          placement="bottom-start"
+          :width="248"
+          popper-class="grammar-color-popper"
+        >
+          <template #reference>
+            <button type="button" class="tool color-menu" aria-label="选择文字颜色" :aria-expanded="colorOpen" @mousedown.prevent>
+              <span class="align-caret" />
+            </button>
+          </template>
+          <div class="color-panel" @mousedown.prevent>
+            <button type="button" class="color-default" :class="{ 'is-current': active.color === '' }" @click="pickColor(null)">
+              <span class="swatch swatch-default" />
+              默认颜色
+            </button>
+            <div class="color-grid">
+              <button
+                v-for="color in colorPresets"
+                :key="color"
+                type="button"
+                class="swatch"
+                :class="{ 'is-current': sameColor(color, active.color) }"
+                :style="{ background: color }"
+                :aria-label="`文字颜色 ${color}`"
+                @click="pickColor(color)"
+              />
+            </div>
+            <button type="button" class="color-more" @click="openMoreColors">更多颜色</button>
+            <input ref="moreColorInput" class="color-native" type="color" tabindex="-1" aria-hidden="true" @change="onMoreColor" />
           </div>
-          <button type="button" class="color-more" @click="openMoreColors">更多颜色</button>
-          <input ref="moreColorInput" class="color-native" type="color" tabindex="-1" aria-hidden="true" @change="onMoreColor" />
-        </div>
-      </el-popover>
+        </el-popover>
+      </div>
+
+      <div class="color-tool fill-tool">
+        <button
+          type="button"
+          class="tool fill-apply"
+          :disabled="!fillActive.inTable"
+          :aria-label="rememberedCellFill ? `沿用表格底色 ${rememberedCellFill}` : '沿用表格底色'"
+          @mousedown.prevent
+          @click="applyRememberedFill"
+        >
+          <span class="fill-mark">
+            <svg class="fill-bucket" viewBox="0 0 2048 2048" aria-hidden="true">
+              <path
+                fill="#252423"
+                d="m1690 960l-858 858l-730-730l666-667V192q0-40 15-75t41-61t61-41t75-15t75 15t61 41t41 61t15 75v640h-128V192q0-26-19-45t-45-19t-45 19t-19 45v283l-549 549h1098l65-64l-211-211l90-90zm-858 678l485-486H347zm1147-48q20 35 30 74t10 80q0 61-22 116t-61 97t-92 66t-116 25q-62 0-116-24t-94-64t-63-95t-24-116q0-79 40-148l257-450zm-251 330q36 0 66-14t52-39t34-57t12-67q0-49-24-90l-140-244l-146 256q-23 40-23 84q0 35 13 66t37 54t53 37t66 14"
+              />
+            </svg>
+            <span class="fill-bar" :style="{ background: rememberedCellFill || '#fff' }" />
+          </span>
+        </button>
+        <el-popover
+          v-model:visible="fillOpen"
+          trigger="click"
+          placement="bottom-start"
+          :width="248"
+          popper-class="grammar-color-popper"
+        >
+          <template #reference>
+            <button
+              type="button"
+              class="tool color-menu"
+              aria-label="选择表格底色"
+              :aria-expanded="fillOpen"
+              :disabled="!fillActive.inTable"
+              @mousedown.prevent
+            >
+              <span class="align-caret" />
+            </button>
+          </template>
+          <div class="color-panel" @mousedown.prevent>
+            <button
+              type="button"
+              class="color-default"
+              :class="{ 'is-current': fillActive.uniform && fillActive.fill === '' }"
+              @click="pickFill(null)"
+            >
+              <span class="swatch swatch-default" />
+              无底色
+            </button>
+            <div class="color-grid">
+              <button
+                v-for="color in colorPresets"
+                :key="color"
+                type="button"
+                class="swatch"
+                :class="{ 'is-current': fillActive.uniform && sameColor(color, fillActive.fill) }"
+                :style="{ background: color }"
+                :aria-label="`表格底色 ${color}`"
+                @click="pickFill(color)"
+              />
+            </div>
+            <button type="button" class="color-more" @click="openMoreFills">更多颜色</button>
+            <input ref="fillColorInput" class="color-native" type="color" tabindex="-1" aria-hidden="true" @change="onMoreFill" />
+          </div>
+        </el-popover>
+      </div>
 
       <button type="button" class="tool" :class="{ 'is-active': active.bold }" aria-label="加粗" :aria-pressed="active.bold" @mousedown.prevent @click="toggleBold">B</button>
       <button type="button" class="tool tool-italic" :class="{ 'is-active': active.italic }" aria-label="斜体" :aria-pressed="active.italic" @mousedown.prevent @click="toggleItalic">I</button>
@@ -893,6 +1134,7 @@ defineExpose({ scrollToHeading })
         </div>
       </el-popover>
       <button type="button" class="tool" aria-label="分割线" @mousedown.prevent @click="insertRule">分割线</button>
+      <button type="button" class="tool" aria-label="大括号" @mousedown.prevent @click="insertBrace">大括号</button>
       <el-popover
         v-if="allowAudio"
         v-model:visible="audioOpen"
@@ -1040,19 +1282,59 @@ defineExpose({ scrollToHeading })
   width: 88px;
 }
 
-.color-trigger {
+.color-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tool.color-apply {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 22%);
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.tool.color-menu {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  width: 16px;
   padding: 0;
 }
 
-.color-chip {
+.fill-apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  padding: 0;
+}
+
+.fill-tool .tool:disabled {
+  color: #1c1917;
+}
+
+.fill-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.fill-bucket {
   width: 16px;
   height: 16px;
-  border: 1px solid #d6d3d1;
-  border-radius: 2px;
+  display: block;
+}
+
+.fill-bar {
+  width: 16px;
+  height: 4px;
+  outline: 1px solid #8a8886;
+  outline-offset: -1px;
 }
 
 .color-panel {
@@ -1497,7 +1779,7 @@ defineExpose({ scrollToHeading })
 }
 
 .grammar-editor :deep(.tiptap .selectedCell) {
-  background: #f7eeeb;
+  box-shadow: inset 0 0 0 2px #9f3d2f;
 }
 
 .grammar-editor :deep(.tiptap hr) {
@@ -1515,6 +1797,76 @@ defineExpose({ scrollToHeading })
 }
 
 .grammar-editor :deep(.tiptap p.is-editor-empty:first-child::before) {
+  float: left;
+  height: 0;
+  color: #a8a29e;
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+.grammar-editor :deep(.tiptap .brace-group) {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 28px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: stretch;
+  margin: 0.6em 0;
+}
+
+.grammar-editor :deep(.tiptap .brace-group.ProseMirror-selectednode) {
+  outline: 1px solid #9f3d2f;
+  border-radius: 4px;
+}
+
+.grammar-editor :deep(.tiptap .brace-content) {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  align-content: start;
+}
+
+.grammar-editor :deep(.tiptap .brace-mark) {
+  position: absolute;
+  grid-column: 2 / 3;
+  grid-row: 1;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  color: #44403c;
+  cursor: pointer;
+}
+
+.grammar-editor :deep(.tiptap .brace-mark path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.grammar-editor :deep(.tiptap .brace-label) {
+  grid-column: 1;
+  /* -1 只覆盖显式行，总称要跟着右边每一行垂直居中。 */
+  grid-row: 1 / span 40;
+  align-self: center;
+  height: fit-content;
+  min-width: 3em;
+  line-height: 1.6;
+}
+
+.grammar-editor :deep(.tiptap .brace-item) {
+  grid-column: 3;
+  min-height: 1.6em;
+  line-height: 1.6;
+}
+
+.grammar-editor :deep(.tiptap .brace-label.is-empty::before),
+.grammar-editor :deep(.tiptap .brace-item.is-empty::before) {
   float: left;
   height: 0;
   color: #a8a29e;
